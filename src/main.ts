@@ -6,7 +6,7 @@ import { getInputs } from './input'
 export function run(): void {
   try {
     const choices = getInputs()
-    debug(`choices: ${choices}`)
+    debug(`choices: ${JSON.stringify(choices)}`)
 
     const randomValue = Math.random()
     if (isDebug()) {
