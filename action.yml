@@ -7,7 +7,7 @@ inputs:
     required: true
   weights:
     description: >
-      Set this if you want to weight the choices.
+      Set natural integer if you want to weight the choices.
       Make it the same length as the contents.
       By default, all content has equal weight.
 outputs:
