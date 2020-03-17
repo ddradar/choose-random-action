@@ -13,7 +13,14 @@ const randomString = (): string =>
   [...Array(12)].map(() => (~~(Math.random() * 36)).toString(36)).join('')
 
 describe('main.ts', () => {
-  beforeEach(() => jest.resetAllMocks())
+  beforeEach(() => {
+    jest.resetAllMocks()
+    mocked(getInputs).mockReturnValue([
+      { content: 'foo', weight: 1 },
+      { content: 'bar', weight: 2 },
+      { content: 'baz', weight: 2 }
+    ])
+  })
 
   describe('run()', () => {
     test('calls core.setFailed() if an error occurs', () => {
