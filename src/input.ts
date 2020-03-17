@@ -8,7 +8,7 @@ const getMultipleInput = (
     .split('\n')
     .filter(x => x !== '')
 
-type Choice = {
+export type Choice = {
   content: string
   weight: number
 }
