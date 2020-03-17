@@ -56,8 +56,8 @@ jobs:
             baz
           weights: |
             10
-            20
-            30
+            10
+            10
       - name: Echo GitHub Actions outputs
         env:
           STEPS_CONTEXT: ${{ toJson(steps.act.outputs) }}
