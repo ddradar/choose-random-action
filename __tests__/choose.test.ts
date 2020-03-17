@@ -1,5 +1,5 @@
+import { Choice } from '../src/choice'
 import { chooseOne } from '../src/choose'
-import { Choice } from '../src/input'
 
 describe('choose.ts', () => {
   describe('chooseOne()', () => {

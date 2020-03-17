@@ -1,5 +1,7 @@
 import { getInput, InputOptions } from '@actions/core'
 
+import { Choice } from './choice'
+
 const getMultipleInput = (
   name: string,
   options?: InputOptions | undefined
@@ -7,11 +9,6 @@ const getMultipleInput = (
   getInput(name, options)
     .split('\n')
     .filter(x => x !== '')
-
-export type Choice = {
-  content: string
-  weight: number
-}
 
 export const getInputs = (): Choice[] => {
   const contents = getMultipleInput('contents', { required: true })

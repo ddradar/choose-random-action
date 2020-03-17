@@ -1,4 +1,4 @@
-import { Choice } from './input'
+import { Choice } from './choice'
 
 export const chooseOne = (choices: Choice[], random: number): string => {
   const sortedChoices = choices.sort((l, r) => r.weight - l.weight)
