@@ -1,10 +1,21 @@
-name: 'Your name here'
-description: 'Provide a description here'
-author: 'Your name or organization here'
+name: 'Choose Random Action'
+description: 'Choose one randomly from multiple user inputs'
+author: 'ddradar'
 inputs:
-  myInput: # change this
-    description: 'input description here'
-    default: 'default value if applicable'
+  contents:
+    description: 'String choices you want to choose randomly'
+    required: true
+  weights:
+    description: >
+      Set natural integer if you want to weight the choices.
+      Make it the same length as the contents.
+      By default, all content has equal weight.
+outputs:
+  selected:
+    description: 'Selected string in contents'
+branding:
+  icon: 'shuffle'
+  color: 'gray-dark'
 runs:
   using: 'node12'
   main: 'dist/index.js'

@@ -1,19 +1,25 @@
-import * as core from '@actions/core'
+import { debug, info, isDebug, setFailed, setOutput } from '@actions/core'
 
-import { wait } from './wait'
+import { chooseOne } from './choose'
+import { getInputs } from './input'
 
-async function run(): Promise<void> {
+export function run(): void {
   try {
-    const ms: string = core.getInput('milliseconds')
-    core.debug(`Waiting ${ms} milliseconds ...`)
+    const choices = getInputs()
+    debug(`choices: ${choices}`)
 
-    core.debug(new Date().toTimeString())
-    await wait(parseInt(ms, 10))
-    core.debug(new Date().toTimeString())
+    const randomValue = Math.random()
+    if (isDebug()) {
+      const sum = choices.reduce((p, c) => p + c.weight, 0)
+      debug(`Math.random(): ${randomValue}`)
+      debug(`Math.random() % weights.sum() + 1: ${(randomValue % sum) + 1}`)
+    }
 
-    core.setOutput('time', new Date().toTimeString())
+    const selected = chooseOne(choices, randomValue)
+    info(`selected: ${selected}`)
+    setOutput('selected', selected)
   } catch (error) {
-    core.setFailed(error.message)
+    setFailed(error.message)
   }
 }
 
