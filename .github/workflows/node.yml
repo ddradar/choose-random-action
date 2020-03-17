@@ -46,6 +46,20 @@ jobs:
         uses: release-drafter/release-drafter@v5
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: GitHub Actions Build Test
+        id: act
+        uses: ./
+        with:
+          contents: |
+            foo
+            bar
+            baz
+          weights: |
+            10
+            20
+            30
+      - name: Echo GitHub Actions outputs
+        run: echo {{ steps.act.outputs }}
 
   release:
     name: Release
