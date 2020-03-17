@@ -61,3 +61,5 @@ By default, all content has equal weight.
 [MIT License](LICENSE)
 
 ## Contributing
+
+See [guide](./CONTRIBUTING.md).
