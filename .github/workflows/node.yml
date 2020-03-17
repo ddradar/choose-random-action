@@ -42,6 +42,10 @@ jobs:
         run: npm test
       - name: Report Code Coverage to codecov
         uses: codecov/codecov-action@v1
+      - name: Drafts next Release notes
+        uses: release-drafter/release-drafter@v5
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   release:
     name: Release
