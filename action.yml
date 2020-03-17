@@ -10,6 +10,7 @@ inputs:
       Set natural integer if you want to weight the choices.
       Make it the same length as the contents.
       By default, all content has equal weight.
+    required: false
 outputs:
   selected:
     description: 'Selected string in contents'
