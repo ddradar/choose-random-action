@@ -1,9 +1,14 @@
 import { getInput } from '@actions/core'
+import { readFile } from 'fs'
+import { safeLoad as yamlLoad } from 'js-yaml'
+import { join as pathJoin } from 'path'
 import { mocked } from 'ts-jest/utils'
+import { promisify } from 'util'
 
 import { getInputs } from '../src/input'
 
 jest.mock('@actions/core')
+const readFileAsync = promisify(readFile)
 
 describe('input.ts', () => {
   describe('getInputs()', () => {
@@ -70,6 +75,30 @@ describe('input.ts', () => {
         { content: 'bar', weight: 2 },
         { content: 'baz', weight: 3 }
       ])
+    })
+    test('uses all input parameters defined action.yml', async () => {
+      // Arrange
+      // Load action.yml settings
+      const yamlText = await readFileAsync(
+        pathJoin(__dirname, '..', 'action.yml'),
+        'utf8'
+      )
+      const actionSettings = yamlLoad(yamlText)
+      const expectedInputs = Object.keys(actionSettings.inputs)
+      mocked(getInput).mockReturnValue('1\n2\n3')
+
+      // Act
+      getInputs()
+
+      // Assert
+      expect(getInput).toHaveBeenCalledTimes(expectedInputs.length)
+      for (const key of expectedInputs) {
+        if (actionSettings.inputs[key].required) {
+          expect(getInput).toHaveBeenCalledWith(key, { required: true })
+        } else {
+          expect(getInput).toHaveBeenCalledWith(key, undefined)
+        }
+      }
     })
   })
 })
