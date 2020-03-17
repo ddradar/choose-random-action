@@ -6,13 +6,13 @@ import { getInputs } from './input'
 export function run(): void {
   try {
     const choices = getInputs()
-    debug(`choices: ${choices}`)
+    debug(`choices: ${JSON.stringify(choices)}`)
 
     const randomValue = Math.random()
     if (isDebug()) {
       const sum = choices.reduce((p, c) => p + c.weight, 0)
       debug(`Math.random(): ${randomValue}`)
-      debug(`Math.random() % weights.sum() + 1: ${(randomValue % sum) + 1}`)
+      debug(`Choice: ${Math.floor(randomValue * sum) + 1}`)
     }
 
     const selected = chooseOne(choices, randomValue)

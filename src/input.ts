@@ -12,7 +12,7 @@ const getMultipleInput = (
 
 export const getInputs = (): Choice[] => {
   const contents = getMultipleInput('contents', { required: true })
-  const weights = getMultipleInput('weights').map(s => parseInt(s))
+  const weights = getMultipleInput('weights').map(s => parseInt(s.trim(), 10))
 
   if (contents.length === 0) throw new Error('contents is required.')
   if (weights.length === 0)

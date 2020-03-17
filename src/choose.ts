@@ -3,7 +3,7 @@ import { Choice } from './choice'
 export const chooseOne = (choices: Choice[], random: number): string => {
   const sortedChoices = choices.sort((l, r) => r.weight - l.weight)
   const weightSum = choices.reduce((prev, c) => prev + c.weight, 0)
-  const selected = (random % weightSum) + 1
+  const selected = Math.floor(random * weightSum) + 1
 
   let current = 0
   for (const choice of sortedChoices) {
