@@ -8,27 +8,27 @@
 [![Dependabot Status](https://api.dependabot.com/badges/status?host=github&repo=ddradar/choose-random-action)](https://dependabot.com)
 [![License](https://img.shields.io/github/license/ddradar/choose-random-action)](LICENSE)
 
-日本語版のガイドは[こちら](./README-ja.md)です。
+English guide is [here](./README.md).
 
-Choose one randomly from multiple user inputs
+"LGTM" コメント時に画像を投稿します。
 
 ## TOC
 
-- [Usage](#usage)
-- [Options](#options)
+- [使い方](#usage)
+- [オプション](#options)
   - [contents](#contents)
   - [weights](#weights)
-- [License](#license)
-- [Contributing](#contributing)
+- [ライセンス](#license)
+- [プロジェクトへの貢献](#contributing)
 
 ## Usage
 
-See [action.yml](./action.yml)
+[action.yml](./action.yml)をご覧ください。
 
 ```yaml
 steps:
   - uses: ddradar/choose-random-action@v1
-    id: act # required to reference output
+    id: act # output を参照するために必須
     with:
       contents: |
         foo
@@ -46,22 +46,22 @@ steps:
 
 ### contents
 
-*Required.*
+*必須です。*
 
-String choices you want to choose randomly.
+ランダムに選択したい文字列を指定します。
 
 ### weights
 
-*Optional.*
+*オプション。*
 
-Set natural integer if you want to weight the choices.
-Make it the same length as the contents.
-By default, all content has equal weight.
+選択肢に重み付けをしたい場合に指定します。
+`contents`と同じ要素数にしてください。
+未指定の場合は、すべての要素が同じ重み付けとなります。
 
 ## License
 
-[MIT License](LICENSE)
+[MIT ライセンス](LICENSE)
 
 ## Contributing
 
-See [guide](./CONTRIBUTING.md).
+[ガイド](CONTRIBUTING-ja.md)をご覧ください。
