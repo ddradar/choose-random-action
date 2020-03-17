@@ -59,7 +59,7 @@ jobs:
             20
             30
       - name: Echo GitHub Actions outputs
-        run: echo {{ steps.act.outputs }}
+        run: echo ${{ toJson(steps.act.outputs) }}
 
   release:
     name: Release
