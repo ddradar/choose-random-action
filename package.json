@@ -6,9 +6,9 @@
   "main": "lib/main.js",
   "scripts": {
     "build": "tsc",
-    "format": "prettier --write **/*.ts",
-    "format-check": "prettier --check **/*.ts",
-    "lint": "eslint src/**/*.ts",
+    "format": "npm run format-check -- --write",
+    "format-check": "prettier --ignore-path .gitignore -l \"**/*.{json,yaml,yml}\"",
+    "lint": "eslint --ext .ts,.js --ignore-path .gitignore .",
     "pack": "ncc build",
     "test": "jest",
     "all": "npm run build && npm run format && npm run lint && npm run pack && npm test"
@@ -29,10 +29,15 @@
   "devDependencies": {
     "@types/jest": "^25.1.4",
     "@types/node": "^13.9.1",
+    "@typescript-eslint/eslint-plugin": "^2.24.0",
     "@typescript-eslint/parser": "^2.24.0",
     "@zeit/ncc": "^0.21.1",
     "eslint": "^6.8.0",
+    "eslint-config-prettier": "^6.10.0",
+    "eslint-plugin-import": "^2.20.1",
     "eslint-plugin-jest": "^23.8.2",
+    "eslint-plugin-prettier": "^3.1.2",
+    "eslint-plugin-simple-import-sort": "^5.0.2",
     "jest": "^25.1.0",
     "prettier": "^1.19.1",
     "ts-jest": "^25.2.1",
