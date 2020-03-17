@@ -1,5 +1,7 @@
 # HOW TO CONTRIBUTE
 
+日本語版のガイドは[こちら](./CONTRIBUTING-ja.md)です。
+
 Thank you for your interest in this project. This project is open source, and anyone can contribute to the project. Please follow the instructions below to ensure that you can contribute smoothly.
 
 ## TOC
