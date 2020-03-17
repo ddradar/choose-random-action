@@ -12,7 +12,7 @@ export function run(): void {
     if (isDebug()) {
       const sum = choices.reduce((p, c) => p + c.weight, 0)
       debug(`Math.random(): ${randomValue}`)
-      debug(`Math.random() % weights.sum() + 1: ${(randomValue % sum) + 1}`)
+      debug(`Choice: ${Math.floor(randomValue * sum) + 1}`)
     }
 
     const selected = chooseOne(choices, randomValue)
