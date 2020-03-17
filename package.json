@@ -1,6 +1,6 @@
 {
-  "name": "typescript-action",
-  "version": "0.0.0",
+  "name": "choose-random-action",
+  "version": "0.0.1",
   "private": true,
   "description": "TypeScript template action",
   "main": "lib/main.js",
@@ -15,14 +15,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/actions/typescript-action.git"
+    "url": "git+https://github.com/ddradar/choose-random-action.git"
   },
   "keywords": [
     "actions",
-    "node",
-    "setup"
+    "github-actions"
   ],
-  "author": "YourNameOrOrganization",
+  "author": "ddradar",
   "license": "MIT",
   "dependencies": {
     "@actions/core": "^1.2.0"
