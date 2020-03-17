@@ -59,7 +59,9 @@ jobs:
             20
             30
       - name: Echo GitHub Actions outputs
-        run: echo ${{ toJson(steps.act.outputs) }}
+        env:
+          STEPS_CONTEXT: ${{ toJson(steps.act.outputs) }}
+        run: echo $STEPS_CONTEXT
 
   release:
     name: Release

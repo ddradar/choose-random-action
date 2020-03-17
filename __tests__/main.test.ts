@@ -1,4 +1,4 @@
-import { setFailed, setOutput } from '@actions/core'
+import { isDebug, setFailed, setOutput } from '@actions/core'
 import { readFile } from 'fs'
 import { safeLoad as yamlLoad } from 'js-yaml'
 import { join as pathJoin } from 'path'
@@ -20,6 +20,7 @@ const randomString = (): string =>
 describe('main.ts', () => {
   beforeEach(() => {
     jest.resetAllMocks()
+    mocked(isDebug).mockReturnValue(true)
     mocked(getInputs).mockReturnValue([
       { content: 'foo', weight: 1 },
       { content: 'bar', weight: 2 },
