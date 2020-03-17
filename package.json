@@ -5,13 +5,14 @@
   "description": "Choose one randomly from multiple user inputs",
   "main": "lib/main.js",
   "scripts": {
-    "build": "tsc",
-    "format": "npm run format-check -- --write",
-    "format-check": "prettier --ignore-path .gitignore -l \"**/*.{json,yaml,yml}\"",
-    "lint": "eslint --ext .ts,.js --ignore-path .gitignore .",
-    "pack": "ncc build",
-    "test": "jest",
-    "all": "npm run build && npm run format && npm run lint && npm run pack && npm test"
+    "build": "tsc && ncc build -m",
+    "fix": "run-p fix:*",
+    "fix:eslint": "npm run lint:eslint -- --fix",
+    "fix:prettier": "npm run lint:prettier -- --write",
+    "lint": "run-p lint:*",
+    "lint:eslint": "eslint --ext .ts,.js --ignore-path .gitignore .",
+    "lint:prettier": "prettier --ignore-path .gitignore -l \"**/*.{json,yaml,yml}\"",
+    "test": "jest"
   },
   "repository": {
     "type": "git",
@@ -23,6 +24,19 @@
   ],
   "author": "ddradar",
   "license": "MIT",
+  "engines": {
+    "node": "12",
+    "npm": "^6.12.0"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{js,ts}": "eslint --fix",
+    "*.{json,yaml,yml}": "prettier --write"
+  },
   "dependencies": {
     "@actions/core": "^1.2.3"
   },
