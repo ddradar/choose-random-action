@@ -1,6 +1,7 @@
-import { getInput, InputOptions } from '@actions/core'
+import type { InputOptions } from '@actions/core'
+import { getInput } from '@actions/core'
 
-import { Choice } from './choice'
+import type { Choice } from './choice'
 
 const getMultipleInput = (
   name: string,
