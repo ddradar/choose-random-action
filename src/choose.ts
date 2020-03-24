@@ -1,6 +1,8 @@
 import type { Choice } from './choice'
 
 export const chooseOne = (choices: Choice[], random: number): string => {
+  if (isNaN(random) || random < 0 || 1 <= random)
+    throw RangeError('random arg should be 0 <= random < 1.')
   const sortedChoices = choices.sort((l, r) => r.weight - l.weight)
   const weightSum = choices.reduce((prev, c) => prev + c.weight, 0)
   const selected = Math.floor(random * weightSum) + 1

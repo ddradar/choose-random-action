@@ -41,7 +41,7 @@ describe('input.ts', () => {
       weight => {
         // Arrange
         mocked(getInput).mockImplementation(n =>
-          n === 'weights' ? weight : 'foo\nbar\nbaz'
+          n === 'weights' ? `${weight}\n${weight}\n${weight}` : 'foo\nbar\nbaz'
         )
 
         // Act - Assert
