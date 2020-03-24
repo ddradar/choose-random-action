@@ -1,5 +1,11 @@
 import type { Choice } from './choice'
 
+/** Choose one content in choices depends on random value.
+ * @param choices content
+ * @param random random number such as Math.random(). (should be 0 <= random < 1)
+ * @returns choices[i].content
+ * @throws random <= 0, random < 1 or choices.weight are not natural integers.
+ */
 export const chooseOne = (choices: Choice[], random: number): string => {
   if (isNaN(random) || random < 0 || 1 <= random)
     throw RangeError('random arg should be 0 <= random < 1.')

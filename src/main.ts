@@ -3,6 +3,7 @@ import { debug, info, isDebug, setFailed, setOutput } from '@actions/core'
 import { chooseOne } from './choose'
 import { getInputs } from './input'
 
+/** main entry point */
 export function run(): void {
   try {
     const choices = getInputs()
