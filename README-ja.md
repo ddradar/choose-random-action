@@ -10,7 +10,7 @@
 
 English guide is [here](./README.md).
 
-"LGTM" コメント時に画像を投稿します。
+ユーザーからの複数入力から、1つをランダムに選択します。
 
 ## TOC
 
