@@ -17,13 +17,22 @@ describe('choose.ts', () => {
     ])('returns %s if random is %i', (expected, random) => {
       expect(chooseOne(choices, random)).toBe(expected)
     })
+    test.each([-1, 2, Infinity, -Infinity, NaN])(
+      'throws error if random is %n',
+      random =>
+        expect(() => chooseOne(choices, random)).toThrowError(
+          'random arg should be 0 <= random < 1.'
+        )
+    )
     test('throws error if weight is invalid', () => {
       const invalidChoices = [
         { content: 'foo', weight: 0 },
         { content: 'bar', weight: 0 },
         { content: 'baz', weight: 0 }
       ]
-      expect(() => chooseOne(invalidChoices, 4)).toThrowError()
+      expect(() => chooseOne(invalidChoices, 0.2)).toThrowError(
+        'invalid choices.weight'
+      )
     })
   })
 })

@@ -12,6 +12,8 @@ const readFileAsync = promisify(readFile)
 
 describe('input.ts', () => {
   describe('getInputs()', () => {
+    beforeEach(() => mocked(getInput).mockClear())
+
     test('throws error if contents is empty', () => {
       // Arrange
       mocked(getInput).mockReturnValue('')
@@ -41,7 +43,7 @@ describe('input.ts', () => {
       weight => {
         // Arrange
         mocked(getInput).mockImplementation(n =>
-          n === 'weights' ? weight : 'foo\nbar\nbaz'
+          n === 'weights' ? `${weight}\n${weight}\n${weight}` : 'foo\nbar\nbaz'
         )
 
         // Act - Assert

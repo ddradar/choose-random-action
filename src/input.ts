@@ -1,15 +1,24 @@
-import { getInput, InputOptions } from '@actions/core'
+import type { InputOptions } from '@actions/core'
+import { getInput } from '@actions/core'
 
-import { Choice } from './choice'
+import type { Choice } from './choice'
 
-const getMultipleInput = (
-  name: string,
-  options?: InputOptions | undefined
-): string[] =>
+/** Gets the values of an multi-line input.
+ * @param name name of the input to get
+ * @param options optional. See InputOptions.
+ * @returns string[]
+ */
+const getMultipleInput = (name: string, options?: InputOptions): string[] =>
   getInput(name, options)
     .split('\n')
     .filter(x => x !== '')
 
+/** Gets the values of user inputs.
+ * @returns Parsed user inputs
+ * @throws contents is empty, weights is not natural number,
+ * or contents length not equals weights one.
+ * @see {@link ../action.yml}
+ */
 export const getInputs = (): Choice[] => {
   const contents = getMultipleInput('contents', { required: true })
   const weights = getMultipleInput('weights').map(s => parseInt(s.trim(), 10))
