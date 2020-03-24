@@ -11,6 +11,7 @@ export const chooseOne = (choices: Choice[], random: number): string => {
     throw RangeError('random arg should be 0 <= random < 1.')
   const sortedChoices = choices.sort((l, r) => r.weight - l.weight)
   const weightSum = choices.reduce((prev, c) => prev + c.weight, 0)
+  // 1 <= selected <= weightSum
   const selected = Math.floor(random * weightSum) + 1
 
   let current = 0

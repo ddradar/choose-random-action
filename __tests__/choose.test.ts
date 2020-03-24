@@ -9,10 +9,11 @@ describe('choose.ts', () => {
       { content: 'baz', weight: 2 }
     ]
     test.each([
+      ['foo', 0.99],
       ['foo', 0.8],
-      ['baz', 0.6],
+      ['baz', 0.79],
       ['baz', 0.4],
-      ['bar', 0.2],
+      ['bar', 0.39],
       ['bar', 0]
     ])('returns %s if random is %i', (expected, random) => {
       expect(chooseOne(choices, random)).toBe(expected)
