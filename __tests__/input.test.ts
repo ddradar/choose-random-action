@@ -12,6 +12,8 @@ const readFileAsync = promisify(readFile)
 
 describe('input.ts', () => {
   describe('getInputs()', () => {
+    beforeEach(() => mocked(getInput).mockClear())
+
     test('throws error if contents is empty', () => {
       // Arrange
       mocked(getInput).mockReturnValue('')
