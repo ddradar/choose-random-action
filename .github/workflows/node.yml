@@ -21,17 +21,29 @@ jobs:
     env:
       CI: true
     steps:
+      # Setup Environment
       - uses: actions/checkout@v2
       - name: Use Node.js 12
         uses: actions/setup-node@v1
         with:
           node-version: 12
-      - uses: actions/cache@v1
+
+      # Cache
+      - name: Get npm cache directory
+        id: npm-config
+        run: echo "::set-output name=dir::$(npm config get cache)"
+      - name: Cache Dependencies
+        id: cache-npm
+        uses: actions/cache@v1
         with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles(format('{0}{1}', github.workspace, '/package-lock.json')) }}
+          path: ${{ steps.npm-config.outputs.dir }}
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-node-
+      - name: Clean npm cache directory before Deploy
+        if: steps.cache-npm.outputs.cache-hit != 'true' && github.event_name == 'push' && contains(github.event.commits[0].message, 'increment version')
+        run: npm cache clear --force
+
       - name: Install Dependencies
         run: npm ci
       - name: Lint
@@ -42,10 +54,6 @@ jobs:
         run: npm test
       - name: Report Code Coverage to codecov
         uses: codecov/codecov-action@v1
-      - name: Drafts next Release notes
-        uses: release-drafter/release-drafter@v5
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: GitHub Actions Build Test
         id: act
         uses: ./
@@ -62,6 +70,10 @@ jobs:
         env:
           STEPS_CONTEXT: ${{ toJson(steps.act.outputs) }}
         run: echo $STEPS_CONTEXT
+      - name: Drafts next Release notes
+        uses: release-drafter/release-drafter@v5
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   release:
     name: Release
@@ -75,7 +87,7 @@ jobs:
         env:
           TAG_REF_NAME: ${{ github.ref }}
       - name: Release for GitHub Actions
-        uses: technote-space/release-github-actions@v4
+        uses: technote-space/release-github-actions@v6
         with:
           CLEAN_TARGETS: .[!.]*,__tests__,coverage,lib,node_modules,src,*.js,*.ts,*.json,*.lock,_config.yml
           COMMIT_MESSAGE: 'build: release ${{ steps.get_tag.outputs.version }} via ${{ github.sha }}'
