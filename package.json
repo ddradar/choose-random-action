@@ -39,7 +39,7 @@
     "*.{json,yaml,yml}": "prettier --write"
   },
   "dependencies": {
-    "@actions/core": "^1.2.3"
+    "@actions/core": "^1.2.4"
   },
   "devDependencies": {
     "@types/jest": "^25.2.1",
