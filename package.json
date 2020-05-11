@@ -1,6 +1,6 @@
 {
   "name": "choose-random-action",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "private": true,
   "description": "Choose one randomly from multiple user inputs",
   "main": "lib/main.js",
