@@ -5,7 +5,6 @@
 [![CI/CD](https://github.com/ddradar/choose-random-action/workflows/CI/CD/badge.svg)](https://github.com/ddradar/choose-random-action/actions?query=workflow%3ACI%2FCD)
 [![codecov](https://codecov.io/gh/ddradar/choose-random-action/branch/master/graph/badge.svg)](https://codecov.io/gh/ddradar/choose-random-action)
 [![CodeFactor](https://www.codefactor.io/repository/github/ddradar/choose-random-action/badge)](https://www.codefactor.io/repository/github/ddradar/choose-random-action)
-[![Dependabot Status](https://api.dependabot.com/badges/status?host=github&repo=ddradar/choose-random-action)](https://dependabot.com)
 [![License](https://img.shields.io/github/license/ddradar/choose-random-action)](LICENSE)
 
 日本語版のガイドは[こちら](./README-ja.md)です。
