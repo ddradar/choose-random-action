@@ -1,17 +1,14 @@
 version: 2
 updates:
-- package-ecosystem: npm
-  directory: "/"
+- package-ecosystem: 'npm'
+  directory: '/'
   schedule:
-    interval: daily
-    time: '12:00'
-    timezone: Asia/Tokyo
-  open-pull-requests-limit: 10
-  reviewers:
-  - nogic1008
+    interval: 'daily'
+    time: '8:00'
+    timezone: 'Asia/Tokyo'
   labels:
   - 'dependabot:robot:'
   commit-message:
-    prefix: fix
-    prefix-development: chore
-    include: scope
+    prefix: 'fix'
+    prefix-development: 'chore'
+    include: 'scope'
