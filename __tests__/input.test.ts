@@ -85,7 +85,9 @@ describe('input.ts', () => {
         pathJoin(__dirname, '..', 'action.yml'),
         'utf8'
       )
-      const actionSettings = yamlLoad(yamlText)
+      const actionSettings = yamlLoad(yamlText) as {
+        inputs: Record<string, { required?: boolean }>
+      }
       const expectedInputs = Object.keys(actionSettings.inputs)
       mocked(getInput).mockReturnValue('1\n2\n3')
 
