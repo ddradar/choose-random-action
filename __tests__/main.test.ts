@@ -50,7 +50,9 @@ describe('main.ts', () => {
         pathJoin(__dirname, '..', 'action.yml'),
         'utf8'
       )
-      const actionSettings = yamlLoad(yamlText)
+      const actionSettings = yamlLoad(yamlText) as {
+        outputs: Record<string, {}>
+      }
       const expectedOutputs = Object.keys(actionSettings.outputs)
       const expectedString = randomString()
       mocked(chooseOne).mockReturnValue(expectedString)
