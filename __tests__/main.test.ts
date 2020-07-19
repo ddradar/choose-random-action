@@ -51,7 +51,7 @@ describe('main.ts', () => {
         'utf8'
       )
       const actionSettings = yamlLoad(yamlText) as {
-        outputs: Record<string, {}>
+        outputs: Record<string, unknown>
       }
       const expectedOutputs = Object.keys(actionSettings.outputs)
       const expectedString = randomString()
