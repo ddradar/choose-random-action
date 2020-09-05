@@ -88,7 +88,9 @@ describe('input.ts', () => {
       const actionSettings = yamlLoad(yamlText) as {
         inputs: Record<string, { required?: boolean }>
       }
-      const expectedInputs = Object.keys(actionSettings.inputs)
+      const expectedInputs = Object.entries(
+        actionSettings.inputs
+      ).map(([key, { required }]) => [key, required ? { required } : undefined])
       mocked(getInput).mockReturnValue('1\n2\n3')
 
       // Act
@@ -96,12 +98,8 @@ describe('input.ts', () => {
 
       // Assert
       expect(getInput).toHaveBeenCalledTimes(expectedInputs.length)
-      for (const key of expectedInputs) {
-        if (actionSettings.inputs[key].required) {
-          expect(getInput).toHaveBeenCalledWith(key, { required: true })
-        } else {
-          expect(getInput).toHaveBeenCalledWith(key, undefined)
-        }
+      for (const [key, value] of expectedInputs) {
+        expect(getInput).toHaveBeenCalledWith(key, value)
       }
     })
   })
