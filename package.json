@@ -7,8 +7,8 @@
   "scripts": {
     "build": "tsc && ncc build -m",
     "fix": "run-p fix:*",
-    "fix:eslint": "npm run lint:eslint -- --fix",
-    "fix:prettier": "npm run lint:prettier -- --write",
+    "fix:eslint": "yarn lint:eslint --fix",
+    "fix:prettier": "yarn lint:prettier --write",
     "lint": "run-p lint:*",
     "lint:eslint": "eslint --ext .ts,.js --ignore-path .gitignore .",
     "lint:prettier": "prettier --ignore-path .gitignore -l \"**/*.{json,yaml,yml}\"",
