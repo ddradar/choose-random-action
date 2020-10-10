@@ -5,7 +5,7 @@
   "description": "Choose one randomly from multiple user inputs",
   "main": "lib/main.js",
   "scripts": {
-    "build": "tsc && ncc build -m",
+    "build": "tsc && ncc build -m --license 3rd_party_licenses",
     "fix": "run-p fix:*",
     "fix:eslint": "yarn lint:eslint --fix",
     "fix:prettier": "yarn lint:prettier --write",
