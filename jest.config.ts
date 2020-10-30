@@ -1,5 +1,6 @@
-/** @type {import('@jest/types/build/Config').InitialOptions} */
-module.exports = {
+import type { Config } from '@jest/types'
+
+const config: Config.InitialOptions = {
   moduleFileExtensions: ['js', 'ts'],
   testEnvironment: 'node',
   testMatch: ['<rootDir>/__tests__/**/*.test.ts'],
@@ -10,3 +11,4 @@ module.exports = {
   collectCoverageFrom: ['<rootDir>/src/*.ts', '!**/*.d.ts'],
   coverageDirectory: './coverage/'
 }
+export default config
