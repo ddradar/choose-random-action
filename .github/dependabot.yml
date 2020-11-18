@@ -14,8 +14,7 @@ updates:
     labels:
       - 'dependabot:robot:'
     commit-message:
-      prefix: 'fix'
-      prefix-development: 'chore'
+      prefix: 'ci'
       include: 'scope'
 
   # npm/yarn (/**/package.json)
