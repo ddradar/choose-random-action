@@ -6,7 +6,7 @@ import type { Choice } from './choice'
  * @returns choices[i].content
  * @throws random <= 0, random < 1 or choices.weight are not natural integers.
  */
-export const chooseOne = (choices: Choice[], random: number): string => {
+export function chooseOne(choices: Choice[], random: number): string {
   if (isNaN(random) || random < 0 || 1 <= random)
     throw RangeError('random arg should be 0 <= random < 1.')
   const sortedChoices = choices.sort((l, r) => r.weight - l.weight)
