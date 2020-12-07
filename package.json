@@ -3,15 +3,15 @@
   "version": "1.0.3",
   "private": true,
   "description": "Choose one randomly from multiple user inputs",
-  "main": "lib/main.js",
+  "main": "dist/index.js",
   "scripts": {
-    "build": "tsc && ncc build -m --license licenses.txt",
+    "build": "ncc build src/main.ts -m --license licenses.txt",
     "fix": "run-p fix:*",
     "fix:eslint": "yarn lint:eslint --fix",
     "fix:prettier": "yarn lint:prettier --write",
     "lint": "run-p lint:*",
     "lint:eslint": "eslint --ext .ts --ignore-path .gitignore .",
-    "lint:prettier": "prettier --ignore-path .gitignore -l \"**/*.{ts,json,yaml,yml}\"",
+    "lint:prettier": "prettier --ignore-path .gitignore -l \"**/*.{ts,json,yml}\"",
     "test": "jest"
   },
   "repository": {
@@ -36,7 +36,7 @@
   },
   "lint-staged": {
     "*.{ts}": "eslint --fix",
-    "*.{ts,json,yaml,yml}": "prettier --write"
+    "*.{ts,json,yml}": "prettier --write"
   },
   "dependencies": {
     "@actions/core": "^1.2.6"
