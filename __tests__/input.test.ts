@@ -1,6 +1,6 @@
 import { getInput } from '@actions/core'
 import { readFile } from 'fs'
-import { safeLoad as yamlLoad } from 'js-yaml'
+import { load as yamlLoad } from 'js-yaml'
 import { join as pathJoin } from 'path'
 import { mocked } from 'ts-jest/utils'
 import { promisify } from 'util'
