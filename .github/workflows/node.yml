@@ -4,15 +4,11 @@ on:
   push:
     branches:
       - master
-    paths:
-      - '**'
-      - '!**.md'
-    tags:
-      - 'v*'
+    paths-ignore:
+      - '**.md'
   pull_request:
-    paths:
-      - '**'
-      - '!**.md'
+    paths-ignore:
+      - '**.md'
 
 jobs:
   build:
@@ -40,12 +36,13 @@ jobs:
 
       - name: Install Dependencies
         run: yarn --frozen-lockfile
+
       - name: Lint
         run: yarn lint
       - name: Build
         run: yarn build
       - name: Test
-        run: yarn test
+        run: yarn test --ci
       - name: Report Code Coverage to codecov
         uses: codecov/codecov-action@v1
       - name: GitHub Actions Build Test
