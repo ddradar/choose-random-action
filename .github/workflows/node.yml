@@ -1,23 +1,19 @@
-name: 'CI/CD'
+name: Node.js CI
 
 on:
   push:
     branches:
       - master
-    paths:
-      - '**'
-      - '!**.md'
-    tags:
-      - 'v*'
+    paths-ignore:
+      - '**.md'
   pull_request:
-    paths:
-      - '**'
-      - '!**.md'
+    paths-ignore:
+      - '**.md'
 
 jobs:
   build:
     name: Build & Test
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     steps:
       # Setup Environment
       - uses: actions/checkout@v2
@@ -39,13 +35,14 @@ jobs:
             ${{ runner.os }}-yarn-
 
       - name: Install Dependencies
-        run: yarn --frozen-lockfile
+        run: yarn --frozen-lockfile --ignore-scripts
+
       - name: Lint
         run: yarn lint
       - name: Build
         run: yarn build
       - name: Test
-        run: yarn test
+        run: yarn test --ci
       - name: Report Code Coverage to codecov
         uses: codecov/codecov-action@v1
       - name: GitHub Actions Build Test
@@ -64,26 +61,3 @@ jobs:
         env:
           STEPS_CONTEXT: ${{ toJson(steps.act.outputs) }}
         run: echo $STEPS_CONTEXT
-      - name: Drafts next Release notes
-        if: (!contains(github.ref, 'tags/v'))
-        uses: release-drafter/release-drafter@v5
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-  release:
-    name: Release
-    needs: [build]
-    if: contains(github.ref, 'tags/v')
-    runs-on: ubuntu-latest
-    steps:
-      - name: Get Version
-        id: get_tag
-        run: echo ::set-output name=version::${TAG_REF_NAME##*/}
-        env:
-          TAG_REF_NAME: ${{ github.ref }}
-      - name: Release for GitHub Actions
-        uses: technote-space/release-github-actions@v7.0.1
-        with:
-          BRANCH_NAME: releases/${MAJOR}
-          CLEAN_TARGETS: .[!.]*,__tests__,coverage,lib,node_modules,src,*.js,*.ts,*.json,*.lock,_config.yml
-          COMMIT_MESSAGE: 'build: release ${{ steps.get_tag.outputs.version }} via ${{ github.sha }}'
