@@ -97,6 +97,3 @@ Thumbs.db
 # Ignore built files
 lib/
 dist/
-
-# husky shell files
-.husky/_
