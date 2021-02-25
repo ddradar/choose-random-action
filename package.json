@@ -1,9 +1,21 @@
 {
   "name": "choose-random-action",
-  "version": "1.0.3",
-  "private": true,
   "description": "Choose one randomly from multiple user inputs",
+  "version": "1.0.4",
+  "author": "ddradar",
+  "private": true,
   "main": "dist/index.js",
+  "repository": "https://github.com/ddradar/choose-random-action",
+  "keywords": [
+    "actions",
+    "github-actions",
+    "random"
+  ],
+  "license": "MIT",
+  "engines": {
+    "node": ">=12",
+    "yarn": "^1.22.4"
+  },
   "scripts": {
     "build": "ncc build src/main.ts -m --license licenses.txt",
     "fix": "run-p \"lint:eslint --fix\" \"lint:prettier --write\"",
@@ -12,21 +24,6 @@
     "lint:prettier": "prettier --ignore-path .gitignore -l \"**/*.{ts,json,yml}\"",
     "postinstall": "husky install",
     "test": "jest"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/ddradar/choose-random-action.git"
-  },
-  "keywords": [
-    "actions",
-    "github-actions",
-    "random"
-  ],
-  "author": "ddradar",
-  "license": "MIT",
-  "engines": {
-    "node": ">=12",
-    "yarn": "^1.22.4"
   },
   "lint-staged": {
     "*.{ts}": [
