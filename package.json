@@ -1,7 +1,7 @@
 {
   "name": "choose-random-action",
   "description": "Choose one randomly from multiple user inputs",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "author": "ddradar",
   "private": true,
   "main": "dist/index.js",
