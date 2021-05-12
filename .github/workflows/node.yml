@@ -44,7 +44,7 @@ jobs:
       - name: Test
         run: yarn test --ci
       - name: Report Code Coverage to codecov
-        uses: codecov/codecov-action@v1
+        uses: codecov/codecov-action@v1.5.0
       - name: GitHub Actions Build Test
         id: act
         uses: ./
