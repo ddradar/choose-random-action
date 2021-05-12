@@ -88,9 +88,9 @@ describe('input.ts', () => {
       const actionSettings = yamlLoad(yamlText) as {
         inputs: Record<string, { required?: boolean }>
       }
-      const expectedInputs = Object.entries(
-        actionSettings.inputs
-      ).map(([key, { required }]) => [key, required ? { required } : undefined])
+      const expectedInputs = Object.entries(actionSettings.inputs).map(
+        ([key, { required }]) => [key, required ? { required } : undefined]
+      )
       mocked(getInput).mockReturnValue('1\n2\n3')
 
       // Act
