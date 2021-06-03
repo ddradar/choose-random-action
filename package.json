@@ -60,10 +60,10 @@
     "chalk": "^4.0.0",
     "cssom": "^0.4.4",
     "eslint-visitor-keys": "^2.0.0",
-    "jest-diff": "^27.0.1",
+    "jest-diff": "^27.0.2",
     "js-yaml": "^4.1.0",
     "optionator": "^0.9.1",
-    "pretty-format": "^27.0.1",
+    "pretty-format": "^27.0.2",
     "supports-color": "^8.0.0",
     "type-fest": "^1.0.2"
   }
