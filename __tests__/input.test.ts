@@ -1,4 +1,4 @@
-import { getInput } from '@actions/core'
+import { getMultilineInput } from '@actions/core'
 import { readFile } from 'fs'
 import { load as yamlLoad } from 'js-yaml'
 import { join as pathJoin } from 'path'
@@ -11,20 +11,22 @@ jest.mock('@actions/core')
 const readFileAsync = promisify(readFile)
 
 describe('input.ts', () => {
+  const mockContent = ['foo', 'bar', 'baz']
+  const mockWeights = ['1', '2', '3']
   describe('getInputs()', () => {
-    beforeEach(() => mocked(getInput).mockClear())
+    beforeEach(() => mocked(getMultilineInput).mockClear())
 
     test('throws error if contents is empty', () => {
       // Arrange
-      mocked(getInput).mockReturnValue('')
+      mocked(getMultilineInput).mockReturnValue([])
 
       // Act - Assert
       expect(getInputs).toThrowError('contents is required.')
     })
     test('returns { content: contents[i], weight: 1 } if weight is empty', () => {
       // Arrange
-      mocked(getInput).mockImplementation(n =>
-        n === 'contents' ? 'foo\nbar\nbaz' : ''
+      mocked(getMultilineInput).mockImplementation(n =>
+        n === 'contents' ? mockContent : []
       )
 
       // Act
@@ -42,8 +44,8 @@ describe('input.ts', () => {
       'throws error if weight is "%s"',
       weight => {
         // Arrange
-        mocked(getInput).mockImplementation(n =>
-          n === 'weights' ? `${weight}\n${weight}\n${weight}` : 'foo\nbar\nbaz'
+        mocked(getMultilineInput).mockImplementation(n =>
+          n === 'weights' ? [weight, weight, weight] : mockContent
         )
 
         // Act - Assert
@@ -52,8 +54,8 @@ describe('input.ts', () => {
     )
     test('throws error if contents.length !== weights.length', () => {
       // Arrange
-      mocked(getInput).mockImplementation(n =>
-        n === 'weights' ? '1\n2' : 'foo\nbar\nbaz'
+      mocked(getMultilineInput).mockImplementation(n =>
+        n === 'weights' ? ['1', '2'] : mockContent
       )
 
       // Act - Assert
@@ -63,8 +65,8 @@ describe('input.ts', () => {
     })
     test('returns { content: contents[i], weight: weight[i] } if contents.length === weights.length', () => {
       // Arrange
-      mocked(getInput).mockImplementation(n =>
-        n === 'contents' ? 'foo\nbar\nbaz' : '1\n2\n3'
+      mocked(getMultilineInput).mockImplementation(n =>
+        n === 'contents' ? mockContent : mockWeights
       )
 
       // Act
@@ -91,16 +93,13 @@ describe('input.ts', () => {
       const expectedInputs = Object.entries(actionSettings.inputs).map(
         ([key, { required }]) => [key, required ? { required } : undefined]
       )
-      mocked(getInput).mockReturnValue('1\n2\n3')
+      mocked(getMultilineInput).mockReturnValue(mockWeights)
 
       // Act
       getInputs()
 
       // Assert
-      expect(getInput).toHaveBeenCalledTimes(expectedInputs.length)
-      for (const [key, value] of expectedInputs) {
-        expect(getInput).toHaveBeenCalledWith(key, value)
-      }
+      expect(getMultilineInput).toHaveBeenCalledTimes(expectedInputs.length)
     })
   })
 })

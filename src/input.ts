@@ -1,4 +1,4 @@
-import { getInput } from '@actions/core'
+import { getMultilineInput } from '@actions/core'
 
 import type { Choice } from './choice'
 
@@ -9,14 +9,8 @@ import type { Choice } from './choice'
  * @see {@link ../action.yml}
  */
 export function getInputs(): Choice[] {
-  type InputOptions = Parameters<typeof getInput>[1]
-  const getMultipleInput = (name: string, options?: InputOptions) =>
-    getInput(name, options)
-      .split('\n')
-      .filter(x => x !== '')
-
-  const contents = getMultipleInput('contents', { required: true })
-  const weights = getMultipleInput('weights').map(s => parseInt(s.trim(), 10))
+  const contents = getMultilineInput('contents', { required: true })
+  const weights = getMultilineInput('weights').map(s => parseInt(s.trim(), 10))
 
   if (contents.length === 0) throw new Error('contents is required.')
   if (weights.length === 0)
