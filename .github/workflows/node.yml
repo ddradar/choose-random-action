@@ -10,6 +10,9 @@ on:
     paths-ignore:
       - '**.md'
 
+permissions:
+  actions: read
+
 jobs:
   lint:
     name: Lint Check
