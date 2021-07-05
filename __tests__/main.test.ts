@@ -40,7 +40,7 @@ describe('src/main.ts', () => {
         { content: 'bar', weight: 2 },
         { content: 'baz', weight: 2 }
       ])
-        const expected = randomString()
+      const expected = randomString()
       mocked(chooseOne).mockReturnValue(expected)
 
       // Act
