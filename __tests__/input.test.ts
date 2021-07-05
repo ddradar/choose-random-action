@@ -5,10 +5,11 @@ import { getInputs } from '../src/input'
 
 jest.mock('@actions/core')
 
-describe('input.ts', () => {
-  const mockContent = ['foo', 'bar', 'baz']
-  const mockWeights = ['1', '2', '3']
+describe('src/input.ts', () => {
   describe('getInputs()', () => {
+    const contents = ['foo', 'bar', 'baz']
+    const weights = ['1', '2', '3']
+
     beforeEach(() => mocked(getMultilineInput).mockClear())
 
     test('throws error if contents is empty', () => {
@@ -21,14 +22,13 @@ describe('input.ts', () => {
     test('returns { content: contents[i], weight: 1 } if weight is empty', () => {
       // Arrange
       mocked(getMultilineInput).mockImplementation(n =>
-        n === 'contents' ? mockContent : []
+        n === 'contents' ? contents : []
       )
 
       // Act
       const choices = getInputs()
 
       // Assert
-      expect(choices).toHaveLength(3)
       expect(choices).toStrictEqual([
         { content: 'foo', weight: 1 },
         { content: 'bar', weight: 1 },
@@ -40,7 +40,7 @@ describe('input.ts', () => {
       weight => {
         // Arrange
         mocked(getMultilineInput).mockImplementation(n =>
-          n === 'weights' ? [weight, weight, weight] : mockContent
+          n === 'weights' ? [weight, weight, weight] : contents
         )
 
         // Act - Assert
@@ -50,7 +50,7 @@ describe('input.ts', () => {
     test('throws error if contents.length !== weights.length', () => {
       // Arrange
       mocked(getMultilineInput).mockImplementation(n =>
-        n === 'weights' ? ['1', '2'] : mockContent
+        n === 'weights' ? ['1', '2'] : contents
       )
 
       // Act - Assert
@@ -61,7 +61,7 @@ describe('input.ts', () => {
     test('returns { content: contents[i], weight: weight[i] } if contents.length === weights.length', () => {
       // Arrange
       mocked(getMultilineInput).mockImplementation(n =>
-        n === 'contents' ? mockContent : mockWeights
+        n === 'contents' ? contents : weights
       )
 
       // Act

@@ -12,7 +12,7 @@ jest.mock('../src/input')
 const randomString = (): string =>
   [...Array(12)].map(() => (~~(Math.random() * 36)).toString(36)).join('')
 
-describe('main.ts', () => {
+describe('src/main.ts', () => {
   beforeEach(() => {
     jest.resetAllMocks()
     mocked(isDebug).mockReturnValue(true)
