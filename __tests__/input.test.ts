@@ -1,14 +1,9 @@
 import { getMultilineInput } from '@actions/core'
-import { readFile } from 'fs'
-import { load as yamlLoad } from 'js-yaml'
-import { join as pathJoin } from 'path'
 import { mocked } from 'ts-jest/utils'
-import { promisify } from 'util'
 
 import { getInputs } from '../src/input'
 
 jest.mock('@actions/core')
-const readFileAsync = promisify(readFile)
 
 describe('input.ts', () => {
   const mockContent = ['foo', 'bar', 'baz']
@@ -79,27 +74,6 @@ describe('input.ts', () => {
         { content: 'bar', weight: 2 },
         { content: 'baz', weight: 3 }
       ])
-    })
-    test('uses all input parameters defined action.yml', async () => {
-      // Arrange
-      // Load action.yml settings
-      const yamlText = await readFileAsync(
-        pathJoin(__dirname, '..', 'action.yml'),
-        'utf8'
-      )
-      const actionSettings = yamlLoad(yamlText) as {
-        inputs: Record<string, { required?: boolean }>
-      }
-      const expectedInputs = Object.entries(actionSettings.inputs).map(
-        ([key, { required }]) => [key, required ? { required } : undefined]
-      )
-      mocked(getMultilineInput).mockReturnValue(mockWeights)
-
-      // Act
-      getInputs()
-
-      // Assert
-      expect(getMultilineInput).toHaveBeenCalledTimes(expectedInputs.length)
     })
   })
 })

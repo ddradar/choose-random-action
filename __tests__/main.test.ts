@@ -1,9 +1,5 @@
 import { isDebug, setFailed, setOutput } from '@actions/core'
-import { readFile } from 'fs'
-import { load as yamlLoad } from 'js-yaml'
-import { join as pathJoin } from 'path'
 import { mocked } from 'ts-jest/utils'
-import { promisify } from 'util'
 
 import { chooseOne } from '../src/choose'
 import { getInputs } from '../src/input'
@@ -12,7 +8,6 @@ import { run } from '../src/main'
 jest.mock('@actions/core')
 jest.mock('../src/choose')
 jest.mock('../src/input')
-const readFileAsync = promisify(readFile)
 
 const randomString = (): string =>
   [...Array(12)].map(() => (~~(Math.random() * 36)).toString(36)).join('')
@@ -21,11 +16,6 @@ describe('main.ts', () => {
   beforeEach(() => {
     jest.resetAllMocks()
     mocked(isDebug).mockReturnValue(true)
-    mocked(getInputs).mockReturnValue([
-      { content: 'foo', weight: 1 },
-      { content: 'bar', weight: 2 },
-      { content: 'baz', weight: 2 }
-    ])
   })
 
   describe('run()', () => {
@@ -43,28 +33,21 @@ describe('main.ts', () => {
       expect(setOutput).not.toBeCalled()
       expect(setFailed).toBeCalledWith(errorMessage)
     })
-    test('calls core.setOutput()', async () => {
+    test('calls core.setOutput("selected", chooseOne())', async () => {
       // Arrange
-      // Load action.yml settings
-      const yamlText = await readFileAsync(
-        pathJoin(__dirname, '..', 'action.yml'),
-        'utf8'
-      )
-      const actionSettings = yamlLoad(yamlText) as {
-        outputs: Record<string, unknown>
-      }
-      const expectedOutputs = Object.keys(actionSettings.outputs)
-      const expectedString = randomString()
-      mocked(chooseOne).mockReturnValue(expectedString)
+      mocked(getInputs).mockReturnValue([
+        { content: 'foo', weight: 1 },
+        { content: 'bar', weight: 2 },
+        { content: 'baz', weight: 2 }
+      ])
+        const expected = randomString()
+      mocked(chooseOne).mockReturnValue(expected)
 
       // Act
       run()
 
       // Assert
-      expect(setOutput).toHaveBeenCalledTimes(expectedOutputs.length)
-      for (const key of expectedOutputs) {
-        expect(setOutput).toHaveBeenCalledWith(key, expectedString)
-      }
+      expect(setOutput).toHaveBeenCalledWith('selected', expected)
       expect(setFailed).not.toBeCalled()
     })
   })
