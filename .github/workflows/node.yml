@@ -52,7 +52,7 @@ jobs:
       - name: Unit Test
         run: yarn test --ci
       - name: Report Code Coverage to codecov
-        uses: codecov/codecov-action@v2.0.2
+        uses: codecov/codecov-action@v2.0.3
 
   build-test:
     name: Build & Integration Test
