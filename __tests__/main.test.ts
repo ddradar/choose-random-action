@@ -21,9 +21,9 @@ describe('src/main.ts', () => {
   describe('run()', () => {
     test('calls core.setFailed() if an error occurs', () => {
       // Arrange
-      const errorMessage = randomString()
+      const error = new Error(randomString())
       mocked(getInputs).mockImplementation(() => {
-        throw new Error(errorMessage)
+        throw error
       })
 
       // Act
@@ -31,7 +31,7 @@ describe('src/main.ts', () => {
 
       // Assert
       expect(setOutput).not.toBeCalled()
-      expect(setFailed).toBeCalledWith(errorMessage)
+      expect(setFailed).toBeCalledWith(error)
     })
     test('calls core.setOutput("selected", chooseOne())', async () => {
       // Arrange
