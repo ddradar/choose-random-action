@@ -58,7 +58,6 @@
     "cssom": "^0.4.4",
     "js-yaml": "^4.1.0",
     "optionator": "^0.9.1",
-    "supports-color": "^8.0.0",
     "type-fest": "^1.2.0"
   }
 }
