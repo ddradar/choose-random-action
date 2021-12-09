@@ -10,15 +10,15 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       # Build on PR branch
+      - name: Checkout PR branch
+        uses: actions/checkout@v2.4.0
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
       - name: Use Node.js 12
         uses: actions/setup-node@v2.5.0
         with:
           node-version: 12
           cache: yarn
-      - name: Checkout PR branch
-        uses: actions/checkout@v2.4.0
-        with:
-          ref: ${{ github.event.pull_request.head.sha }}
       - name: Install dependencies
         run: yarn
       - name: Build on PR branch
