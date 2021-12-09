@@ -32,7 +32,7 @@ jobs:
       - name: Compare
         id: compare
         continue-on-error: true
-        run: git diff --compact-summary --no-index ./dist ./current > git-diff.log
+        run: git diff --compact-summary --no-index ./dist/ ./current/ > git-diff.log
 
       - name: Comment to PR
         if: steps.compare.outcome == 'failure'
