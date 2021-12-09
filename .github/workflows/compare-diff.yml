@@ -30,16 +30,18 @@ jobs:
         with:
           ref: releases/v1
       - name: Compare
+        id: compare
+        continue-on-error: true
         run: git diff --compact-summary --no-index ./dist ./current > git-diff.log
 
       - name: Comment to PR
-        if: ${{ failure() }}
+        if: steps.compare.outcome == 'failure'
         uses: actions/github-script@v3
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             const fs = require('fs')
-            const result = fs.readFileSync('git-diff.log', 'utf8')
+            const result = fs.readFileSync('./git-diff.log', 'utf8')
             const commentBody =
               `There is a difference in the build results.
               <details>
