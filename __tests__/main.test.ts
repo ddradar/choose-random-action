@@ -16,20 +16,22 @@ describe('src/main.ts', () => {
   beforeEach(() => jest.resetAllMocks())
 
   describe('run()', () => {
-    test('calls core.setFailed() if an error occurs', () => {
-      // Arrange
-      const error = new Error(randomString())
-      mocked(getInputs).mockImplementation(() => {
-        throw error
-      })
+    test.each([new Error(randomString()), randomString()])(
+      'calls core.setFailed() if an error occurs',
+      error => {
+        // Arrange
+        mocked(getInputs).mockImplementation(() => {
+          throw error
+        })
 
-      // Act
-      run()
+        // Act
+        run()
 
-      // Assert
-      expect(setOutput).not.toBeCalled()
-      expect(setFailed).toBeCalledWith(error)
-    })
+        // Assert
+        expect(setOutput).not.toBeCalled()
+        expect(setFailed).toBeCalledWith(error)
+      }
+    )
     test('calls core.setOutput("selected", chooseOne())', async () => {
       // Arrange
       mocked(getInputs).mockReturnValue([

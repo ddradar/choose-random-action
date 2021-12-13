@@ -11,9 +11,7 @@ export function run(): void {
     info(`selected: ${selected}`)
     setOutput('selected', selected)
   } catch (error) {
-    setFailed(
-      error instanceof Error ? error : /* istanbul ignore next */ `${error}`
-    )
+    setFailed(error instanceof Error ? error : `${error}`)
   }
 }
 
