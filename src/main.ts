@@ -6,10 +6,8 @@ import { getInputs } from './input'
 /** main entry point */
 export function run(): void {
   try {
-    const choices = getInputs()
-    const randomValue = Math.random()
+    const selected = chooseOne(getInputs(), Math.random())
 
-    const selected = chooseOne(choices, randomValue)
     info(`selected: ${selected}`)
     setOutput('selected', selected)
   } catch (error) {
