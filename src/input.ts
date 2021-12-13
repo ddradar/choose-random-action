@@ -1,6 +1,6 @@
 import { getMultilineInput } from '@actions/core'
 
-import type { Choice } from './choice'
+import type { chooseOne } from './choose'
 
 /** Gets the values of user inputs.
  * @returns Parsed user inputs
@@ -8,7 +8,7 @@ import type { Choice } from './choice'
  * or contents length not equals weights one.
  * @see {@link ../action.yml}
  */
-export function getInputs(): Choice[] {
+export function getInputs(): Parameters<typeof chooseOne>[0] {
   const contents = getMultilineInput('contents', { required: true })
   const weights = getMultilineInput('weights').map(s => parseInt(s.trim(), 10))
 
