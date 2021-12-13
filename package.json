@@ -13,8 +13,7 @@
   ],
   "license": "MIT",
   "engines": {
-    "node": ">=12",
-    "yarn": "^1.22.4"
+    "node": ">=12"
   },
   "scripts": {
     "build": "ncc build src/main.ts -m --license licenses.txt",
