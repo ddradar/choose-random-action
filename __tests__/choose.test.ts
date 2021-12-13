@@ -1,6 +1,8 @@
 import type { Choice } from '../src/choice'
 import { chooseOne } from '../src/choose'
 
+jest.mock('@actions/core')
+
 describe('src/choose.ts', () => {
   describe('chooseOne', () => {
     const choices: Choice[] = [

@@ -1,4 +1,4 @@
-import { isDebug, setFailed, setOutput } from '@actions/core'
+import { setFailed, setOutput } from '@actions/core'
 import { mocked } from 'ts-jest/utils'
 
 import { chooseOne } from '../src/choose'
@@ -13,10 +13,7 @@ const randomString = (): string =>
   [...Array(12)].map(() => (~~(Math.random() * 36)).toString(36)).join('')
 
 describe('src/main.ts', () => {
-  beforeEach(() => {
-    jest.resetAllMocks()
-    mocked(isDebug).mockReturnValue(true)
-  })
+  beforeEach(() => jest.resetAllMocks())
 
   describe('run()', () => {
     test('calls core.setFailed() if an error occurs', () => {
