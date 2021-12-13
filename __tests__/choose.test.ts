@@ -1,9 +1,10 @@
-import type { Choice } from '../src/choice'
 import { chooseOne } from '../src/choose'
+
+jest.mock('@actions/core')
 
 describe('src/choose.ts', () => {
   describe('chooseOne', () => {
-    const choices: Choice[] = [
+    const choices: Parameters<typeof chooseOne>[0] = [
       { content: 'foo', weight: 1 },
       { content: 'bar', weight: 2 },
       { content: 'baz', weight: 2 }
@@ -27,7 +28,7 @@ describe('src/choose.ts', () => {
         )
     )
     test('([invalidChoices], any) throws error', () => {
-      const invalidChoices = [
+      const invalidChoices: Parameters<typeof chooseOne>[0] = [
         { content: 'foo', weight: 0 },
         { content: 'bar', weight: 0 },
         { content: 'baz', weight: 0 }

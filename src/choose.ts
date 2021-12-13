@@ -1,4 +1,6 @@
-import type { Choice } from './choice'
+import { debug } from '@actions/core'
+
+type Choice = { content: string; weight: number }
 
 /** Choose one content in choices depends on random value.
  * @param choices content
@@ -7,12 +9,15 @@ import type { Choice } from './choice'
  * @throws random <= 0, random < 1 or choices.weight are not natural integers.
  */
 export function chooseOne(choices: Choice[], random: number): string {
+  debug(`choices: ${JSON.stringify(choices)}`)
+  debug(`Math.random(): ${random}`)
   if (isNaN(random) || random < 0 || 1 <= random)
     throw RangeError('random arg should be 0 <= random < 1.')
   const sortedChoices = choices.sort((l, r) => r.weight - l.weight)
   const weightSum = choices.reduce((prev, c) => prev + c.weight, 0)
   // 1 <= selected <= weightSum
   const selected = Math.floor(random * weightSum) + 1
+  debug(`Choice: ${selected}`)
 
   let current = 0
   for (const choice of sortedChoices) {
