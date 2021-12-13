@@ -24,15 +24,15 @@ jobs:
         uses: actions/setup-node@v2.5.0
         with:
           node-version: 16
-          cache: yarn
+          cache: npm
 
       - name: Install Dependencies
-        run: yarn --frozen-lockfile --ignore-scripts
+        run: npm ci --ignore-scripts
 
       - name: ESLint
-        run: yarn lint:eslint
+        run: npm run lint:eslint
       - name: Prettier
-        run: yarn lint:prettier
+        run: npm run lint:prettier
 
   unit-test:
     name: Unit Test
@@ -44,13 +44,13 @@ jobs:
         uses: actions/setup-node@v2.5.0
         with:
           node-version: 16
-          cache: yarn
+          cache: npm
 
       - name: Install Dependencies
-        run: yarn --frozen-lockfile --ignore-scripts
+        run: npm ci --ignore-scripts
 
       - name: Unit Test
-        run: yarn test --ci
+        run: npm test -- --ci --colors
       - name: Report Code Coverage to codecov
         uses: codecov/codecov-action@v2.1.0
 
@@ -64,13 +64,13 @@ jobs:
         uses: actions/setup-node@v2.5.0
         with:
           node-version: 16
-          cache: yarn
+          cache: npm
 
       - name: Install Dependencies
-        run: yarn --frozen-lockfile --ignore-scripts
+        run: npm ci --ignore-scripts
 
       - name: Build
-        run: yarn build
+        run: npm run build
 
       # Integration Test
       - name: Launch this Action
