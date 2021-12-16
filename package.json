@@ -51,12 +51,5 @@
     "ts-jest": "^27.1.1",
     "ts-node": "^10.4.0",
     "typescript": "^4.5.2"
-  },
-  "resolutions": {
-    "chalk": "^4.0.0",
-    "cssom": "^0.4.4",
-    "js-yaml": "^4.1.0",
-    "optionator": "^0.9.1",
-    "type-fest": "^1.2.0"
   }
 }
