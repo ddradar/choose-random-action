@@ -30,6 +30,11 @@ jobs:
         with:
           ref: releases/v1
           clean: false
+      - name: Setup js-beautify to compare minified js files
+        run: |
+          npm install --global js-beautify
+          git config --local diff.minjs.textconv js-beautify
+          echo "index.js diff=minjs" > .gitattributes
       - name: Compare
         id: compare
         continue-on-error: true
