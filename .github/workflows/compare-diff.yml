@@ -18,11 +18,11 @@ jobs:
         uses: actions/setup-node@v2.5.1
         with:
           node-version: 12
-          cache: yarn
+          cache: npm
       - name: Install dependencies
-        run: yarn
+        run: npm ci
       - name: Build on PR branch
-        run: yarn build -o current
+        run: npm run build -- -o current
 
       # Compare
       - name: Checkout release branch
