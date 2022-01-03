@@ -30,6 +30,11 @@ jobs:
         with:
           ref: releases/v1
           clean: false
+      - name: Setup js-beautify to compare minified js files
+        run: |
+          npm install --global js-beautify
+          git config --local diff.minjs.textconv js-beautify
+          echo "index.js diff=minjs" > .gitattributes
       - name: Compare
         id: compare
         continue-on-error: true
@@ -37,7 +42,7 @@ jobs:
 
       - name: Comment to PR
         if: steps.compare.outcome == 'failure'
-        uses: actions/github-script@v5
+        uses: actions/github-script@v5.0.0
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
@@ -50,7 +55,7 @@ jobs:
                 <pre>${result}</pre>
               </details>`
 
-            await github.issues.createComment({
+            await github.rest.issues.createComment({
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
