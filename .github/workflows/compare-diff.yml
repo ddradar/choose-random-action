@@ -28,8 +28,10 @@ jobs:
       - name: Checkout release branch
         uses: actions/checkout@v2
         with:
-          ref: releases/v1
+          ref: main
           clean: false
+      - name: Build on main branch
+        run: npm run build
       - name: Setup js-beautify to compare minified js files
         run: |
           npm install --global js-beautify
@@ -38,7 +40,7 @@ jobs:
       - name: Compare
         id: compare
         continue-on-error: true
-        run: git diff --compact-summary --no-index ./dist/ ./current/ > git-diff.log
+        run: git diff --no-index ./dist/ ./current/ > git-diff.log
 
       - name: Comment to PR
         if: steps.compare.outcome == 'failure'
