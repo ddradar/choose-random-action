@@ -57,6 +57,7 @@ jobs:
                 <pre>${result}</pre>
               </details>`
 
+            core.warning('There is a difference in the build results.')
             await github.rest.issues.createComment({
               issue_number: context.issue.number,
               owner: context.repo.owner,
