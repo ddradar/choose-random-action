@@ -25,7 +25,7 @@ jobs:
         run: npm run build -- -o current
 
       # Compare
-      - name: Checkout release branch
+      - name: Checkout main branch
         uses: actions/checkout@v2
         with:
           ref: main
@@ -57,6 +57,7 @@ jobs:
                 <pre>${result}</pre>
               </details>`
 
+            core.warning('There is a difference in the build results.')
             await github.rest.issues.createComment({
               issue_number: context.issue.number,
               owner: context.repo.owner,
