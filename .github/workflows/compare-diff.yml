@@ -25,7 +25,7 @@ jobs:
         run: npm run build -- -o current
 
       # Compare
-      - name: Checkout release branch
+      - name: Checkout main branch
         uses: actions/checkout@v2
         with:
           ref: main
