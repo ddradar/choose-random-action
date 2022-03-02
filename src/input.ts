@@ -23,5 +23,8 @@ export function getInputs(): Parameters<typeof chooseOne>[0] {
       `Parameters should be the same length. (contents: ${contents.length} weights: ${weights.length})`
     )
 
-  return contents.map((content, i) => ({ content, weight: weights[i] }))
+  return contents.map((content, i) => ({
+    content,
+    weight: weights[i] as number
+  }))
 }
