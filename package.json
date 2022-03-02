@@ -13,10 +13,10 @@
   ],
   "license": "MIT",
   "engines": {
-    "node": ">=12"
+    "node": ">=16"
   },
   "scripts": {
-    "build": "ncc build src/main.ts -m --license licenses.txt",
+    "build": "ncc build src/main.ts -m --target es2021 --license licenses.txt",
     "fix": "run-p \"lint:eslint --fix\" \"lint:prettier --write\"",
     "lint": "run-p lint:*",
     "lint:eslint": "eslint --ext .ts --ignore-path .gitignore .",
@@ -35,6 +35,7 @@
     "@actions/core": "^1.6.0"
   },
   "devDependencies": {
+    "@tsconfig/node16-strictest": "^1.0.0",
     "@types/jest": "^27.4.1",
     "@typescript-eslint/eslint-plugin": "^5.13.0",
     "@typescript-eslint/parser": "^5.13.0",
