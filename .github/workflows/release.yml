@@ -17,4 +17,3 @@ jobs:
           CLEAN_TARGETS: .[!.]*,__tests__,coverage,lib,src,*.js,*.ts,*.json,*.lock,_config.yml
           COMMIT_MESSAGE: 'build: release ${{ github.event.release.tag_name }} via ${{ github.sha }}'
           DELETE_NODE_MODULES: true
-
