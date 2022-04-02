@@ -19,7 +19,7 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       # Setup Environment
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v3.0.0
       - name: Use Node.js 16
         uses: actions/setup-node@v3.0.0
         with:
@@ -39,7 +39,7 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       # Setup Environment
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v3.0.0
       - name: Use Node.js 16
         uses: actions/setup-node@v3.0.0
         with:
@@ -59,7 +59,7 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       # Setup Environment
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v3.0.0
       - name: Use Node.js 16
         uses: actions/setup-node@v3.0.0
         with:
