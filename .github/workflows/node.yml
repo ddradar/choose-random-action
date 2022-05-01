@@ -52,7 +52,7 @@ jobs:
       - name: Unit Test
         run: npm test -- --ci --colors
       - name: Report Code Coverage to codecov
-        uses: codecov/codecov-action@v2.1.0
+        uses: codecov/codecov-action@v3.1.0
 
   build-test:
     name: Build & Integration Test
