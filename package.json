@@ -32,7 +32,7 @@
     "*.{json,yml}": "prettier --write"
   },
   "dependencies": {
-    "@actions/core": "^1.6.0"
+    "@actions/core": "^1.7.0"
   },
   "devDependencies": {
     "@tsconfig/node16-strictest": "^1.0.0",
