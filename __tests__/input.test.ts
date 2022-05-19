@@ -1,27 +1,29 @@
 import { getMultilineInput } from '@actions/core'
-import { mocked } from 'ts-jest/utils'
+import { beforeEach, describe, expect, test, vi } from 'vitest'
 
 import { getInputs } from '../src/input'
 
-jest.mock('@actions/core')
+vi.mock('@actions/core')
 
 describe('src/input.ts', () => {
   describe('getInputs()', () => {
     const contents = ['foo', 'bar', 'baz']
     const weights = ['1', '2', '3']
 
-    beforeEach(() => mocked(getMultilineInput).mockClear())
+    beforeEach(() => {
+      vi.mocked(getMultilineInput).mockClear()
+    })
 
     test('throws error if contents is empty', () => {
       // Arrange
-      mocked(getMultilineInput).mockReturnValue([])
+      vi.mocked(getMultilineInput).mockReturnValue([])
 
       // Act - Assert
       expect(getInputs).toThrowError('contents is required.')
     })
     test('returns { content: contents[i], weight: 1 } if weight is empty', () => {
       // Arrange
-      mocked(getMultilineInput).mockImplementation(n =>
+      vi.mocked(getMultilineInput).mockImplementation(n =>
         n === 'contents' ? contents : []
       )
 
@@ -39,7 +41,7 @@ describe('src/input.ts', () => {
       'throws error if weight is "%s"',
       weight => {
         // Arrange
-        mocked(getMultilineInput).mockImplementation(n =>
+        vi.mocked(getMultilineInput).mockImplementation(n =>
           n === 'weights' ? [weight, weight, weight] : contents
         )
 
@@ -49,7 +51,7 @@ describe('src/input.ts', () => {
     )
     test('throws error if contents.length !== weights.length', () => {
       // Arrange
-      mocked(getMultilineInput).mockImplementation(n =>
+      vi.mocked(getMultilineInput).mockImplementation(n =>
         n === 'weights' ? ['1', '2'] : contents
       )
 
@@ -60,7 +62,7 @@ describe('src/input.ts', () => {
     })
     test('returns { content: contents[i], weight: weight[i] } if contents.length === weights.length', () => {
       // Arrange
-      mocked(getMultilineInput).mockImplementation(n =>
+      vi.mocked(getMultilineInput).mockImplementation(n =>
         n === 'contents' ? contents : weights
       )
 
