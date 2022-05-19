@@ -33,19 +33,19 @@
     "*.{json,yml}": "prettier --write"
   },
   "dependencies": {
-    "@actions/core": "^1.7.0"
+    "@actions/core": "^1.8.2"
   },
   "devDependencies": {
     "@tsconfig/node16-strictest": "^1.0.1",
-    "@typescript-eslint/eslint-plugin": "^5.21.0",
-    "@typescript-eslint/parser": "^5.21.0",
+    "@typescript-eslint/eslint-plugin": "^5.25.0",
+    "@typescript-eslint/parser": "^5.25.0",
     "@vercel/ncc": "^0.33.4",
     "c8": "^7.11.3",
-    "eslint": "^8.14.0",
+    "eslint": "^8.15.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-simple-import-sort": "^7.0.0",
     "eslint-plugin-vitest": "^0.0.8",
-    "husky": "^7.0.4",
+    "husky": "^8.0.1",
     "lint-staged": "^12.4.1",
     "npm-run-all2": "^5.0.2",
     "prettier": "^2.6.2",
