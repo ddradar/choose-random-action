@@ -50,7 +50,7 @@ jobs:
         run: npm ci --ignore-scripts
 
       - name: Unit Test
-        run: npm test -- --ci --colors
+        run: npm test -- --coverage
       - name: Report Code Coverage to codecov
         uses: codecov/codecov-action@v3.1.0
 
