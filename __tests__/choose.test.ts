@@ -1,6 +1,8 @@
+import { describe, expect, test, vi } from 'vitest'
+
 import { chooseOne } from '../src/choose'
 
-jest.mock('@actions/core')
+vi.mock('@actions/core')
 
 describe('src/choose.ts', () => {
   describe('chooseOne', () => {

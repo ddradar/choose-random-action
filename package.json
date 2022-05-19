@@ -22,7 +22,8 @@
     "lint:eslint": "eslint --ext .ts --ignore-path .gitignore .",
     "lint:prettier": "prettier --ignore-path .gitignore -l \"**/*.{ts,json,yml}\"",
     "prepare": "husky install",
-    "test": "jest"
+    "test": "vitest run --coverage",
+    "test:watch": "vitest --coverage"
   },
   "lint-staged": {
     "*.{ts}": [
