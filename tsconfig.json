@@ -1,7 +1,9 @@
 {
-  "extends": "@tsconfig/node16-strictest/tsconfig.json",
+  "extends": "@tsconfig/node16-strictest-esm/tsconfig.json",
   "compilerOptions": {
-    "rootDir": "./src"
+    "rootDir": "./src",
+    "module": "node16",
+    "moduleResolution": "node16"
   },
-  "exclude": ["node_modules", "__tests__", "coverage", "*.config.ts"]
+  "exclude": ["node_modules", "__tests__", "coverage", "dist", "*.config.ts"]
 }
