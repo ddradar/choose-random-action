@@ -37,11 +37,11 @@
   },
   "devDependencies": {
     "@tsconfig/node16-strictest": "^1.0.3",
-    "@typescript-eslint/eslint-plugin": "^5.30.4",
-    "@typescript-eslint/parser": "^5.30.4",
+    "@typescript-eslint/eslint-plugin": "^5.31.0",
+    "@typescript-eslint/parser": "^5.31.0",
     "@vercel/ncc": "^0.34.0",
-    "c8": "^7.11.3",
-    "eslint": "^8.19.0",
+    "c8": "^7.12.0",
+    "eslint": "^8.20.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-simple-import-sort": "^7.0.0",
     "eslint-plugin-vitest": "^0.0.8",
@@ -50,6 +50,6 @@
     "npm-run-all2": "^6.0.1",
     "prettier": "^2.7.1",
     "typescript": "^4.7.4",
-    "vitest": "^0.17.0"
+    "vitest": "^0.19.1"
   }
 }
