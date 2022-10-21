@@ -30,7 +30,7 @@ See [action.yml](./action.yml)
 
 ```yaml
 steps:
-  - uses: ddradar/choose-random-action@v2.0.1
+  - uses: ddradar/choose-random-action@v2.0.2
     id: act # required to reference output
     with:
       contents: |
@@ -59,7 +59,7 @@ jobs:
     runs-on: ubuntu-latest
     if: (!contains(github.actor, '[bot]')) # Exclude bot comment
     steps:
-      - uses: ddradar/choose-random-action@v2.0.1
+      - uses: ddradar/choose-random-action@v2.0.2
         id: act
         with:
           contents: |
