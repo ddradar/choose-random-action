@@ -30,7 +30,7 @@ English guide is [here](./README.md).
 
 ```yaml
 steps:
-  - uses: ddradar/choose-random-action@v2.0.1
+  - uses: ddradar/choose-random-action@v2.0.2
     id: act # output を参照するために必須
     with:
       contents: |
@@ -59,7 +59,7 @@ jobs:
     runs-on: ubuntu-latest
     if: (!contains(github.actor, '[bot]')) # botのコメントを除く
     steps:
-      - uses: ddradar/choose-random-action@v2.0.1
+      - uses: ddradar/choose-random-action@v2.0.2
         id: act
         with:
           contents: |
