@@ -16,10 +16,10 @@
     "no-console": "error",
     "simple-import-sort/imports": "error",
     "sort-imports": "off",
-    "vitest/no-skip-test": "error",
+    "vitest/no-skipped-tests": "error",
     "vitest/assertion-type": "error",
     "vitest/max-nested-describe": "error",
-    "vitest/no-idential-title": "error",
-    "vitest/no-conditional-in-test": "error"
+    "vitest/no-identical-title": "error",
+    "vitest/no-conditional-in-tests": "error"
   }
 }
