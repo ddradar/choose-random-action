@@ -50,6 +50,6 @@
     "npm-run-all2": "^6.0.4",
     "prettier": "^2.8.0",
     "typescript": "^4.9.3",
-    "vitest": "^0.24.4"
+    "vitest": "^0.25.3"
   }
 }
