@@ -8,8 +8,6 @@ updates:
       interval: 'monthly'
       time: '18:00'
       timezone: 'Asia/Tokyo'
-    reviewers:
-      - 'ddradar/action-maintainer'
     labels:
       - 'dependabot:robot:'
     commit-message:
@@ -23,8 +21,6 @@ updates:
       interval: 'monthly'
       time: '18:00'
       timezone: 'Asia/Tokyo'
-    reviewers:
-      - 'ddradar/action-maintainer'
     labels:
       - 'dependabot:robot:'
     commit-message:
