@@ -21,10 +21,10 @@ jobs:
     steps:
       # Setup Environment
       - uses: actions/checkout@v3.5.0
-      - name: Use Node.js 16
+      - name: Use Node.js ${{ vars.NODE_VERSION }}
         uses: actions/setup-node@v3.6.0
         with:
-          node-version: 16
+          node-version: ${{ vars.NODE_VERSION }}
           cache: npm
 
       - name: Install Dependencies
@@ -41,10 +41,10 @@ jobs:
     steps:
       # Setup Environment
       - uses: actions/checkout@v3.5.0
-      - name: Use Node.js 16
+      - name: Use Node.js ${{ vars.NODE_VERSION }}
         uses: actions/setup-node@v3.6.0
         with:
-          node-version: 16
+          node-version: ${{ vars.NODE_VERSION }}
           cache: npm
 
       - name: Install Dependencies
@@ -61,10 +61,10 @@ jobs:
     steps:
       # Setup Environment
       - uses: actions/checkout@v3.5.0
-      - name: Use Node.js 16
+      - name: Use Node.js ${{ vars.NODE_VERSION }}
         uses: actions/setup-node@v3.6.0
         with:
-          node-version: 16
+          node-version: ${{ vars.NODE_VERSION }}
           cache: npm
 
       - name: Install Dependencies
