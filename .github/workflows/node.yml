@@ -19,7 +19,6 @@ jobs:
     name: Lint Check
     runs-on: ubuntu-20.04
     steps:
-      # Setup Environment
       - uses: actions/checkout@v3.5.0
       - name: Use Node.js ${{ vars.NODE_VERSION }}
         uses: actions/setup-node@v3.6.0
@@ -38,7 +37,6 @@ jobs:
     name: Unit Test
     runs-on: ubuntu-20.04
     steps:
-      # Setup Environment
       - uses: actions/checkout@v3.5.0
       - name: Use Node.js ${{ vars.NODE_VERSION }}
         uses: actions/setup-node@v3.6.0
