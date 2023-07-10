@@ -17,10 +17,10 @@
   },
   "scripts": {
     "build": "ncc build src/main.ts -m --target es2021 --license licenses.txt",
-    "fix": "run-p \"lint:eslint --fix\" \"lint:prettier --write\"",
+    "fix": "run-p \"lint:eslint -- --fix\" \"lint:prettier -- --write\"",
     "lint": "run-p lint:*",
     "lint:eslint": "eslint --ext .ts --ignore-path .gitignore .",
-    "lint:prettier": "prettier --ignore-path .gitignore -l \"**/*.{ts,json,yml}\"",
+    "lint:prettier": "prettier --ignore-path .gitignore -l \"**/*.{ts,json,md,yml}\"",
     "prepare": "husky install",
     "test": "vitest run",
     "test:watch": "vitest"
@@ -30,7 +30,7 @@
       "eslint --fix",
       "prettier --write"
     ],
-    "*.{json,yml}": "prettier --write"
+    "*.{json,md,yml}": "prettier --write"
   },
   "dependencies": {
     "@actions/core": "^1.10.0"
@@ -49,7 +49,7 @@
     "husky": "^8.0.3",
     "lint-staged": "^13.2.3",
     "npm-run-all2": "^6.0.6",
-    "prettier": "^2.8.8",
+    "prettier": "^3.0.0",
     "typescript": "^5.1.6",
     "vitest": "^0.33.0"
   }
