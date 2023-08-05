@@ -10,7 +10,9 @@ vi.mock('../src/choose')
 vi.mock('../src/input')
 
 const randomString = (): string =>
-  [...Array(12)].map(() => (~~(Math.random() * 36)).toString(36)).join('')
+  [...Array<unknown>(12)]
+    .map(() => (~~(Math.random() * 36)).toString(36))
+    .join('')
 
 describe('src/main.ts', () => {
   beforeEach(() => {
@@ -34,7 +36,7 @@ describe('src/main.ts', () => {
         expect(setFailed).toBeCalledWith(error)
       }
     )
-    test('calls core.setOutput("selected", chooseOne())', async () => {
+    test('calls core.setOutput("selected", chooseOne())', () => {
       // Arrange
       vi.mocked(getInputs).mockReturnValue([
         { content: 'foo', weight: 1 },

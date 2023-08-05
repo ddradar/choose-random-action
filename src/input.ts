@@ -25,6 +25,6 @@ export function getInputs(): Parameters<typeof chooseOne>[0] {
 
   return contents.map((content, i) => ({
     content,
-    weight: weights[i] as number
+    weight: weights[i]!
   }))
 }
