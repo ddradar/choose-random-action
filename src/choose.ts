@@ -1,6 +1,9 @@
 import { debug } from '@actions/core'
 
-type Choice = { content: string; weight: number }
+interface Choice {
+  content: string
+  weight: number
+}
 
 /** Choose one content in choices depends on random value.
  * @param choices content

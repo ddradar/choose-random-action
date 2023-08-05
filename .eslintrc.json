@@ -7,11 +7,15 @@
   "plugins": ["simple-import-sort"],
   "extends": [
     "eslint:recommended",
-    "plugin:@typescript-eslint/eslint-recommended",
-    "plugin:@typescript-eslint/recommended",
+    "plugin:@typescript-eslint/recommended-type-checked",
+    "plugin:@typescript-eslint/stylistic-type-checked",
     "plugin:vitest/recommended",
     "prettier"
   ],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "project": "./tsconfig.lint.json"
+  },
   "rules": {
     "no-process-env": "error",
     "no-console": "error",
