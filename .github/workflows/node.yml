@@ -117,6 +117,9 @@ jobs:
     name: Compare Build Assets
     if: github.event_name == 'pull_request'
     needs: [build]
+    permissions:
+      issues: write
+      pull-requests: write
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v4.0.0
