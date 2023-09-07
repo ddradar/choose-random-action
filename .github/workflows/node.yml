@@ -150,8 +150,11 @@ jobs:
         id: compare
         continue-on-error: true
         run: |
-          echo "# Compare ${{ github.sha }} to main" >> $GITHUB_STEP_SUMMARY
-          git diff --no-index --exit-code ./dist/ ./current/ >> $GITHUB_STEP_SUMMARY
+          echo '# Compare ${{ github.sha }} to main' >> $GITHUB_STEP_SUMMARY
+          echo '```diff' >> $GITHUB_STEP_SUMMARY
+          git diff --no-index ./dist/ ./current/ >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
+          git diff --no-index --exit-code ./dist/ ./current/
       - name: Report diff
         if: steps.compare.outcome == 'failure'
         uses: actions/github-script@v6
