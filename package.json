@@ -22,7 +22,7 @@
     "lint": "run-p lint:*",
     "lint:eslint": "eslint .",
     "lint:prettier": "prettier --ignore-path .gitignore -l \"**/*.{mjs,ts,json,md,yml}\"",
-    "prepare": "husky install",
+    "prepare": "husky",
     "test": "vitest run",
     "test:watch": "vitest"
   },
