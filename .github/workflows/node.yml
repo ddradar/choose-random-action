@@ -164,7 +164,7 @@ jobs:
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: `${message} [Show More](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})`
+              body: `${message} [Show More](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})`
             })
 
   deploy:
