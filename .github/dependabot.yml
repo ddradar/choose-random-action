@@ -3,13 +3,13 @@ version: 2
 updates:
   # GitHub Actions (/.github/workflows/*.yml)
   - package-ecosystem: github-actions
-    directory: '/'
+    directory: /
     schedule:
       interval: monthly
       time: '18:00'
       timezone: 'Asia/Tokyo'
     labels:
-      - 'dependabot:robot:'
+      - 'dependabot :robot:'
     milestone: 11
     commit-message:
       prefix: ci
@@ -17,7 +17,7 @@ updates:
 
   # npm/yarn (/**/package.json)
   - package-ecosystem: npm
-    directory: '/'
+    directory: /
     schedule:
       interval: monthly
       time: '18:00'
@@ -27,7 +27,7 @@ updates:
         dependency-type: development
         patterns:
           - '@vitest/*'
-          - 'vitest'
+          - vitest
       lint-tools:
         dependency-type: development
         exclude-patterns:
@@ -35,7 +35,7 @@ updates:
           - '@vercel/*'
           - typescript
     labels:
-      - 'dependabot:robot:'
+      - 'dependabot :robot:'
     milestone: 11
     commit-message:
       prefix: fix
