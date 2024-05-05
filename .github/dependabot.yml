@@ -10,6 +10,7 @@ updates:
       timezone: 'Asia/Tokyo'
     labels:
       - 'dependabot:robot:'
+    milestone: 11
     commit-message:
       prefix: ci
       include: scope
@@ -35,6 +36,7 @@ updates:
           - typescript
     labels:
       - 'dependabot:robot:'
+    milestone: 11
     commit-message:
       prefix: fix
       prefix-development: chore
