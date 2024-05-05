@@ -2,7 +2,7 @@
 
 [![last commit](https://img.shields.io/github/last-commit/ddradar/choose-random-action 'last commit')](https://github.com/ddradar/choose-random-action/commits/main)
 [![release version](https://img.shields.io/github/v/release/ddradar/choose-random-action?sort=semver 'release version')](https://github.com/ddradar/choose-random-action/releases)
-[![Node.js CI](https://github.com/ddradar/choose-random-action/actions/workflows/node.yml/badge.svg)](https://github.com/ddradar/choose-random-action/actions/workflows/node.yml)
+[![Node.js CI/CD](https://github.com/ddradar/choose-random-action/actions/workflows/node.yml/badge.svg)](https://github.com/ddradar/choose-random-action/actions/workflows/node.yml)
 [![codecov](https://codecov.io/gh/ddradar/choose-random-action/branch/main/graph/badge.svg?token=VfAjX7k1B4)](https://codecov.io/gh/ddradar/choose-random-action)
 [![CodeFactor](https://www.codefactor.io/repository/github/ddradar/choose-random-action/badge)](https://www.codefactor.io/repository/github/ddradar/choose-random-action)
 [![License](https://img.shields.io/github/license/ddradar/choose-random-action)](LICENSE)
@@ -23,8 +23,6 @@ English guide is [here](./README.md).
 - [プロジェクトへの貢献](#contributing)
 
 ## Usage
-
-[action.yml](./action.yml)をご覧ください。
 
 ### Basic
 
