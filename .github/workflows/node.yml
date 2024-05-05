@@ -171,6 +171,8 @@ jobs:
     if: github.event_name == 'push'
     needs: [build]
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - name: Checkout Release Branch
         uses: actions/checkout@v4.1.4
