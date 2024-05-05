@@ -1,9 +1,9 @@
 import { setFailed, setOutput } from '@actions/core'
 import { beforeEach, describe, expect, test, vi } from 'vitest'
 
-import { chooseOne } from '../src/choose'
-import { getInputs } from '../src/input'
-import { run } from '../src/main'
+import { chooseOne } from '../src/choose.js'
+import { getInputs } from '../src/input.js'
+import { run } from '../src/main.js'
 
 vi.mock('@actions/core')
 vi.mock('../src/choose')

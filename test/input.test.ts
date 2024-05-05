@@ -1,7 +1,7 @@
 import { getMultilineInput } from '@actions/core'
 import { beforeEach, describe, expect, test, vi } from 'vitest'
 
-import { getInputs } from '../src/input'
+import { getInputs } from '../src/input.js'
 
 vi.mock('@actions/core')
 
