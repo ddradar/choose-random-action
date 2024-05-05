@@ -122,17 +122,14 @@ jobs:
     steps:
       - uses: actions/checkout@v4.1.4
         with:
-          ref: main
+          ref: ${{ vars.RELEASE_BRANCH }}
+          sparse-checkout: |
+            dist
       - name: Use Node.js ${{ vars.NODE_VERSION }}
         uses: actions/setup-node@v4.0.2
         with:
           node-version: ${{ vars.NODE_VERSION }}
-          cache: npm
-      - name: Install Dependencies
-        run: npm ci --ignore-scripts
 
-      - name: Build Action Assets on main
-        run: npm run build
       - name: Download Current Action Assets
         uses: actions/download-artifact@v4.1.7
         with:
@@ -147,12 +144,15 @@ jobs:
       - name: Compare
         id: compare
         continue-on-error: true
+        run: git diff --no-index --exit-code ./dist/ ./current/
+
+      - name: Report Summary
+        if: steps.compare.outcome == 'failure'
         run: |
           echo '# Compare ${{ github.sha }} to main' >> $GITHUB_STEP_SUMMARY
           echo '```diff' >> $GITHUB_STEP_SUMMARY
           git diff --no-index ./dist/ ./current/ >> $GITHUB_STEP_SUMMARY
           echo '```' >> $GITHUB_STEP_SUMMARY
-          git diff --no-index --exit-code ./dist/ ./current/
       - name: Report diff
         if: steps.compare.outcome == 'failure'
         uses: actions/github-script@v7
@@ -164,7 +164,7 @@ jobs:
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: `${message} [Show More](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})`
+              body: `${message} [Show More](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})`
             })
 
   deploy:
