@@ -1,7 +1,7 @@
 {
   "name": "choose-random-action",
   "type": "module",
-  "version": "2.0.2",
+  "version": "3.0.0",
   "private": true,
   "description": "Choose one randomly from multiple user inputs",
   "author": "Nogic <24802730+nogic1008@users.noreply.github.com>",
@@ -22,7 +22,7 @@
     "lint": "run-p lint:*",
     "lint:eslint": "eslint .",
     "lint:prettier": "prettier --ignore-path .gitignore -l \"**/*.{mjs,ts,json,md,yml}\"",
-    "prepare": "husky install",
+    "prepare": "husky",
     "test": "vitest run",
     "test:watch": "vitest"
   },
