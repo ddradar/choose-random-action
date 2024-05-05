@@ -12,7 +12,7 @@ permissions:
 jobs:
   lint:
     name: Lint Check
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4.1.4
       - name: Use Node.js ${{ vars.NODE_VERSION }}
@@ -30,7 +30,7 @@ jobs:
 
   unit-test:
     name: Unit Test
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4.1.4
       - name: Use Node.js ${{ vars.NODE_VERSION }}
@@ -51,7 +51,7 @@ jobs:
 
   build:
     name: Build
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4.1.4
       - name: Use Node.js ${{ vars.NODE_VERSION }}
@@ -80,8 +80,9 @@ jobs:
         os:
           - ubuntu-22.04
           - ubuntu-20.04
+          - macos-14
+          - macos-13
           - macos-12
-          - macos-11
           - windows-2022
           - windows-2019
     runs-on: ${{ matrix.os }}
@@ -117,7 +118,7 @@ jobs:
     permissions:
       issues: write
       pull-requests: write
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4.1.4
         with:
