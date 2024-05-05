@@ -1,6 +1,6 @@
 import { describe, expect, test, vi } from 'vitest'
 
-import { chooseOne } from '../src/choose'
+import { chooseOne } from '../src/choose.js'
 
 vi.mock('@actions/core')
 

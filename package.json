@@ -1,22 +1,23 @@
 {
   "name": "choose-random-action",
-  "description": "Choose one randomly from multiple user inputs",
+  "type": "module",
   "version": "2.0.2",
-  "author": "ddradar",
   "private": true,
-  "main": "dist/index.js",
+  "description": "Choose one randomly from multiple user inputs",
+  "author": "Nogic <24802730+nogic1008@users.noreply.github.com>",
+  "license": "MIT",
   "repository": "https://github.com/ddradar/choose-random-action",
   "keywords": [
     "actions",
     "github-actions",
     "random"
   ],
-  "license": "MIT",
+  "main": "dist/index.js",
   "engines": {
     "node": ">=20"
   },
   "scripts": {
-    "build": "ncc build src/main.ts -m --target es2021 --license licenses.txt",
+    "build": "ncc build src/main.ts -m --license licenses.txt --target es2022",
     "fix": "run-p \"lint:eslint -- --fix\" \"lint:prettier -- --write\"",
     "lint": "run-p lint:*",
     "lint:eslint": "eslint .",
