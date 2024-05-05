@@ -12,8 +12,7 @@ updates:
       - 'dependabot :robot:'
     milestone: 11
     commit-message:
-      prefix: ci
-      include: scope
+      prefix: ci(gh-actions)
 
   # npm/yarn (/**/package.json)
   - package-ecosystem: npm
