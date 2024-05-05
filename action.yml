@@ -1,0 +1,22 @@
+name: Choose Random Action
+description: Choose one randomly from multiple user inputs
+author: ddradar
+inputs:
+  contents:
+    description: String choices you want to choose randomly
+    required: true
+  weights:
+    description: >
+      Set natural integer if you want to weight the choices.
+      Make it the same length as the contents.
+      By default, all content has equal weight.
+    required: false
+outputs:
+  selected:
+    description: Selected string in contents
+branding:
+  icon: shuffle
+  color: gray-dark
+runs:
+  using: node20
+  main: dist/index.js
