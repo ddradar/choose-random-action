@@ -14,7 +14,7 @@ jobs:
     name: Lint Check
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4.1.6
+      - uses: actions/checkout@v4.1.7
       - name: Use Node.js ${{ vars.NODE_VERSION }}
         uses: actions/setup-node@v4.0.2
         with:
@@ -32,7 +32,7 @@ jobs:
     name: Unit Test
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4.1.6
+      - uses: actions/checkout@v4.1.7
       - name: Use Node.js ${{ vars.NODE_VERSION }}
         uses: actions/setup-node@v4.0.2
         with:
@@ -53,7 +53,7 @@ jobs:
     name: Build
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4.1.6
+      - uses: actions/checkout@v4.1.7
       - name: Use Node.js ${{ vars.NODE_VERSION }}
         uses: actions/setup-node@v4.0.2
         with:
@@ -87,7 +87,7 @@ jobs:
           - windows-2019
     runs-on: ${{ matrix.os }}
     steps:
-      - uses: actions/checkout@v4.1.6
+      - uses: actions/checkout@v4.1.7
         with:
           sparse-checkout: action.yml
           sparse-checkout-cone-mode: false
@@ -123,7 +123,7 @@ jobs:
       pull-requests: write
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4.1.6
+      - uses: actions/checkout@v4.1.7
         with:
           ref: ${{ vars.RELEASE_BRANCH }}
           sparse-checkout: dist
@@ -178,7 +178,7 @@ jobs:
       contents: write
     steps:
       - name: Checkout Release Branch
-        uses: actions/checkout@v4.1.6
+        uses: actions/checkout@v4.1.7
         with:
           ref: ${{ vars.RELEASE_BRANCH }}
 
