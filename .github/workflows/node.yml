@@ -16,7 +16,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4.1.7
       - name: Use Node.js ${{ vars.NODE_VERSION }}
-        uses: actions/setup-node@v4.0.2
+        uses: actions/setup-node@v4.0.3
         with:
           node-version: ${{ vars.NODE_VERSION }}
           cache: npm
@@ -34,7 +34,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4.1.7
       - name: Use Node.js ${{ vars.NODE_VERSION }}
-        uses: actions/setup-node@v4.0.2
+        uses: actions/setup-node@v4.0.3
         with:
           node-version: ${{ vars.NODE_VERSION }}
           cache: npm
@@ -55,7 +55,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4.1.7
       - name: Use Node.js ${{ vars.NODE_VERSION }}
-        uses: actions/setup-node@v4.0.2
+        uses: actions/setup-node@v4.0.3
         with:
           node-version: ${{ vars.NODE_VERSION }}
           cache: npm
@@ -128,7 +128,7 @@ jobs:
           ref: ${{ vars.RELEASE_BRANCH }}
           sparse-checkout: dist
       - name: Use Node.js ${{ vars.NODE_VERSION }}
-        uses: actions/setup-node@v4.0.2
+        uses: actions/setup-node@v4.0.3
         with:
           node-version: ${{ vars.NODE_VERSION }}
 
