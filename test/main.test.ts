@@ -25,6 +25,7 @@ describe('src/main.ts', () => {
       error => {
         // Arrange
         vi.mocked(getInputs).mockImplementation(() => {
+          // eslint-disable-next-line @typescript-eslint/only-throw-error
           throw error
         })
 
