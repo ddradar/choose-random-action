@@ -18,6 +18,7 @@ export default tseslint.config(
     }
   },
   // Prettier
+  // @ts-expect-error - types are incorrect
   eslintConfigPrettier,
   // vitest
   { ...vitest.configs.recommended, files: ['test/**'] },
