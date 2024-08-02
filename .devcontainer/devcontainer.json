@@ -7,10 +7,11 @@
         "dbaeumer.vscode-eslint",
         "EditorConfig.EditorConfig",
         "esbenp.prettier-vscode",
-        "GitHub.vscode-github-actions"
+        "GitHub.vscode-github-actions",
+        "vitest.explorer"
       ]
     }
   },
-  "postCreateCommand": "npm install",
+  "postCreateCommand": ["corepack enable", "npm ci"],
   "remoteUser": "node"
 }
