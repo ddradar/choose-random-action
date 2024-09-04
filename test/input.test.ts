@@ -19,7 +19,7 @@ describe('src/input.ts', () => {
       vi.mocked(getMultilineInput).mockReturnValue([])
 
       // Act - Assert
-      expect(getInputs).toThrowError('contents is required.')
+      expect(getInputs).toThrow('contents is required.')
     })
     test('returns { content: contents[i], weight: 1 } if weight is empty', () => {
       // Arrange
@@ -46,7 +46,7 @@ describe('src/input.ts', () => {
         )
 
         // Act - Assert
-        expect(getInputs).toThrowError('weights should be natural number.')
+        expect(getInputs).toThrow('weights should be natural number.')
       }
     )
     test('throws error if contents.length !== weights.length', () => {
@@ -56,7 +56,7 @@ describe('src/input.ts', () => {
       )
 
       // Act - Assert
-      expect(getInputs).toThrowError(
+      expect(getInputs).toThrow(
         'Parameters should be the same length. (contents: 3 weights: 2)'
       )
     })
