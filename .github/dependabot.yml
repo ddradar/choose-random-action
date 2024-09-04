@@ -25,14 +25,14 @@ updates:
       vitest:
         dependency-type: development
         patterns:
-          - '@vitest/*'
+          - '@vitest/coverage-v8'
           - vitest
       lint-tools:
         dependency-type: development
         exclude-patterns:
           - '@tsconfig/*'
           - '@vercel/*'
-          - '@vitest/*'
+          - '@vitest/coverage-v8'
           - typescript
           - vitest
     labels:
