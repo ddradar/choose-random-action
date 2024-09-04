@@ -33,8 +33,8 @@ describe('src/main.ts', () => {
         run()
 
         // Assert
-        expect(setOutput).not.toBeCalled()
-        expect(setFailed).toBeCalledWith(error)
+        expect(setOutput).not.toHaveBeenCalled()
+        expect(setFailed).toHaveBeenCalledWith(error)
       }
     )
     test('calls core.setOutput("selected", chooseOne())', () => {
@@ -52,7 +52,7 @@ describe('src/main.ts', () => {
 
       // Assert
       expect(setOutput).toHaveBeenCalledWith('selected', expected)
-      expect(setFailed).not.toBeCalled()
+      expect(setFailed).not.toHaveBeenCalled()
     })
   })
 })

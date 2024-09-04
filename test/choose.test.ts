@@ -25,7 +25,7 @@ describe('src/choose.ts', () => {
     test.each([-1, 2, Infinity, -Infinity, NaN])(
       '(choices, %d) throws error',
       random =>
-        expect(() => chooseOne(choices, random)).toThrowError(
+        expect(() => chooseOne(choices, random)).toThrow(
           'random arg should be 0 <= random < 1.'
         )
     )
@@ -35,7 +35,7 @@ describe('src/choose.ts', () => {
         { content: 'bar', weight: 0 },
         { content: 'baz', weight: 0 }
       ]
-      expect(() => chooseOne(invalidChoices, 0.2)).toThrowError(
+      expect(() => chooseOne(invalidChoices, 0.2)).toThrow(
         'invalid choices.weight'
       )
     })
