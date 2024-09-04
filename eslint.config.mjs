@@ -18,6 +18,7 @@ export default tseslint.config(
     }
   },
   // Prettier
+  // @ts-expect-error - not have type
   eslintConfigPrettier,
   // vitest
   {
