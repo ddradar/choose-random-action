@@ -159,6 +159,7 @@ jobs:
 
       - name: Report Summary
         if: steps.compare.outcome == 'failure'
+        continue-on-error: true
         run: |
           echo '# Compare ${{ github.sha }} to ${{ github.base_ref }}' >> $GITHUB_STEP_SUMMARY
           echo '```diff' >> $GITHUB_STEP_SUMMARY
