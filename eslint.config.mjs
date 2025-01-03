@@ -24,6 +24,7 @@ export default tseslint.config(
   {
     files: ['**/*.test.ts'],
     plugins: { vitest },
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     rules: {
       ...vitest.configs.recommended.rules,
       'vitest/consistent-test-filename': 'error',
@@ -48,7 +49,6 @@ export default tseslint.config(
   },
   // simple-import-sort
   {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     plugins: { 'simple-import-sort': simpleImportSort },
     rules: {
       'simple-import-sort/imports': 'error',
