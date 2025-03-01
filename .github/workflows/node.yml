@@ -103,7 +103,7 @@ jobs:
           sparse-checkout: action.yml
           sparse-checkout-cone-mode: false
       - name: Download Action Assets
-        uses: actions/download-artifact@v4.1.8
+        uses: actions/download-artifact@v4.1.9
         with:
           name: dist
           path: dist
@@ -146,7 +146,7 @@ jobs:
           node-version: ${{ vars.NODE_VERSION }}
 
       - name: Download Current Action Assets
-        uses: actions/download-artifact@v4.1.8
+        uses: actions/download-artifact@v4.1.9
         with:
           name: dist
           path: current
@@ -205,7 +205,7 @@ jobs:
           git restore --source=origin/${{ github.ref_name }} -- .github/workflows/release.yml
 
       - name: Download Build Assets
-        uses: actions/download-artifact@v4.1.8
+        uses: actions/download-artifact@v4.1.9
         with:
           name: dist
           path: dist
