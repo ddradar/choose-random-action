@@ -87,7 +87,6 @@ jobs:
         os:
           - ubuntu-24.04
           - ubuntu-22.04
-          - ubuntu-20.04
           - ubuntu-24.04-arm
           - ubuntu-22.04-arm
           - macos-15
@@ -95,7 +94,7 @@ jobs:
           - macos-13
           - windows-2025
           - windows-2022
-          - windows-2019
+          - windows-11-arm
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4.2.2
