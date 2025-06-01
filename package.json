@@ -42,16 +42,16 @@
     "@tsconfig/strictest": "^2.0.5",
     "@vercel/ncc": "^0.38.3",
     "@vitest/coverage-v8": "^3.0.4",
-    "@vitest/eslint-plugin": "^1.1.43",
-    "eslint": "^9.25.1",
-    "eslint-config-prettier": "^10.1.2",
+    "@vitest/eslint-plugin": "^1.2.1",
+    "eslint": "^9.28.0",
+    "eslint-config-prettier": "^10.1.5",
     "eslint-plugin-simple-import-sort": "^12.1.1",
     "husky": "^9.1.7",
-    "lint-staged": "^15.5.1",
-    "npm-run-all2": "^7.0.2",
+    "lint-staged": "^16.1.0",
+    "npm-run-all2": "^8.0.4",
     "prettier": "^3.5.3",
     "typescript": "^5.7.3",
-    "typescript-eslint": "^8.31.0",
+    "typescript-eslint": "^8.33.0",
     "vitest": "^3.0.4"
   }
 }
