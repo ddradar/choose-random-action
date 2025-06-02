@@ -1,4 +1,7 @@
 name: Site Cat LGTM
+permissions:
+  issues: write
+  pull-requests: write
 on:
   issue_comment:
     types: [created]
