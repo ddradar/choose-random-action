@@ -22,19 +22,12 @@ updates:
       time: '18:00'
       timezone: 'Asia/Tokyo'
     groups:
-      vitest:
-        dependency-type: development
-        patterns:
-          - '@vitest/coverage-v8'
-          - vitest
       lint-tools:
         dependency-type: development
-        exclude-patterns:
+        exclude-patterns: # Exclude build tools
           - '@tsconfig/*'
           - '@vercel/*'
-          - '@vitest/coverage-v8'
           - typescript
-          - vitest
     labels:
       - 'dependabot :robot:'
     milestone: 11

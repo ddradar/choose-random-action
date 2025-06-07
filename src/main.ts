@@ -1,7 +1,7 @@
 import { info, setFailed, setOutput } from '@actions/core'
 
-import { chooseOne } from './choose.js'
-import { getInputs } from './input.js'
+import { chooseOne } from './choose.ts'
+import { getInputs } from './input.ts'
 
 /** main entry point */
 export function run(): void {

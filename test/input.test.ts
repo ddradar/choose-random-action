@@ -1,77 +1,86 @@
-import { getMultilineInput } from '@actions/core'
-import { beforeEach, describe, expect, test, vi } from 'vitest'
+import type { TestContext } from 'node:test'
+import { before, mock, suite, test } from 'node:test'
 
-import { getInputs } from '../src/input.js'
+import type { getMultilineInput } from '@actions/core'
 
-vi.mock('@actions/core')
+await suite('src/input.ts', async () => {
+  const getMultilineInputMock = mock.fn<typeof getMultilineInput>()
+  let getInputs: typeof import('../src/input.ts').getInputs
 
-describe('src/input.ts', () => {
-  describe('getInputs()', () => {
+  before(async () => {
+    mock.module('@actions/core', {
+      namedExports: { getMultilineInput: getMultilineInputMock }
+    })
+
+    getInputs = (await import('../src/input.ts')).getInputs
+  })
+
+  await suite('getInputs()', async () => {
     const contents = ['foo', 'bar', 'baz']
     const weights = ['1', '2', '3']
 
-    beforeEach(() => {
-      vi.mocked(getMultilineInput).mockClear()
-    })
-
-    test('throws error if contents is empty', () => {
+    await test('throws error if contents is empty', (t: TestContext) => {
       // Arrange
-      vi.mocked(getMultilineInput).mockReturnValue([])
+      getMultilineInputMock.mock.mockImplementation(() => [])
 
       // Act - Assert
-      expect(getInputs).toThrow('contents is required.')
+      t.assert.throws(() => getInputs(), { message: 'contents is required.' })
     })
-    test('returns { content: contents[i], weight: 1 } if weight is empty', () => {
+
+    await test('returns { content: contents[i], weight: 1 } if weight is empty', (t: TestContext) => {
       // Arrange
-      vi.mocked(getMultilineInput).mockImplementation(n =>
-        n === 'contents' ? contents : []
+      getMultilineInputMock.mock.mockImplementation(name =>
+        name === 'contents' ? contents : []
       )
 
       // Act
       const choices = getInputs()
 
       // Assert
-      expect(choices).toStrictEqual([
+      t.assert.deepEqual(choices, [
         { content: 'foo', weight: 1 },
         { content: 'bar', weight: 1 },
         { content: 'baz', weight: 1 }
       ])
     })
-    test.each(['foo', '-1', 'NaN'])(
-      'throws error if weight is "%s"',
-      weight => {
-        // Arrange
-        vi.mocked(getMultilineInput).mockImplementation(n =>
-          n === 'weights' ? [weight, weight, weight] : contents
-        )
 
+    const invalidWeights = ['foo', '-1', 'NaN']
+    for (const weight of invalidWeights) {
+      await test(`throws error if weight is "${weight}"`, (t: TestContext) => {
+        // Arrange
+        getMultilineInputMock.mock.mockImplementation(name =>
+          name === 'weights' ? [weight, weight, weight] : contents
+        )
         // Act - Assert
-        expect(getInputs).toThrow('weights should be natural number.')
-      }
-    )
-    test('throws error if contents.length !== weights.length', () => {
+        t.assert.throws(() => getInputs(), {
+          message: 'weights should be natural number.'
+        })
+      })
+    }
+
+    await test('throws error if contents.length !== weights.length', (t: TestContext) => {
       // Arrange
-      vi.mocked(getMultilineInput).mockImplementation(n =>
-        n === 'weights' ? ['1', '2'] : contents
+      getMultilineInputMock.mock.mockImplementation(name =>
+        name === 'weights' ? ['1', '2'] : contents
       )
 
       // Act - Assert
-      expect(getInputs).toThrow(
-        'Parameters should be the same length. (contents: 3 weights: 2)'
-      )
+      t.assert.throws(() => getInputs(), {
+        message:
+          'Parameters should be the same length. (contents: 3 weights: 2)'
+      })
     })
-    test('returns { content: contents[i], weight: weight[i] } if contents.length === weights.length', () => {
-      // Arrange
-      vi.mocked(getMultilineInput).mockImplementation(n =>
-        n === 'contents' ? contents : weights
-      )
 
+    await test('returns { content: contents[i], weight: weight[i] } if contents.length === weights.length', (t: TestContext) => {
+      // Arrange
+      getMultilineInputMock.mock.mockImplementation(name =>
+        name === 'contents' ? contents : weights
+      )
       // Act
       const choices = getInputs()
-
       // Assert
-      expect(choices).toHaveLength(3)
-      expect(choices).toStrictEqual([
+      t.assert.strictEqual(choices.length, 3)
+      t.assert.deepEqual(choices, [
         { content: 'foo', weight: 1 },
         { content: 'bar', weight: 2 },
         { content: 'baz', weight: 3 }
