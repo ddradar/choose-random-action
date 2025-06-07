@@ -24,8 +24,7 @@
     "lint:eslint": "eslint .",
     "lint:prettier": "prettier --ignore-path .gitignore -l \"**/*.{mjs,ts,json,md,yml}\"",
     "prepare": "husky",
-    "test": "vitest run",
-    "test:watch": "vitest"
+    "test": "node --test --experimental-strip-types --experimental-test-module-mocks"
   },
   "lint-staged": {
     "*.{mjs,ts}": [
