@@ -14,7 +14,7 @@ jobs:
     name: Lint Check
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6.0.1
+      - uses: actions/checkout@v6.0.2
       - name: Enable Corepack
         run: corepack enable
       - name: Use Node.js ${{ vars.NODE_VERSION }}
@@ -34,7 +34,7 @@ jobs:
     name: Unit Test
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6.0.1
+      - uses: actions/checkout@v6.0.2
       - name: Enable Corepack
         run: corepack enable
       - name: Use Node.js ${{ vars.NODE_VERSION }}
@@ -57,7 +57,7 @@ jobs:
     name: Build
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6.0.1
+      - uses: actions/checkout@v6.0.2
       - name: Enable Corepack
         run: corepack enable
       - name: Use Node.js ${{ vars.NODE_VERSION }}
@@ -99,7 +99,7 @@ jobs:
           - windows-11-arm
     runs-on: ${{ matrix.os }}
     steps:
-      - uses: actions/checkout@v6.0.1
+      - uses: actions/checkout@v6.0.2
         with:
           sparse-checkout: action.yml
           sparse-checkout-cone-mode: false
@@ -135,7 +135,7 @@ jobs:
       pull-requests: write
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6.0.1
+      - uses: actions/checkout@v6.0.2
         with:
           ref: ${{ vars.RELEASE_BRANCH }}
           sparse-checkout: dist
@@ -193,7 +193,7 @@ jobs:
       contents: write
     steps:
       - name: Checkout Release Branch
-        uses: actions/checkout@v6.0.1
+        uses: actions/checkout@v6.0.2
         with:
           ref: ${{ vars.RELEASE_BRANCH }}
 
