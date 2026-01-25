@@ -33,6 +33,10 @@ jobs:
   unit-test:
     name: Unit Test
     runs-on: ubuntu-latest
+    permissions:
+      id-token: write # to use OIDC
+      contents: read
+
     steps:
       - uses: actions/checkout@v6.0.2
       - name: Enable Corepack
@@ -49,7 +53,7 @@ jobs:
       - name: Report Code Coverage to codecov
         uses: codecov/codecov-action@v5.5.2
         with:
-          token: ${{ secrets.CODECOV_TOKEN }}
+          use_oidc: true
 
   build:
     name: Build
