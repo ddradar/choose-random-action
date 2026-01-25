@@ -5,12 +5,18 @@ updates:
   - package-ecosystem: github-actions
     directory: /
     schedule:
-      interval: monthly
+      interval: daily
       time: '18:00'
-      timezone: 'Asia/Tokyo'
+      timezone: Asia/Tokyo
+    cooldown:
+      default-days: 5
+    groups:
+      actions-artifact:
+        patterns:
+          - 'actions/download-artifact'
+          - 'actions/upload-artifact'
     labels:
       - 'dependabot :robot:'
-    milestone: 11
     commit-message:
       prefix: ci(gh-actions)
 
@@ -18,21 +24,30 @@ updates:
   - package-ecosystem: npm
     directory: /
     schedule:
-      interval: monthly
+      interval: daily
       time: '18:00'
-      timezone: 'Asia/Tokyo'
+      timezone: Asia/Tokyo
+    cooldown:
+      default-days: 5
+      semver-major-days: 30
+      semver-minor-days: 7
+      semver-patch-days: 3
     groups:
       lint-tools:
         dependency-type: development
         exclude-patterns: # Exclude build tools
           - '@tsconfig/*'
+          - '@types/node'
           - '@vercel/*'
           - typescript
+    ignore:
+      - dependency-name: '@types/node'
+        update-types:
+          - version-update:semver-major
     labels:
       - 'dependabot :robot:'
-    milestone: 11
     commit-message:
-      prefix: fix
+      prefix: chore
       prefix-development: chore
       include: scope
     open-pull-requests-limit: 10
@@ -41,11 +56,12 @@ updates:
   - package-ecosystem: devcontainers
     directory: /
     schedule:
-      interval: monthly
+      interval: daily
       time: '18:00'
-      timezone: 'Asia/Tokyo'
+      timezone: Asia/Tokyo
+    cooldown:
+      default-days: 5
     labels:
       - 'dependabot :robot:'
-    milestone: 11
     commit-message:
       prefix: ci(devcontainer)
