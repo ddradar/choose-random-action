@@ -1,20 +1,25 @@
 // @ts-check
 import eslint from '@eslint/js'
+import { defineConfig } from 'eslint/config'
 import eslintConfigPrettier from 'eslint-config-prettier'
 import simpleImportSort from 'eslint-plugin-simple-import-sort'
 import tseslint from 'typescript-eslint'
 
-export default tseslint.config(
+export default defineConfig(
   { ignores: ['node_modules/**', 'dist/**'] },
   eslint.configs.recommended,
   // typescript-eslint
-  ...tseslint.configs.recommendedTypeChecked,
-  ...tseslint.configs.stylisticTypeChecked,
   {
+    files: ['**/*.ts'],
+    extends: [
+      tseslint.configs.recommendedTypeChecked,
+      tseslint.configs.stylisticTypeChecked
+    ],
     languageOptions: {
       parserOptions: { project: './tsconfig.lint.json' }
     }
   },
+  { files: ['**/*.mjs'], languageOptions: { sourceType: 'module' } },
   // Prettier
   eslintConfigPrettier,
   // simple-import-sort
