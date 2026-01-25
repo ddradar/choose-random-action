@@ -39,7 +39,7 @@
   "devDependencies": {
     "@tsconfig/node20": "^20.1.8",
     "@tsconfig/strictest": "^2.0.8",
-    "@types/node": "^24.1.0",
+    "@types/node": "^24.10.9",
     "@vercel/ncc": "^0.38.4",
     "eslint": "^9.39.2",
     "eslint-config-prettier": "^10.1.8",
