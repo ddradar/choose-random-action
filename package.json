@@ -41,10 +41,11 @@
     "typescript": "^5.9.3"
   },
   "lint-staged": {
-    "*.{mjs,ts,json,md,yml}": [
+    "*.{mjs,ts}": [
       "oxlint --type-aware --fix",
       "oxfmt"
-    ]
+    ],
+    "*.{json,md,yml}": "oxfmt"
   },
   "engines": {
     "node": ">=24"
