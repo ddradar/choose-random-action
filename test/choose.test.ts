@@ -14,7 +14,7 @@ await suite('src/choose.ts', async () => {
     const choices: Parameters<typeof chooseOne>[0] = [
       { content: 'foo', weight: 1 },
       { content: 'bar', weight: 2 },
-      { content: 'baz', weight: 2 }
+      { content: 'baz', weight: 2 },
     ]
 
     const validTestData: [number, string][] = [
@@ -23,7 +23,7 @@ await suite('src/choose.ts', async () => {
       [0.79, 'baz'],
       [0.4, 'baz'],
       [0.39, 'bar'],
-      [0, 'bar']
+      [0, 'bar'],
     ]
     for (const [random, expected] of validTestData) {
       await test(`(choices, ${random}) returns ${expected}`, (t: TestContext) => {
@@ -35,7 +35,7 @@ await suite('src/choose.ts', async () => {
     for (const random of invalidTestData) {
       await test(`(choices, ${random}) throws error`, t =>
         t.assert.throws(() => chooseOne(choices, random), {
-          message: 'random arg should be 0 <= random < 1.'
+          message: 'random arg should be 0 <= random < 1.',
         }))
     }
 
@@ -43,10 +43,10 @@ await suite('src/choose.ts', async () => {
       const invalidChoices: Parameters<typeof chooseOne>[0] = [
         { content: 'foo', weight: 0 },
         { content: 'bar', weight: 0 },
-        { content: 'baz', weight: 0 }
+        { content: 'baz', weight: 0 },
       ]
       t.assert.throws(() => chooseOne(invalidChoices, 0.2), {
-        message: 'invalid choices.weight'
+        message: 'invalid choices.weight',
       })
     })
   })

@@ -29,7 +29,7 @@ jobs:
 
       - name: Oxlint
         run: npm run lint:oxlint
-      - name: oxfmt
+      - name: Oxfmt
         run: npm run lint:oxfmt
 
   unit-test:

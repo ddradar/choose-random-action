@@ -7,9 +7,7 @@ import type { chooseOne } from '../src/choose.js'
 import type { getInputs } from '../src/input.js'
 
 const randomString = (): string =>
-  [...Array<unknown>(12)]
-    .map(() => (~~(Math.random() * 36)).toString(36))
-    .join('')
+  [...Array<unknown>(12)].map(() => (~~(Math.random() * 36)).toString(36)).join('')
 
 await suite('src/main.ts', async () => {
   const setFailedMock = mock.fn<typeof setFailed>()
@@ -24,14 +22,14 @@ await suite('src/main.ts', async () => {
       namedExports: {
         info: mock.fn(),
         setFailed: setFailedMock,
-        setOutput: setOutputMock
-      }
+        setOutput: setOutputMock,
+      },
     })
     mock.module('../src/choose.ts', {
-      namedExports: { chooseOne: chooseOneMock }
+      namedExports: { chooseOne: chooseOneMock },
     })
     mock.module('../src/input.ts', {
-      namedExports: { getInputs: getInputsMock }
+      namedExports: { getInputs: getInputsMock },
     })
 
     run = (await import('../src/main.ts')).run
@@ -79,17 +77,14 @@ await suite('src/main.ts', async () => {
       getInputsMock.mock.mockImplementation(() => [
         { content: 'foo', weight: 1 },
         { content: 'bar', weight: 2 },
-        { content: 'baz', weight: 2 }
+        { content: 'baz', weight: 2 },
       ])
       chooseOneMock.mock.mockImplementation(() => expected)
       // Act
       run()
       // Assert
       t.assert.strictEqual(setOutputMock.mock.callCount(), 1)
-      t.assert.deepEqual(setOutputMock.mock.calls[0].arguments, [
-        'selected',
-        expected
-      ])
+      t.assert.deepEqual(setOutputMock.mock.calls[0].arguments, ['selected', expected])
       t.assert.strictEqual(setFailedMock.mock.callCount(), 0)
     })
   })

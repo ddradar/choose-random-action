@@ -3,8 +3,7 @@
   "arrowParens": "avoid",
   "semi": false,
   "singleQuote": true,
-  "trailingComma": "none",
-  "printWidth": 80,
+  "trailingComma": "es5",
   "experimentalSortImports": {
     "groups": ["builtin", "external", ["parent", "sibling", "index"]],
     "newlinesBetween": true
