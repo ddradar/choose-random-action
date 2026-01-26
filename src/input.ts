@@ -1,6 +1,6 @@
 import { getMultilineInput } from '@actions/core'
 
-import type { chooseOne } from './choose.js'
+import type { chooseOne } from './choose.ts'
 
 /** Gets the values of user inputs.
  * @returns Parsed user inputs
