@@ -4,6 +4,7 @@
   "semi": false,
   "singleQuote": true,
   "trailingComma": "es5",
+  "printWidth": 80,
   "experimentalSortImports": {
     "groups": ["builtin", "external", ["parent", "sibling", "index"]],
     "newlinesBetween": true

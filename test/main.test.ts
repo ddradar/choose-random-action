@@ -7,7 +7,9 @@ import type { chooseOne } from '../src/choose.js'
 import type { getInputs } from '../src/input.js'
 
 const randomString = (): string =>
-  [...Array<unknown>(12)].map(() => (~~(Math.random() * 36)).toString(36)).join('')
+  [...Array<unknown>(12)]
+    .map(() => (~~(Math.random() * 36)).toString(36))
+    .join('')
 
 await suite('src/main.ts', async () => {
   const setFailedMock = mock.fn<typeof setFailed>()
@@ -84,7 +86,10 @@ await suite('src/main.ts', async () => {
       run()
       // Assert
       t.assert.strictEqual(setOutputMock.mock.callCount(), 1)
-      t.assert.deepEqual(setOutputMock.mock.calls[0].arguments, ['selected', expected])
+      t.assert.deepEqual(setOutputMock.mock.calls[0].arguments, [
+        'selected',
+        expected,
+      ])
       t.assert.strictEqual(setFailedMock.mock.callCount(), 0)
     })
   })
