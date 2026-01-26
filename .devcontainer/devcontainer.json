@@ -4,10 +4,10 @@
   "customizations": {
     "vscode": {
       "extensions": [
-        "dbaeumer.vscode-eslint",
         "EditorConfig.EditorConfig",
         "esbenp.prettier-vscode",
-        "GitHub.vscode-github-actions"
+        "GitHub.vscode-github-actions",
+        "oxc.oxc-vscode"
       ]
     }
   },
