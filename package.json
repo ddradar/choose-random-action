@@ -1,39 +1,28 @@
 {
   "name": "choose-random-action",
-  "type": "module",
   "version": "4.0.0",
   "private": true,
   "description": "Choose one randomly from multiple user inputs",
-  "author": "Nogic <24802730+nogic1008@users.noreply.github.com>",
-  "license": "MIT",
-  "repository": "https://github.com/ddradar/choose-random-action",
   "keywords": [
     "actions",
     "github-actions",
     "random"
   ],
+  "license": "MIT",
+  "author": "Nogic <24802730+nogic1008@users.noreply.github.com>",
+  "repository": "https://github.com/ddradar/choose-random-action",
+  "type": "module",
   "main": "dist/index.js",
-  "packageManager": "npm@11.8.0+sha512.9f5f6c25e5be44629d907a3c482739c614b090a8505057d9685cd273e12c6172e34aa215d2d97bd9a0d8415bb356f7eb6f2b06c1d690b0d2cdcb9f09d7410149",
-  "engines": {
-    "node": ">=24"
-  },
   "scripts": {
     "build": "ncc build src/main.ts -m --license licenses.txt --target es2024",
     "fix": "run-p fix:*",
     "fix:oxlint": "oxlint --type-aware --fix",
-    "fix:prettier": "prettier --ignore-path .gitignore \"**/*.{mjs,ts,json,md,yml}\" --write --experimental-cli",
+    "fix:oxfmt": "oxfmt",
     "lint": "run-p lint:*",
     "lint:oxlint": "oxlint --type-aware",
-    "lint:prettier": "prettier --ignore-path .gitignore --check \"**/*.{mjs,ts,json,md,yml}\" --experimental-cli",
+    "lint:oxfmt": "oxfmt --check",
     "prepare": "husky",
     "test": "node --test --experimental-strip-types --experimental-test-module-mocks"
-  },
-  "lint-staged": {
-    "*.{mjs,ts}": [
-      "oxlint --type-aware --fix",
-      "prettier --write --experimental-cli"
-    ],
-    "*.{json,md,yml}": "prettier --write --experimental-cli"
   },
   "dependencies": {
     "@actions/core": "^2.0.2"
@@ -43,13 +32,23 @@
     "@tsconfig/strictest": "^2.0.8",
     "@types/node": "^24.10.9",
     "@vercel/ncc": "^0.38.4",
-    "eslint-plugin-simple-import-sort": "^12.1.1",
     "husky": "^9.1.7",
     "lint-staged": "^16.2.7",
     "npm-run-all2": "^8.0.4",
+    "oxfmt": "^0.26.0",
     "oxlint": "^1.41.0",
     "oxlint-tsgolint": "^0.11.1",
-    "prettier": "^3.8.0",
     "typescript": "^5.9.3"
-  }
+  },
+  "lint-staged": {
+    "*.{mjs,ts}": [
+      "oxlint --type-aware --fix",
+      "oxfmt"
+    ],
+    "*.{json,md,yml}": "oxfmt"
+  },
+  "engines": {
+    "node": ">=24"
+  },
+  "packageManager": "npm@11.8.0+sha512.9f5f6c25e5be44629d907a3c482739c614b090a8505057d9685cd273e12c6172e34aa215d2d97bd9a0d8415bb356f7eb6f2b06c1d690b0d2cdcb9f09d7410149"
 }

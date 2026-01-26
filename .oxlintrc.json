@@ -1,7 +1,6 @@
 {
   "$schema": "./node_modules/oxlint/configuration_schema.json",
   "plugins": ["eslint", "node", "typescript", "unicorn"],
-  "jsPlugins": ["eslint-plugin-simple-import-sort"],
   "categories": {
     "correctness": "error"
   },
@@ -72,11 +71,8 @@
     "typescript/prefer-function-type": "error",
     "typescript/prefer-includes": "error",
     "typescript/prefer-nullish-coalescing": "error",
-    "typescript/prefer-optional-chain": "error",
+    "typescript/prefer-optional-chain": "error"
     // "@typescript-eslint/prefer-regexp-exec": "error",
-    // "@typescript-eslint/prefer-string-starts-ends-with": "error",
-    // eslint-plugin-simple-import-sort
-    "simple-import-sort/imports": "error",
-    "simple-import-sort/exports": "error"
+    // "@typescript-eslint/prefer-string-starts-ends-with": "error"
   }
 }

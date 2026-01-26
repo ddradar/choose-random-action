@@ -9,7 +9,7 @@ await suite('src/input.ts', async () => {
 
   before(async () => {
     mock.module('@actions/core', {
-      namedExports: { getMultilineInput: getMultilineInputMock }
+      namedExports: { getMultilineInput: getMultilineInputMock },
     })
 
     getInputs = (await import('../src/input.ts')).getInputs
@@ -40,7 +40,7 @@ await suite('src/input.ts', async () => {
       t.assert.deepEqual(choices, [
         { content: 'foo', weight: 1 },
         { content: 'bar', weight: 1 },
-        { content: 'baz', weight: 1 }
+        { content: 'baz', weight: 1 },
       ])
     })
 
@@ -53,7 +53,7 @@ await suite('src/input.ts', async () => {
         )
         // Act - Assert
         t.assert.throws(() => getInputs(), {
-          message: 'weights should be natural number.'
+          message: 'weights should be natural number.',
         })
       })
     }
@@ -67,7 +67,7 @@ await suite('src/input.ts', async () => {
       // Act - Assert
       t.assert.throws(() => getInputs(), {
         message:
-          'Parameters should be the same length. (contents: 3 weights: 2)'
+          'Parameters should be the same length. (contents: 3 weights: 2)',
       })
     })
 
@@ -83,7 +83,7 @@ await suite('src/input.ts', async () => {
       t.assert.deepEqual(choices, [
         { content: 'foo', weight: 1 },
         { content: 'bar', weight: 2 },
-        { content: 'baz', weight: 3 }
+        { content: 'baz', weight: 3 },
       ])
     })
   })

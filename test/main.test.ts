@@ -24,14 +24,14 @@ await suite('src/main.ts', async () => {
       namedExports: {
         info: mock.fn(),
         setFailed: setFailedMock,
-        setOutput: setOutputMock
-      }
+        setOutput: setOutputMock,
+      },
     })
     mock.module('../src/choose.ts', {
-      namedExports: { chooseOne: chooseOneMock }
+      namedExports: { chooseOne: chooseOneMock },
     })
     mock.module('../src/input.ts', {
-      namedExports: { getInputs: getInputsMock }
+      namedExports: { getInputs: getInputsMock },
     })
 
     run = (await import('../src/main.ts')).run
@@ -79,7 +79,7 @@ await suite('src/main.ts', async () => {
       getInputsMock.mock.mockImplementation(() => [
         { content: 'foo', weight: 1 },
         { content: 'bar', weight: 2 },
-        { content: 'baz', weight: 2 }
+        { content: 'baz', weight: 2 },
       ])
       chooseOneMock.mock.mockImplementation(() => expected)
       // Act
@@ -88,7 +88,7 @@ await suite('src/main.ts', async () => {
       t.assert.strictEqual(setOutputMock.mock.callCount(), 1)
       t.assert.deepEqual(setOutputMock.mock.calls[0].arguments, [
         'selected',
-        expected
+        expected,
       ])
       t.assert.strictEqual(setFailedMock.mock.callCount(), 0)
     })

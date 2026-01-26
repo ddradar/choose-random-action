@@ -29,8 +29,8 @@ jobs:
 
       - name: Oxlint
         run: npm run lint:oxlint
-      - name: Prettier
-        run: npm run lint:prettier
+      - name: Oxfmt
+        run: npm run lint:oxfmt
 
   unit-test:
     name: Unit Test
