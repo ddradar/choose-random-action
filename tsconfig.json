@@ -4,8 +4,9 @@
     "@tsconfig/strictest/tsconfig.json"
   ],
   "compilerOptions": {
-    "rootDir": "src",
+    "rootDir": ".",
     "rewriteRelativeImportExtensions": true
   },
+  "include": ["src/**/*", "build.mts", "*.d.ts"],
   "exclude": ["coverage", "dist", "node_modules", "test", "*.config.*"]
 }
