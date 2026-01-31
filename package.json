@@ -1,6 +1,6 @@
 {
   "name": "choose-random-action",
-  "version": "4.0.0",
+  "version": "4.0.2",
   "private": true,
   "description": "Choose one randomly from multiple user inputs",
   "keywords": [
@@ -25,7 +25,7 @@
     "test": "node --test --experimental-strip-types --experimental-test-module-mocks"
   },
   "dependencies": {
-    "@actions/core": "^2.0.2"
+    "@actions/core": "^3.0.0"
   },
   "devDependencies": {
     "@tsconfig/node24": "^24.0.4",

@@ -28,7 +28,7 @@ Choose one randomly from multiple user inputs
 
 ```yaml
 steps:
-  - uses: ddradar/choose-random-action@v3.0.0
+  - uses: ddradar/choose-random-action@v4
     id: act # required to reference output
     with:
       contents: |
@@ -57,14 +57,14 @@ jobs:
     runs-on: ubuntu-latest
     if: (!contains(github.actor, '[bot]')) # Exclude bot comment
     steps:
-      - uses: ddradar/choose-random-action@v3.0.0
+      - uses: ddradar/choose-random-action@v4
         id: act
         with:
           contents: |
             https://example.com/your-lgtm-image-1.jpg
             https://example.com/your-lgtm-image-2.jpg
             https://example.com/your-lgtm-image-3.jpg
-      - uses: ddradar/lgtm-action@v3
+      - uses: ddradar/lgtm-action@v4
         with:
           image-url: ${{ steps.act.outputs.selected }}
 ```
