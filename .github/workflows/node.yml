@@ -156,7 +156,7 @@ jobs:
         run: |
           npm install --global js-beautify
           git config --local diff.minjs.textconv js-beautify
-          echo "index.js diff=minjs" > .gitattributes
+          echo "index.mjs diff=minjs" > .gitattributes
       - name: Compare
         id: compare
         continue-on-error: true
