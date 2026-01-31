@@ -5,7 +5,6 @@
     "vscode": {
       "extensions": [
         "EditorConfig.EditorConfig",
-        "esbenp.prettier-vscode",
         "GitHub.vscode-github-actions",
         "oxc.oxc-vscode"
       ]
