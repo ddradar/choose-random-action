@@ -3,8 +3,8 @@ import { before, beforeEach, mock, suite, test } from 'node:test'
 
 import type { setFailed, setOutput } from '@actions/core'
 
-import type { chooseOne } from '../src/choose.js'
-import type { getInputs } from '../src/input.js'
+import type { chooseOne } from '../src/choose.ts'
+import type { getInputs } from '../src/input.ts'
 
 const randomString = (): string =>
   [...Array<unknown>(12)]
