@@ -5,6 +5,10 @@
     "correctness": "error"
   },
   "ignorePatterns": ["node_modules/**", "dist/**"],
+  "env": {
+    "node": true,
+    "es2024": true
+  },
   "rules": {
     // ESLint Recommended (Excepts correctness category)
     "getter-return": "error",

@@ -1,5 +1,3 @@
-import { getMultilineInput } from '@actions/core'
-
 import type { chooseOne } from './choose.ts'
 
 /** Gets the values of user inputs.
@@ -9,8 +7,10 @@ import type { chooseOne } from './choose.ts'
  * @see {@link ../action.yml}
  */
 export function getInputs(): Parameters<typeof chooseOne>[0] {
-  const contents = getMultilineInput('contents', { required: true })
-  const weights = getMultilineInput('weights').map(s => parseInt(s.trim(), 10))
+  const contents = getMultilineInputsFromEnv('contents', true)
+  const weights = getMultilineInputsFromEnv('weights').map(s =>
+    parseInt(s.trim(), 10)
+  )
 
   if (contents.length === 0) throw new Error('contents is required.')
   if (weights.length === 0)
@@ -27,4 +27,14 @@ export function getInputs(): Parameters<typeof chooseOne>[0] {
     content,
     weight: weights[i]!,
   }))
+}
+
+function getMultilineInputsFromEnv(name: string, required = false) {
+  const value =
+    process.env[`INPUT_${name.replace(/ /g, '_').toUpperCase()}`] ?? ''
+  if (required && !value) throw new Error(`${name} is required.`)
+  return value
+    .split('\n')
+    .map(s => s.trim())
+    .filter(s => s)
 }
