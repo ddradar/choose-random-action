@@ -200,11 +200,17 @@ jobs:
       - name: Restore Documents from ${{ github.ref_name }}
         run: |
           git fetch --no-tags --depth=1 origin +${{ github.ref }}:refs/remotes/origin/${{ github.ref_name }}
+          if [ -z "$RELEASE_FILES" ]; then
+            echo "::error::RELEASE_FILES is not set or empty. Aborting deploy to avoid clearing the release branch without restoring files."
+            exit 1
+          fi
           git rm -r --force --quiet -- . ':!.gitignore'
           while IFS= read -r pattern; do
             [ -z "$pattern" ] && continue
             git restore --source=origin/${{ github.ref_name }} -- "$pattern" || true
-          done <<< '${{ vars.RELEASE_FILES }}'
+          done <<< "$RELEASE_FILES"
+        env:
+          RELEASE_FILES: ${{ vars.RELEASE_FILES }}
 
       - name: Download Build Assets
         uses: actions/download-artifact@v7.0.0
