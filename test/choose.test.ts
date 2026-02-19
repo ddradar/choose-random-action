@@ -5,8 +5,7 @@ await suite('src/choose.ts', async () => {
   let chooseOne: typeof import('../src/choose.ts').chooseOne
 
   before(async () => {
-    mock.module('@actions/core', { namedExports: { debug: mock.fn() } })
-
+    mock.module('../src/gh-command.ts', { namedExports: { debug: mock.fn() } })
     chooseOne = (await import('../src/choose.ts')).chooseOne
   })
 

@@ -1,9 +1,8 @@
 import type { TestContext } from 'node:test'
 import { before, beforeEach, mock, suite, test } from 'node:test'
 
-import type { setFailed, setOutput } from '@actions/core'
-
 import type { chooseOne } from '../src/choose.ts'
+import { setOutput } from '../src/gh-command.ts'
 import type { getInputs } from '../src/input.ts'
 
 const randomString = (): string =>
@@ -12,7 +11,6 @@ const randomString = (): string =>
     .join('')
 
 await suite('src/main.ts', async () => {
-  const setFailedMock = mock.fn<typeof setFailed>()
   const setOutputMock = mock.fn<typeof setOutput>()
   const chooseOneMock = mock.fn<typeof chooseOne>()
   const getInputsMock = mock.fn<typeof getInputs>()
@@ -20,58 +18,47 @@ await suite('src/main.ts', async () => {
   let run: typeof import('../src/main.ts').run
 
   before(async () => {
-    mock.module('@actions/core', {
-      namedExports: {
-        info: mock.fn(),
-        setFailed: setFailedMock,
-        setOutput: setOutputMock,
-      },
-    })
     mock.module('../src/choose.ts', {
       namedExports: { chooseOne: chooseOneMock },
     })
     mock.module('../src/input.ts', {
       namedExports: { getInputs: getInputsMock },
     })
+    mock.module('../src/gh-command.ts', {
+      namedExports: {
+        error: mock.fn(),
+        info: mock.fn(),
+        setOutput: setOutputMock,
+      },
+    })
 
     run = (await import('../src/main.ts')).run
   })
+  beforeEach(() => (process.exitCode = 0))
 
   await suite('run()', async () => {
     beforeEach(() => {
-      setFailedMock.mock.resetCalls()
       setOutputMock.mock.resetCalls()
       chooseOneMock.mock.resetCalls()
       getInputsMock.mock.resetCalls()
     })
 
-    await test('calls core.setFailed() when getInputs() throws Error object', (t: TestContext) => {
-      // Arrange
-      const error = new Error(randomString())
-      getInputsMock.mock.mockImplementation(() => {
-        throw error
+    for (const error of [new Error(randomString()), randomString()]) {
+      await test(`exits with code 1 when chooseOne() throws ${error}`, (t: TestContext) => {
+        // Arrange
+        chooseOneMock.mock.mockImplementation(() => {
+          // oxlint-disable-next-line typescript/only-throw-error
+          throw error
+        })
+
+        // Act
+        run()
+
+        // Assert
+        t.assert.strictEqual(setOutputMock.mock.callCount(), 0)
+        t.assert.strictEqual(process.exitCode, 1)
       })
-      // Act
-      run()
-      // Assert
-      t.assert.strictEqual(setOutputMock.mock.callCount(), 0)
-      t.assert.strictEqual(setFailedMock.mock.callCount(), 1)
-      t.assert.strictEqual(setFailedMock.mock.calls[0].arguments[0], error)
-    })
-    await test('calls core.setFailed() when getInputs() throws Error string', (t: TestContext) => {
-      // Arrange
-      const error = randomString()
-      getInputsMock.mock.mockImplementation(() => {
-        // eslint-disable-next-line @typescript-eslint/only-throw-error
-        throw error
-      })
-      // Act
-      run()
-      // Assert
-      t.assert.strictEqual(setOutputMock.mock.callCount(), 0)
-      t.assert.strictEqual(setFailedMock.mock.callCount(), 1)
-      t.assert.strictEqual(setFailedMock.mock.calls[0].arguments[0], error)
-    })
+    }
 
     await test('calls core.setOutput("selected", chooseOne())', (t: TestContext) => {
       // Arrange
@@ -82,15 +69,17 @@ await suite('src/main.ts', async () => {
         { content: 'baz', weight: 2 },
       ])
       chooseOneMock.mock.mockImplementation(() => expected)
+
       // Act
       run()
+
       // Assert
       t.assert.strictEqual(setOutputMock.mock.callCount(), 1)
       t.assert.deepEqual(setOutputMock.mock.calls[0].arguments, [
         'selected',
         expected,
       ])
-      t.assert.strictEqual(setFailedMock.mock.callCount(), 0)
+      t.assert.strictEqual(process.exitCode, 0)
     })
   })
 })

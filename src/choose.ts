@@ -1,4 +1,4 @@
-import { debug } from '@actions/core'
+import { debug } from './gh-command.ts'
 
 interface Choice {
   content: string
