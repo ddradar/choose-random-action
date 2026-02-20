@@ -1,9 +1,10 @@
 // Note: This test file does not output anything to the console because it mocks `process.stdout.write`.
-import { mkdtempSync, readFileSync, writeFileSync } from 'node:fs'
+// If you want to see the output, add `--test-reporter=spec --test-reporter-destination=stderr` to the test script in package.json.
+import { mkdtemp, readFile, writeFile } from 'node:fs/promises'
 import { EOL, tmpdir } from 'node:os'
 import { join } from 'node:path'
 import type { TestContext } from 'node:test'
-import { afterEach, before, beforeEach, mock, suite, test } from 'node:test'
+import { afterEach, beforeEach, mock, suite, test } from 'node:test'
 
 import {
   debug,
@@ -15,9 +16,6 @@ import {
 
 await suite('src/gh-command.ts', async () => {
   const originalEnv: NodeJS.ProcessEnv = { ...process.env }
-  const stdoutMock = mock.method(process.stdout, 'write', () => true)
-
-  beforeEach(() => stdoutMock.mock.resetCalls())
   afterEach(() => (process.env = { ...originalEnv }))
 
   await suite('logging', async () => {
@@ -62,10 +60,7 @@ await suite('src/gh-command.ts', async () => {
   })
 
   await suite('setOutput()', async () => {
-    let tmpDir: string
-    before(() => {
-      tmpDir = mkdtempSync(join(tmpdir(), 'gh-command-test-'))
-    })
+    const tmpDir = await mkdtemp(join(tmpdir(), 'gh-command-test-'))
 
     await test('throws if GITHUB_OUTPUT is not set', (t: TestContext) => {
       // Arrange
@@ -89,17 +84,17 @@ await suite('src/gh-command.ts', async () => {
       })
     })
 
-    await test('appends "key=value[EOL]" to the file', (t: TestContext) => {
+    await test('appends "key<<(delimiter)[EOL]value[EOL](delimiter)" to the file', async (t: TestContext) => {
       // Arrange
       const filePath = join(tmpDir, 'output.txt')
-      writeFileSync(filePath, '')
+      await writeFile(filePath, '')
       process.env['GITHUB_OUTPUT'] = filePath
 
       // Act
       setOutput('my-key', 'my-value')
 
       // Assert
-      const content = readFileSync(filePath, 'utf8')
+      const content = await readFile(filePath, 'utf8')
       t.assert.match(
         content,
         /^my-key<<(gh-delim-[0-9a-f-]+)\r?\nmy-value\r?\n\1$/

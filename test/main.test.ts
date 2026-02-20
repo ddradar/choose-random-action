@@ -3,7 +3,7 @@ import type { TestContext } from 'node:test'
 import { before, beforeEach, mock, suite, test } from 'node:test'
 
 import type { chooseOne } from '../src/choose.ts'
-import { setOutput } from '../src/gh-command.ts'
+import type { setOutput } from '../src/gh-command.ts'
 import type { getInputs } from '../src/input.ts'
 
 await suite('src/main.ts', async () => {
@@ -75,7 +75,7 @@ await suite('src/main.ts', async () => {
       })
     }
 
-    await test('calls core.setOutput("selected", chooseOne())', (t: TestContext) => {
+    await test('calls setOutput("selected", chooseOne())', (t: TestContext) => {
       // Arrange
       const expected = randomUUID().toString()
       chooseOneMock.mock.mockImplementationOnce(() => expected)
@@ -85,10 +85,8 @@ await suite('src/main.ts', async () => {
 
       // Assert
       t.assert.strictEqual(setOutputMock.mock.callCount(), 1)
-      t.assert.deepEqual(setOutputMock.mock.calls[0].arguments, [
-        'selected',
-        expected,
-      ])
+      const args = ['selected', expected]
+      t.assert.deepEqual(setOutputMock.mock.calls[0].arguments, args)
       t.assert.strictEqual(process.exitCode, 0)
     })
   })
