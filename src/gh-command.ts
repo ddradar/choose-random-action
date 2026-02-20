@@ -1,4 +1,3 @@
-import { randomUUID } from 'node:crypto'
 import { appendFileSync, existsSync } from 'node:fs'
 import { EOL } from 'node:os'
 
@@ -39,20 +38,6 @@ export function error(message: string): void {
 }
 
 /**
- * Sanitizes a key-value pair for GitHub Actions output.
- * @param key The key of the output variable.
- * @param value The value of the output variable.
- * @returns The sanitized key-value pair string.
- */
-function sanitizeKeyValue(key: string, value: string): string {
-  let delimiter = `gh-delim-${randomUUID()}`
-  while (key.includes(delimiter) || value.includes(delimiter)) {
-    delimiter = `gh-delim-${randomUUID()}`
-  }
-  return `${key}<<${delimiter}${EOL}${value}${EOL}${delimiter}`
-}
-
-/**
  * Sets an output variable for the GitHub Actions.
  * @param key The name of the output variable.
  * @param value The value of the output variable.
@@ -65,7 +50,7 @@ export function setOutput(key: string, value: string): void {
       `${outputEnv} environment variable is not set or file does not exist.`
     )
 
-  appendFileSync(filePath, sanitizeKeyValue(key, value), { encoding: 'utf8' })
+  appendFileSync(filePath, `${key}=${value}${EOL}`, { encoding: 'utf8' })
 }
 
 /**

@@ -84,7 +84,7 @@ await suite('src/gh-command.ts', async () => {
       })
     })
 
-    await test('appends "key<<(delimiter)[EOL]value[EOL](delimiter)" to the file', async (t: TestContext) => {
+    await test('appends "key=value[EOL]" to the file', async (t: TestContext) => {
       // Arrange
       const filePath = join(tmpDir, 'output.txt')
       await writeFile(filePath, '')
@@ -95,10 +95,7 @@ await suite('src/gh-command.ts', async () => {
 
       // Assert
       const content = await readFile(filePath, 'utf8')
-      t.assert.match(
-        content,
-        /^my-key<<(gh-delim-[0-9a-f-]+)\r?\nmy-value\r?\n\1$/
-      )
+      t.assert.strictEqual(content, `my-key=my-value${EOL}`)
     })
   })
 
