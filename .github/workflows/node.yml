@@ -132,6 +132,40 @@ jobs:
           STEPS_CONTEXT: ${{ toJson(steps.act.outputs) }}
         run: echo $STEPS_CONTEXT
 
+      - name: Execute GitHub Action with invalid parameters (missing contents)
+        id: missing-contents
+        continue-on-error: true
+        uses: ./
+      - name: Execute GitHub Action with invalid parameters (weights length mismatch)
+        id: length-mismatch
+        continue-on-error: true
+        uses: ./
+        with:
+          contents: |
+            foo
+            bar
+            baz
+          weights: |
+            10
+            10
+      - name: Execute GitHub Action with invalid parameters (non-numeric weight)
+        id: non-numeric-weight
+        continue-on-error: true
+        uses: ./
+        with:
+          contents: |
+            foo
+            bar
+            baz
+          weights: |
+            -10
+            10
+      - name: Assert action failed with invalid parameters
+        if: steps.non-numeric-weight.outcome != 'failure' || steps.length-mismatch.outcome != 'failure' || steps.missing-contents.outcome != 'failure'
+        run: |
+          echo "::error::Expected action to fail with invalid parameters, but it succeeded."
+          exit 1
+
   diff:
     name: Compare Build Assets
     if: github.event_name == 'pull_request'
