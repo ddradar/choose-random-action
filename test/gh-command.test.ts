@@ -1,3 +1,4 @@
+// Note: This test file does not output anything to the console because it mocks `process.stdout.write`.
 import { mkdtempSync, readFileSync, writeFileSync } from 'node:fs'
 import { EOL, tmpdir } from 'node:os'
 import { join } from 'node:path'
@@ -35,7 +36,7 @@ await suite('src/gh-command.ts', async () => {
       )
     })
 
-    await test('info("message") writes "::info::message" to stdout', (t: TestContext) => {
+    await test('info("message") writes "message" to stdout', (t: TestContext) => {
       // Arrange - Act
       info('info message')
 
@@ -43,7 +44,7 @@ await suite('src/gh-command.ts', async () => {
       t.assert.strictEqual(stdoutMock.mock.calls.length, 1)
       t.assert.strictEqual(
         stdoutMock.mock.calls[0].arguments[0],
-        `::info::info message${EOL}`
+        `info message${EOL}`
       )
     })
 

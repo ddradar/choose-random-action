@@ -18,7 +18,7 @@ export function debug(message: string): void {
  * @param message The message to log.
  */
 export function info(message: string): void {
-  ghCommand('info', message)
+  process.stdout.write(`${message}${EOL}`)
 }
 
 /**
