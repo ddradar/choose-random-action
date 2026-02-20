@@ -1,3 +1,4 @@
+import { randomUUID } from 'node:crypto'
 import type { TestContext } from 'node:test'
 import { before, beforeEach, mock, suite, test } from 'node:test'
 
@@ -5,15 +6,14 @@ import type { chooseOne } from '../src/choose.ts'
 import { setOutput } from '../src/gh-command.ts'
 import type { getInputs } from '../src/input.ts'
 
-const randomString = (): string =>
-  [...Array<unknown>(12)]
-    .map(() => (~~(Math.random() * 36)).toString(36))
-    .join('')
-
 await suite('src/main.ts', async () => {
-  const setOutputMock = mock.fn<typeof setOutput>()
   const chooseOneMock = mock.fn<typeof chooseOne>()
-  const getInputsMock = mock.fn<typeof getInputs>()
+  const setOutputMock = mock.fn<typeof setOutput>()
+  const getInputsMock = mock.fn<typeof getInputs>(() => [
+    { content: 'foo', weight: 1 },
+    { content: 'bar', weight: 2 },
+    { content: 'baz', weight: 2 },
+  ])
 
   let run: typeof import('../src/main.ts').run
 
@@ -21,15 +21,15 @@ await suite('src/main.ts', async () => {
     mock.module('../src/choose.ts', {
       namedExports: { chooseOne: chooseOneMock },
     })
-    mock.module('../src/input.ts', {
-      namedExports: { getInputs: getInputsMock },
-    })
     mock.module('../src/gh-command.ts', {
       namedExports: {
         error: mock.fn(),
         info: mock.fn(),
         setOutput: setOutputMock,
       },
+    })
+    mock.module('../src/input.ts', {
+      namedExports: { getInputs: getInputsMock },
     })
 
     run = (await import('../src/main.ts')).run
@@ -43,10 +43,25 @@ await suite('src/main.ts', async () => {
       getInputsMock.mock.resetCalls()
     })
 
-    for (const error of [new Error(randomString()), randomString()]) {
+    for (const error of [new Error('Error'), 'Error']) {
+      await test(`exits with code 1 when getInputs() throws ${error}`, (t: TestContext) => {
+        // Arrange
+        getInputsMock.mock.mockImplementationOnce(() => {
+          // oxlint-disable-next-line typescript/only-throw-error
+          throw error
+        })
+
+        // Act
+        run()
+
+        // Assert
+        t.assert.strictEqual(setOutputMock.mock.callCount(), 0)
+        t.assert.strictEqual(process.exitCode, 1)
+      })
+
       await test(`exits with code 1 when chooseOne() throws ${error}`, (t: TestContext) => {
         // Arrange
-        chooseOneMock.mock.mockImplementation(() => {
+        chooseOneMock.mock.mockImplementationOnce(() => {
           // oxlint-disable-next-line typescript/only-throw-error
           throw error
         })
@@ -62,13 +77,8 @@ await suite('src/main.ts', async () => {
 
     await test('calls core.setOutput("selected", chooseOne())', (t: TestContext) => {
       // Arrange
-      const expected = randomString()
-      getInputsMock.mock.mockImplementation(() => [
-        { content: 'foo', weight: 1 },
-        { content: 'bar', weight: 2 },
-        { content: 'baz', weight: 2 },
-      ])
-      chooseOneMock.mock.mockImplementation(() => expected)
+      const expected = randomUUID().toString()
+      chooseOneMock.mock.mockImplementationOnce(() => expected)
 
       // Act
       run()

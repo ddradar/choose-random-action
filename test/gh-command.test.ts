@@ -100,7 +100,10 @@ await suite('src/gh-command.ts', async () => {
 
       // Assert
       const content = readFileSync(filePath, 'utf8')
-      t.assert.strictEqual(content, `my-key=my-value${EOL}`)
+      t.assert.match(
+        content,
+        /^my-key<<(gh-delim-[0-9a-f-]+)\r?\nmy-value\r?\n\1$/
+      )
     })
   })
 
