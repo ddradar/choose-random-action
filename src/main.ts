@@ -11,7 +11,7 @@ export function run(): void {
     setOutput('selected', selected)
   } catch (e) {
     process.exitCode = 1
-    error(e instanceof Error ? e.message : `${e as string}`)
+    error(e instanceof Error ? e.toString() : `${e as string}`)
   }
 }
 
