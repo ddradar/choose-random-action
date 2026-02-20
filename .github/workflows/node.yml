@@ -210,6 +210,11 @@ jobs:
             git restore --source=origin/${{ github.ref_name }} -- "$pattern" || true
           done <<< "$RELEASE_FILES"
         env:
+          # A newline-separated list of file patterns to restore.
+          # Example:
+          #   *.md
+          #   LICENSE
+          #   action.yml
           RELEASE_FILES: ${{ vars.RELEASE_FILES }}
 
       - name: Download Build Assets
