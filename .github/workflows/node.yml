@@ -206,6 +206,7 @@ jobs:
           fi
           git rm -r --force --quiet -- . ':!.gitignore'
           while IFS= read -r pattern; do
+            pattern="${pattern%$'\r'}"
             [ -z "$pattern" ] && continue
             git restore --source=origin/${{ github.ref_name }} -- "$pattern" || true
           done <<< "$RELEASE_FILES"
