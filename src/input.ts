@@ -1,6 +1,5 @@
-import { getMultilineInput } from '@actions/core'
-
 import type { chooseOne } from './choose.ts'
+import { getMultilineInput } from './gh-command.ts'
 
 /** Gets the values of user inputs.
  * @returns Parsed user inputs
@@ -9,7 +8,7 @@ import type { chooseOne } from './choose.ts'
  * @see {@link ../action.yml}
  */
 export function getInputs(): Parameters<typeof chooseOne>[0] {
-  const contents = getMultilineInput('contents', { required: true })
+  const contents = getMultilineInput('contents', true)
   const weights = getMultilineInput('weights').map(s => parseInt(s.trim(), 10))
 
   if (contents.length === 0) throw new Error('contents is required.')

@@ -1,6 +1,5 @@
-import { info, setFailed, setOutput } from '@actions/core'
-
 import { chooseOne } from './choose.ts'
+import { error, info, setOutput } from './gh-command.ts'
 import { getInputs } from './input.ts'
 
 /** main entry point */
@@ -10,8 +9,9 @@ export function run(): void {
 
     info(`selected: ${selected}`)
     setOutput('selected', selected)
-  } catch (error) {
-    setFailed(error instanceof Error ? error : `${error as string}`)
+  } catch (e) {
+    process.exitCode = 1
+    error(e instanceof Error ? e.toString() : `${e as string}`)
   }
 }
 

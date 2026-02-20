@@ -1,14 +1,14 @@
 import type { TestContext } from 'node:test'
 import { before, mock, suite, test } from 'node:test'
 
-import type { getMultilineInput } from '@actions/core'
+import type { getMultilineInput } from '../src/gh-command.ts'
 
 await suite('src/input.ts', async () => {
   const getMultilineInputMock = mock.fn<typeof getMultilineInput>()
   let getInputs: typeof import('../src/input.ts').getInputs
 
   before(async () => {
-    mock.module('@actions/core', {
+    mock.module('../src/gh-command.ts', {
       namedExports: { getMultilineInput: getMultilineInputMock },
     })
 
