@@ -33,14 +33,20 @@ updates:
       semver-minor-days: 7
       semver-patch-days: 3
     groups:
-      lint-tools:
+      oxc: # oxc tools
         dependency-type: development
-        exclude-patterns: # Exclude build tools
-          - '@tsconfig/*'
-          - '@types/node'
-          - '@vercel/*'
-          - typescript
+        patterns:
+          - oxlint
+          - oxfmt
+          - oxlint-tsgolint
+      lint-tools: # lint tools (not affected on build)
+        dependency-type: development
+        patterns:
+          - husky
+          - lint-staged
+          - npm-run-all2
     ignore:
+      # Should match the runtime Node.js major version, so keep it manually updated.
       - dependency-name: '@types/node'
         update-types:
           - version-update:semver-major
