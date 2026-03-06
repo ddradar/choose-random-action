@@ -10,7 +10,7 @@
     "es2024": true
   },
   "rules": {
-    // ESLint Recommended (Excepts correctness category)
+    // #region eslint/recommended (Excepts correctness category)
     "getter-return": "error",
     "no-case-declarations": "error",
     "no-empty": "error",
@@ -22,14 +22,16 @@
     "no-undef": "error",
     "no-unexpected-multiline": "error",
     "no-unreachable": "error",
-    // Node.js Recommended (Excepts correctness category)
+    // #endregion eslint/recommended (Excepts correctness category)
+    // #region eslint-plugin-n/recommended (Excepts correctness category)
     // "n/no-deprecated-api": "error",
     "node/no-exports-assign": "error",
     "unicorn/no-process-exit": "error",
     // "n/no-unsupported-features/es-builtins": "error",
     // "n/no-unsupported-features/es-syntax":"error",
     // "n/no-unsupported-features/node-builtins":"error",
-    // typescript-eslint Recommended Type Checked (Excepts correctness category)
+    // #endregion eslint-plugin-n/recommended (Excepts correctness category)
+    // #region typescript-eslint/recommended-type-checked (Excepts correctness category)
     // https://github.com/typescript-eslint/typescript-eslint/blob/main/packages/eslint-plugin/src/configs/eslintrc/recommended-type-checked.ts
     "typescript/ban-ts-comment": "error",
     "no-array-constructor": "error",
@@ -55,28 +57,30 @@
     "require-await": "off",
     "typescript/require-await": "error",
     "typescript/restrict-plus-operands": "error",
-    // typescript-eslint Stylistic Type Checked (Excepts correctness category)
+    // #endregion typescript-eslint/recommended-type-checked (Excepts correctness category)
+    // #region typescript-eslint/stylistic-type-checked (Excepts correctness category)
     // https://github.com/typescript-eslint/typescript-eslint/blob/main/packages/eslint-plugin/src/configs/eslintrc/stylistic-type-checked.ts
     "typescript/adjacent-overload-signatures": "error",
     "typescript/array-type": "error",
     "typescript/ban-tslint-comment": "error",
-    // "@typescript-eslint/class-literal-property-style": "error",
+    "typescript/class-literal-property-style": "error",
     "typescript/consistent-generic-constructors": "error",
     "typescript/consistent-indexed-object-style": "error",
-    // "@typescript-eslint/consistent-type-assertions": "error",
+    "typescript/consistent-type-assertions": "error",
     "typescript/consistent-type-definitions": "error",
-    // "@typescript-eslint/dot-notation": "error",
+    "typescript/dot-notation": "error",
     "typescript/no-confusing-non-null-assertion": "error",
     "no-empty-function": "error",
     "typescript/no-inferrable-types": "error",
     "typescript/non-nullable-type-assertion-style": "error",
-    // "@typescript-eslint/prefer-find": "error",
+    "typescript/prefer-find": "error",
     "typescript/prefer-for-of": "error",
     "typescript/prefer-function-type": "error",
     "typescript/prefer-includes": "error",
     "typescript/prefer-nullish-coalescing": "error",
-    "typescript/prefer-optional-chain": "error"
-    // "@typescript-eslint/prefer-regexp-exec": "error",
-    // "@typescript-eslint/prefer-string-starts-ends-with": "error"
+    "typescript/prefer-optional-chain": "error",
+    "typescript/prefer-regexp-exec": "error",
+    "typescript/prefer-string-starts-ends-with": "error"
+    // #endregion typescript-eslint/stylistic-type-checked (Excepts correctness category)
   }
 }
