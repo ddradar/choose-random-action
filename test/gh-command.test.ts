@@ -64,7 +64,7 @@ await suite('src/gh-command.ts', async () => {
 
     await test('throws if GITHUB_OUTPUT is not set', (t: TestContext) => {
       // Arrange
-      delete process.env['GITHUB_OUTPUT']
+      delete process.env.GITHUB_OUTPUT
 
       // Act - Assert
       t.assert.throws(() => setOutput('key', 'value'), {
@@ -75,7 +75,7 @@ await suite('src/gh-command.ts', async () => {
 
     await test('throws if GITHUB_OUTPUT file does not exist', (t: TestContext) => {
       // Arrange
-      process.env['GITHUB_OUTPUT'] = join(tmpDir, 'nonexistent.txt')
+      process.env.GITHUB_OUTPUT = join(tmpDir, 'nonexistent.txt')
 
       // Act - Assert
       t.assert.throws(() => setOutput('key', 'value'), {
@@ -88,7 +88,7 @@ await suite('src/gh-command.ts', async () => {
       // Arrange
       const filePath = join(tmpDir, 'output.txt')
       await writeFile(filePath, '')
-      process.env['GITHUB_OUTPUT'] = filePath
+      process.env.GITHUB_OUTPUT = filePath
 
       // Act
       setOutput('my-key', 'my-value')
@@ -102,7 +102,7 @@ await suite('src/gh-command.ts', async () => {
   await suite('getMultilineInput()', async () => {
     await test('returns empty array if env var is not set', (t: TestContext) => {
       // Arrange
-      delete process.env['INPUT_TEST']
+      delete process.env.INPUT_TEST
 
       // Act
       const result = getMultilineInput('test')
@@ -113,7 +113,7 @@ await suite('src/gh-command.ts', async () => {
 
     await test('trims whitespace and filters empty lines', (t: TestContext) => {
       // Arrange
-      process.env['INPUT_TEST'] = '  foo  \n  bar  \n\nbaz'
+      process.env.INPUT_TEST = '  foo  \n  bar  \n\nbaz'
 
       // Act
       const result = getMultilineInput('test')
@@ -124,7 +124,7 @@ await suite('src/gh-command.ts', async () => {
 
     await test('converts spaces in name to underscores', (t: TestContext) => {
       // Arrange
-      process.env['INPUT_MY_INPUT'] = 'value'
+      process.env.INPUT_MY_INPUT = 'value'
 
       // Act
       const result = getMultilineInput('my input')
@@ -135,7 +135,7 @@ await suite('src/gh-command.ts', async () => {
 
     await test('throws if required and value is empty', (t: TestContext) => {
       // Arrange
-      delete process.env['INPUT_TEST']
+      delete process.env.INPUT_TEST
 
       // Act - Assert
       t.assert.throws(() => getMultilineInput('test', true), {
@@ -145,7 +145,7 @@ await suite('src/gh-command.ts', async () => {
 
     await test('returns values if required and value is provided', (t: TestContext) => {
       // Arrange
-      process.env['INPUT_TEST'] = 'foo\nbar'
+      process.env.INPUT_TEST = 'foo\nbar'
 
       // Act
       const result = getMultilineInput('test', true)
