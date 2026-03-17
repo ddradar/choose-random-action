@@ -110,7 +110,7 @@ jobs:
           sparse-checkout: action.yml
           sparse-checkout-cone-mode: false
       - name: Download Action Assets
-        uses: actions/download-artifact@v8.0.0
+        uses: actions/download-artifact@v8.0.1
         with:
           name: dist
           path: dist
@@ -181,7 +181,7 @@ jobs:
           sparse-checkout: dist
 
       - name: Download Current Action Assets
-        uses: actions/download-artifact@v8.0.0
+        uses: actions/download-artifact@v8.0.1
         with:
           name: dist
           path: current
@@ -253,7 +253,7 @@ jobs:
           RELEASE_FILES: ${{ vars.RELEASE_FILES }}
 
       - name: Download Build Assets
-        uses: actions/download-artifact@v8.0.0
+        uses: actions/download-artifact@v8.0.1
         with:
           name: dist
           path: dist
