@@ -5,7 +5,8 @@
   ],
   "compilerOptions": {
     "rootDir": ".",
-    "rewriteRelativeImportExtensions": true
+    "rewriteRelativeImportExtensions": true,
+    "types": ["node"]
   },
   "include": ["src/**/*", "build.mts", "*.d.ts"],
   "exclude": ["coverage", "dist", "node_modules", "test", "*.config.*"]
