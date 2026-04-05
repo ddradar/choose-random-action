@@ -139,5 +139,5 @@ Scope is optional; use it to indicate the affected area (e.g., `feat(choose): ..
 
 - The title should clearly summarize the change.
 - Reference related issues in the description (e.g., `ref #99`).
-- Mark in-progress PRs with a `[WIP]` prefix and open as Draft; remove both when ready for review.
-- Resolve conflicts with `main` before removing `[WIP]`.
+- Open in-progress PRs as Draft; convert to Ready for Review when ready.
+- Resolve conflicts with `main` before marking as Ready for Review.
