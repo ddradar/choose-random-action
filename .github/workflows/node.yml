@@ -209,13 +209,14 @@ jobs:
           echo '```' >> $GITHUB_STEP_SUMMARY
       - name: Report diff
         if: steps.compare.outcome == 'failure'
+        run: |
+          echo "::warning::${MESSAGE}"
+          gh pr comment "$PR_URL" --body "${MESSAGE} [Show More](${RUN_URL})"
         env:
           GH_TOKEN: ${{ github.token }}
-        run: |
-          message="There is a difference in the build results."
-          echo "::warning::${message}"
-          gh pr comment "${{ github.event.pull_request.number }}" \
-            --body "${message} [Show More](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})"
+          PR_URL: ${{ github.event.pull_request.html_url }}
+          MESSAGE: 'There is a difference in the build results.'
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
 
   deploy:
     name: Deploy to Release branch
