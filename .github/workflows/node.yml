@@ -171,7 +171,6 @@ jobs:
     if: github.event_name == 'pull_request'
     needs: [build]
     permissions:
-      issues: write
       pull-requests: write
     runs-on: ubuntu-slim
     steps:
@@ -210,17 +209,13 @@ jobs:
           echo '```' >> $GITHUB_STEP_SUMMARY
       - name: Report diff
         if: steps.compare.outcome == 'failure'
-        uses: actions/github-script@v8
-        with:
-          script: |
-            const message = 'There is a difference in the build results.'
-            core.warning(message)
-            await github.rest.issues.createComment({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: `${message} [Show More](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})`
-            })
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          message="There is a difference in the build results."
+          echo "::warning::${message}"
+          gh pr comment "${{ github.event.pull_request.number }}" \
+            --body "${message} [Show More](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})"
 
   deploy:
     name: Deploy to Release branch
