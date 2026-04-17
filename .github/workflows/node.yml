@@ -186,11 +186,16 @@ jobs:
           name: dist
           path: current
 
-      - name: Setup js-beautify to compare minified js files
+      - name: Get oxfmt version from package-lock.json
+        id: version
         run: |
-          npm install --global js-beautify
-          git config --local diff.minjs.textconv js-beautify
-          echo "index.mjs diff=minjs" > .gitattributes
+          git fetch --depth=1 origin ${{ github.sha }}
+          VERSION=$(git show FETCH_HEAD:package-lock.json | jq -r '.packages["node_modules/oxfmt"].version')
+          echo "oxfmt=$VERSION" >> $GITHUB_OUTPUT
+      - name: Format minified js files for comparison
+        run: |
+          npm install --global "oxfmt@${{ steps.version.outputs.oxfmt }}"
+          oxfmt dist/ current/
       - name: Compare
         id: compare
         continue-on-error: true
