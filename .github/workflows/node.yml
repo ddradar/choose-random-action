@@ -38,6 +38,7 @@ jobs:
     permissions:
       id-token: write # to use OIDC
       contents: read
+      code-quality: write
 
     steps:
       - uses: actions/checkout@v6.0.3
@@ -50,12 +51,24 @@ jobs:
         run: npm ci --ignore-scripts
 
       - name: Unit Test
-        run: npm test -- --experimental-test-coverage --test-coverage-include=src/*.ts --test-reporter=lcov --test-reporter-destination=coverage.lcov
+        run: |
+          npm test -- --experimental-test-coverage --test-coverage-include=src/*.ts \
+            --test-reporter=spec --test-reporter-destination=stdout \
+            --test-reporter=cobertura --test-reporter-destination=cobertura.xml
 
       - name: Report Code Coverage to codecov
         uses: codecov/codecov-action@v7.0.0
         with:
           use_oidc: true
+          disable_search: true
+          files: ./cobertura.xml
+
+      - name: Upload coverage report to GitHub
+        uses: actions/upload-code-coverage@abb5995db9e0199b0e2bb9dbd136fce4cb1ec4d3 # v1.3.0
+        with:
+          file: cobertura.xml
+          language: TypeScript
+          label: code-coverage/node-test
 
   build:
     name: Build
