@@ -59,14 +59,14 @@ jobs:
       - parallel:
         - name: Report Code Coverage to codecov
           uses: codecov/codecov-action@v7.0.0
-          if: ${{ !canceled() }}
+          if: ${{ !cancelled() }}
           with:
             use_oidc: true
             disable_search: true
             files: ./cobertura.xml
         - name: Upload coverage report to GitHub
           uses: actions/upload-code-coverage@abb5995db9e0199b0e2bb9dbd136fce4cb1ec4d3 # v1.3.0
-          if: ${{ !canceled() }}
+          if: ${{ !cancelled() }}
           with:
             file: cobertura.xml
             language: TypeScript
