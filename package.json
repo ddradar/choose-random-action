@@ -27,7 +27,7 @@
   "devDependencies": {
     "@tsconfig/node24": "^24.0.4",
     "@tsconfig/strictest": "^2.0.8",
-    "@types/node": "^24.13.2",
+    "@types/node": "^24.13.3",
     "cobertura": "^1.0.3",
     "esbuild": "^0.28.1",
     "husky": "^9.1.7",
