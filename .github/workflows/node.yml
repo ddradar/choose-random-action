@@ -27,10 +27,11 @@ jobs:
       - name: Install Dependencies
         run: npm ci --ignore-scripts
 
-      - name: Oxlint
-        run: npm run lint:oxlint
-      - name: Oxfmt
-        run: npm run lint:oxfmt
+      - parallel:
+        - name: Oxlint
+          run: npm run lint:oxlint
+        - name: Oxfmt
+          run: npm run lint:oxfmt
 
   unit-test:
     name: Unit Test
@@ -39,7 +40,6 @@ jobs:
       id-token: write # to use OIDC
       contents: read
       code-quality: write
-
     steps:
       - uses: actions/checkout@v7.0.0
       - name: Enable Corepack
@@ -56,19 +56,21 @@ jobs:
             --test-reporter=spec --test-reporter-destination=stdout \
             --test-reporter=cobertura --test-reporter-destination=cobertura.xml
 
-      - name: Report Code Coverage to codecov
-        uses: codecov/codecov-action@v7.0.0
-        with:
-          use_oidc: true
-          disable_search: true
-          files: ./cobertura.xml
-
-      - name: Upload coverage report to GitHub
-        uses: actions/upload-code-coverage@abb5995db9e0199b0e2bb9dbd136fce4cb1ec4d3 # v1.3.0
-        with:
-          file: cobertura.xml
-          language: TypeScript
-          label: code-coverage/node-test
+      - parallel:
+        - name: Report Code Coverage to codecov
+          uses: codecov/codecov-action@v7.0.0
+          if: ${{ !cancelled() }}
+          with:
+            use_oidc: true
+            disable_search: true
+            files: ./cobertura.xml
+        - name: Upload coverage report to GitHub
+          uses: actions/upload-code-coverage@abb5995db9e0199b0e2bb9dbd136fce4cb1ec4d3 # v1.3.0
+          if: ${{ !cancelled() }}
+          with:
+            file: cobertura.xml
+            language: TypeScript
+            label: code-coverage/node-test
 
   build:
     name: Build
@@ -118,63 +120,66 @@ jobs:
           - windows-11-arm
     runs-on: ${{ matrix.os }}
     steps:
-      - uses: actions/checkout@v7.0.0
-        with:
-          sparse-checkout: action.yml
-          sparse-checkout-cone-mode: false
-      - name: Download Action Assets
-        uses: actions/download-artifact@v8.0.1
-        with:
-          name: dist
-          path: dist
+      - parallel:
+        - uses: actions/checkout@v7.0.0
+          with:
+            sparse-checkout: action.yml
+            sparse-checkout-cone-mode: false
+        - name: Download Action Assets
+          uses: actions/download-artifact@v8.0.1
+          with:
+            name: dist
+            path: dist
 
-      - name: Execute GitHub Action
-        id: act
-        uses: ./
-        with:
-          contents: |
-            foo
-            bar
-            baz
-          weights: |
-            10
-            10
-            10
+      - parallel:
+        - name: Execute GitHub Action
+          id: act
+          uses: ./
+          with:
+            contents: |
+              foo
+              bar
+              baz
+            weights: |
+              10
+              10
+              10
+        - name: Execute GitHub Action with invalid parameters (missing contents)
+          id: missing-contents
+          continue-on-error: true
+          uses: ./
+        - name: Execute GitHub Action with invalid parameters (weights length mismatch)
+          id: length-mismatch
+          continue-on-error: true
+          uses: ./
+          with:
+            contents: |
+              foo
+              bar
+              baz
+            weights: |
+              10
+              10
+        - name: Execute GitHub Action with invalid parameters (non-numeric weight)
+          id: non-numeric-weight
+          continue-on-error: true
+          uses: ./
+          with:
+            contents: |
+              foo
+              bar
+              baz
+            weights: |
+              -10
+              10
+
       - name: Echo Action outputs
         env:
           STEPS_CONTEXT: ${{ toJson(steps.act.outputs) }}
         run: echo $STEPS_CONTEXT
 
-      - name: Execute GitHub Action with invalid parameters (missing contents)
-        id: missing-contents
-        continue-on-error: true
-        uses: ./
-      - name: Execute GitHub Action with invalid parameters (weights length mismatch)
-        id: length-mismatch
-        continue-on-error: true
-        uses: ./
-        with:
-          contents: |
-            foo
-            bar
-            baz
-          weights: |
-            10
-            10
-      - name: Execute GitHub Action with invalid parameters (non-numeric weight)
-        id: non-numeric-weight
-        continue-on-error: true
-        uses: ./
-        with:
-          contents: |
-            foo
-            bar
-            baz
-          weights: |
-            -10
-            10
       - name: Assert action failed with invalid parameters
-        if: steps.non-numeric-weight.outcome != 'failure' || steps.length-mismatch.outcome != 'failure' || steps.missing-contents.outcome != 'failure'
+        if: steps.missing-contents.outcome != 'failure' || steps.length-mismatch.outcome != 'failure' || steps.non-numeric-weight.outcome != 'failure'
         run: |
           echo "::error::Expected action to fail with invalid parameters, but it succeeded."
           exit 1
@@ -187,16 +192,16 @@ jobs:
       pull-requests: write
     runs-on: ubuntu-slim
     steps:
-      - uses: actions/checkout@v7.0.0
-        with:
-          ref: ${{ vars.RELEASE_BRANCH }}
-          sparse-checkout: dist
-
-      - name: Download Current Action Assets
-        uses: actions/download-artifact@v8.0.1
-        with:
-          name: dist
-          path: current
+      - parallel:
+        - uses: actions/checkout@v7.0.0
+          with:
+            ref: ${{ vars.RELEASE_BRANCH }}
+            sparse-checkout: dist
+        - name: Download Current Action Assets
+          uses: actions/download-artifact@v8.0.1
+          with:
+            name: dist
+            path: current
 
       - name: Get oxfmt version from package-lock.json
         id: version
@@ -213,23 +218,24 @@ jobs:
         continue-on-error: true
         run: git diff --no-index ./dist/ ./current/ > $RUNNER_TEMP/diff.txt
 
-      - name: Report Summary
-        if: steps.compare.outcome == 'failure'
-        run: |
-          echo '# Compare ${{ github.sha }} to ${{ github.base_ref }}' >> $GITHUB_STEP_SUMMARY
-          echo '```diff' >> $GITHUB_STEP_SUMMARY
-          cat $RUNNER_TEMP/diff.txt >> $GITHUB_STEP_SUMMARY
-          echo '```' >> $GITHUB_STEP_SUMMARY
-      - name: Report diff
-        if: steps.compare.outcome == 'failure'
-        run: |
-          echo "::warning::${MESSAGE}"
-          gh pr comment "$PR_URL" --body "${MESSAGE} [Show More](${RUN_URL})"
-        env:
-          GH_TOKEN: ${{ github.token }}
-          PR_URL: ${{ github.event.pull_request.html_url }}
-          MESSAGE: 'There is a difference in the build results.'
-          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+      - parallel:
+        - name: Report Summary
+          if: steps.compare.outcome == 'failure'
+          run: |
+            echo '# Compare ${{ github.sha }} to ${{ github.base_ref }}' >> $GITHUB_STEP_SUMMARY
+            echo '```diff' >> $GITHUB_STEP_SUMMARY
+            cat $RUNNER_TEMP/diff.txt >> $GITHUB_STEP_SUMMARY
+            echo '```' >> $GITHUB_STEP_SUMMARY
+        - name: Report diff
+          if: steps.compare.outcome == 'failure'
+          run: |
+            echo "::warning::${MESSAGE}"
+            gh pr comment "$PR_URL" --body "${MESSAGE} [Show More](${RUN_URL})"
+          env:
+            GH_TOKEN: ${{ github.token }}
+            PR_URL: ${{ github.event.pull_request.html_url }}
+            MESSAGE: 'There is a difference in the build results.'
+            RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
 
   deploy:
     name: Deploy to Release branch
