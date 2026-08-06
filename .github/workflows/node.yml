@@ -120,16 +120,15 @@ jobs:
           - windows-11-arm
     runs-on: ${{ matrix.os }}
     steps:
-      - parallel:
-        - uses: actions/checkout@v7.0.0
-          with:
-            sparse-checkout: action.yml
-            sparse-checkout-cone-mode: false
-        - name: Download Action Assets
-          uses: actions/download-artifact@v8.0.1
-          with:
-            name: dist
-            path: dist
+      - uses: actions/checkout@v7.0.0
+        with:
+          sparse-checkout: action.yml
+          sparse-checkout-cone-mode: false
+      - name: Download Action Assets
+        uses: actions/download-artifact@v8.0.1
+        with:
+          name: dist
+          path: dist
 
       - parallel:
         - name: Execute GitHub Action
@@ -192,16 +191,15 @@ jobs:
       pull-requests: write
     runs-on: ubuntu-slim
     steps:
-      - parallel:
-        - uses: actions/checkout@v7.0.0
-          with:
-            ref: ${{ vars.RELEASE_BRANCH }}
-            sparse-checkout: dist
-        - name: Download Current Action Assets
-          uses: actions/download-artifact@v8.0.1
-          with:
-            name: dist
-            path: current
+      - uses: actions/checkout@v7.0.0
+        with:
+          ref: ${{ vars.RELEASE_BRANCH }}
+          sparse-checkout: dist
+      - name: Download Current Action Assets
+        uses: actions/download-artifact@v8.0.1
+        with:
+          name: dist
+          path: current
 
       - name: Get oxfmt version from package-lock.json
         id: version
