@@ -28,10 +28,10 @@ jobs:
         run: npm ci --ignore-scripts
 
       - parallel:
-        - name: Oxlint
-          run: npm run lint:oxlint
-        - name: Oxfmt
-          run: npm run lint:oxfmt
+          - name: Oxlint
+            run: npm run lint:oxlint
+          - name: Oxfmt
+            run: npm run lint:oxfmt
 
   unit-test:
     name: Unit Test
@@ -57,20 +57,20 @@ jobs:
             --test-reporter=cobertura --test-reporter-destination=cobertura.xml
 
       - parallel:
-        - name: Report Code Coverage to codecov
-          uses: codecov/codecov-action@v7.0.0
-          if: ${{ !cancelled() }}
-          with:
-            use_oidc: true
-            disable_search: true
-            files: ./cobertura.xml
-        - name: Upload coverage report to GitHub
-          uses: actions/upload-code-coverage@1c15be36fc3733ba839b1dd643bd9556e4426dc1 # v1.4.1
-          if: ${{ !cancelled() }}
-          with:
-            file: cobertura.xml
-            language: TypeScript
-            label: code-coverage/node-test
+          - name: Report Code Coverage to codecov
+            uses: codecov/codecov-action@v7.0.0
+            if: ${{ !cancelled() }}
+            with:
+              use_oidc: true
+              disable_search: true
+              files: ./cobertura.xml
+          - name: Upload coverage report to GitHub
+            uses: actions/upload-code-coverage@1c15be36fc3733ba839b1dd643bd9556e4426dc1 # v1.4.1
+            if: ${{ !cancelled() }}
+            with:
+              file: cobertura.xml
+              language: TypeScript
+              label: code-coverage/node-test
 
   build:
     name: Build
@@ -133,46 +133,46 @@ jobs:
           path: dist
 
       - parallel:
-        - name: Execute GitHub Action
-          id: act
-          uses: ./
-          with:
-            contents: |
-              foo
-              bar
-              baz
-            weights: |
-              10
-              10
-              10
-        - name: Execute GitHub Action with invalid parameters (missing contents)
-          id: missing-contents
-          continue-on-error: true
-          uses: ./
-        - name: Execute GitHub Action with invalid parameters (weights length mismatch)
-          id: length-mismatch
-          continue-on-error: true
-          uses: ./
-          with:
-            contents: |
-              foo
-              bar
-              baz
-            weights: |
-              10
-              10
-        - name: Execute GitHub Action with invalid parameters (non-numeric weight)
-          id: non-numeric-weight
-          continue-on-error: true
-          uses: ./
-          with:
-            contents: |
-              foo
-              bar
-              baz
-            weights: |
-              -10
-              10
+          - name: Execute GitHub Action
+            id: act
+            uses: ./
+            with:
+              contents: |
+                foo
+                bar
+                baz
+              weights: |
+                10
+                10
+                10
+          - name: Execute GitHub Action with invalid parameters (missing contents)
+            id: missing-contents
+            continue-on-error: true
+            uses: ./
+          - name: Execute GitHub Action with invalid parameters (weights length mismatch)
+            id: length-mismatch
+            continue-on-error: true
+            uses: ./
+            with:
+              contents: |
+                foo
+                bar
+                baz
+              weights: |
+                10
+                10
+          - name: Execute GitHub Action with invalid parameters (non-numeric weight)
+            id: non-numeric-weight
+            continue-on-error: true
+            uses: ./
+            with:
+              contents: |
+                foo
+                bar
+                baz
+              weights: |
+                -10
+                10
 
       - name: Echo Action outputs
         env:
@@ -219,23 +219,23 @@ jobs:
         run: git diff --no-index ./dist/ ./current/ > $RUNNER_TEMP/diff.txt
 
       - parallel:
-        - name: Report Summary
-          if: steps.compare.outcome == 'failure'
-          run: |
-            echo '# Compare ${{ github.sha }} to ${{ github.base_ref }}' >> $GITHUB_STEP_SUMMARY
-            echo '```diff' >> $GITHUB_STEP_SUMMARY
-            cat $RUNNER_TEMP/diff.txt >> $GITHUB_STEP_SUMMARY
-            echo '```' >> $GITHUB_STEP_SUMMARY
-        - name: Report diff
-          if: steps.compare.outcome == 'failure'
-          run: |
-            echo "::warning::${MESSAGE}"
-            gh pr comment "$PR_URL" --body "${MESSAGE} [Show More](${RUN_URL})"
-          env:
-            GH_TOKEN: ${{ github.token }}
-            PR_URL: ${{ github.event.pull_request.html_url }}
-            MESSAGE: 'There is a difference in the build results.'
-            RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          - name: Report Summary
+            if: steps.compare.outcome == 'failure'
+            run: |
+              echo '# Compare ${{ github.sha }} to ${{ github.base_ref }}' >> $GITHUB_STEP_SUMMARY
+              echo '```diff' >> $GITHUB_STEP_SUMMARY
+              cat $RUNNER_TEMP/diff.txt >> $GITHUB_STEP_SUMMARY
+              echo '```' >> $GITHUB_STEP_SUMMARY
+          - name: Report diff
+            if: steps.compare.outcome == 'failure'
+            run: |
+              echo "::warning::${MESSAGE}"
+              gh pr comment "$PR_URL" --body "${MESSAGE} [Show More](${RUN_URL})"
+            env:
+              GH_TOKEN: ${{ github.token }}
+              PR_URL: ${{ github.event.pull_request.html_url }}
+              MESSAGE: 'There is a difference in the build results.'
+              RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
 
   deploy:
     name: Deploy to Release branch
