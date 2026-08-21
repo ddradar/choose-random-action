@@ -25,7 +25,7 @@
     "test": "node --test --experimental-strip-types --experimental-test-module-mocks"
   },
   "devDependencies": {
-    "@tsconfig/node24": "^24.0.4",
+    "@tsconfig/node24": "^24.0.5",
     "@tsconfig/strictest": "^2.0.8",
     "@types/node": "^24.13.3",
     "cobertura": "^1.0.3",
