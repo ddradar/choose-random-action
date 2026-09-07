@@ -86,7 +86,7 @@ await suite('src/main.ts', async () => {
       // Assert
       t.assert.strictEqual(setOutputMock.mock.callCount(), 1)
       const args = ['selected', expected]
-      t.assert.deepEqual(setOutputMock.mock.calls[0].arguments, args)
+      t.assert.deepEqual(setOutputMock.mock.calls[0]?.arguments, args)
       t.assert.strictEqual(process.exitCode, 0)
     })
   })
