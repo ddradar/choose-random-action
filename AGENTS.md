@@ -35,7 +35,7 @@ fnm use
 
 - Supported inputs: `contents` (required), `weights` (optional)
 - Output: `selected` — the randomly selected string
-- Runtime: Node.js as specified in `.node-version` (currently `24.x`), ESM (`"type": "module"`)
+- Runtime: Node.js as specified in `.node-version` and `action.yml` (currently `24.x`), ESM (`"type": "module"`)
 - Built with: `esbuild` → outputs `dist/index.mjs`
 
 ## Project Structure
@@ -54,11 +54,11 @@ build.mts        esbuild build script
 
 ## Tech Stack
 
-|                |                                        |
+| Package        | Purpose                                |
 | -------------- | -------------------------------------- |
-| TypeScript 5.x | Language                               |
+| TypeScript 7.x | Language                               |
 | Node.js 24     | Runtime                                |
-| oxlint         | Linting                                |
+| oxlint         | Linting & Type checking                |
 | oxfmt          | Formatting                             |
 | node --test    | Testing (Node.js built-in test runner) |
 | esbuild        | Build bundler                          |
@@ -87,7 +87,7 @@ npm run lint   # Check for issues
 npm run fix    # Auto-fix issues
 ```
 
-Key rules enforced by oxlint (`.oxlintrc.jsonc`):
+Key rules enforced by oxlint (`.oxlintrc.json`):
 
 - No `any` types — `typescript/no-explicit-any`
 - No `require()` — `typescript/no-require-imports`
@@ -114,7 +114,7 @@ Do not add disable comments (e.g., `// oxlint-disable`) unless unavoidable; alwa
 
 ## Commit Conventions
 
-Follow the [Angular commit message format](https://github.com/angular/angular.js/blob/master/DEVELOPERS.md#type).
+Follow the [Conventional Commits v1.0.0](https://www.conventionalcommits.org/en/v1.0.0/).
 
 ```
 <type>(<scope>): <summary>
