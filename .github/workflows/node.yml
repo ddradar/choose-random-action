@@ -278,10 +278,16 @@ jobs:
           path: dist
 
       - name: Commit and Push
-        continue-on-error: true
         run: |
           git config user.name ${{ vars.GH_ACTIONS_COMMIT_NAME }}
           git config user.email ${{ vars.GH_ACTIONS_COMMIT_EMAIL }}
           git add .
+
+          # Check if there are changes
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+            exit 0
+          fi
+
           git commit -m "build: deploy via ${{ github.sha }}"
           git push
