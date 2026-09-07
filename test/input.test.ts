@@ -9,7 +9,7 @@ await suite('src/input.ts', async () => {
 
   before(async () => {
     mock.module('../src/gh-command.ts', {
-      namedExports: { getMultilineInput: getMultilineInputMock },
+      exports: { getMultilineInput: getMultilineInputMock },
     })
 
     getInputs = (await import('../src/input.ts')).getInputs
