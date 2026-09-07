@@ -1,4 +1,4 @@
-import { appendFileSync, existsSync } from 'node:fs'
+import { appendFileSync } from 'node:fs'
 import { EOL } from 'node:os'
 
 /**
@@ -43,14 +43,8 @@ export function error(message: string): void {
  * @param value The value of the output variable.
  */
 export function setOutput(key: string, value: string): void {
-  const outputEnv = 'GITHUB_OUTPUT'
-  const filePath = process.env[outputEnv]
-  if (!filePath || !existsSync(filePath))
-    throw new Error(
-      `${outputEnv} environment variable is not set or file does not exist.`
-    )
-
-  appendFileSync(filePath, `${key}=${value}${EOL}`, { encoding: 'utf8' })
+  const filePath = process.env['GITHUB_OUTPUT']
+  appendFileSync(filePath!, `${key}=${value}${EOL}`, { encoding: 'utf8' })
 }
 
 /**
