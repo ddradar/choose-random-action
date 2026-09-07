@@ -57,8 +57,11 @@ export function getMultilineInput(name: string, required = false): string[] {
   const value =
     process.env[`INPUT_${name.replace(/ /g, '_').toUpperCase()}`] ?? ''
   if (required && !value) throw new Error(`${name} is required.`)
-  return value
-    .split('\n')
-    .map(s => s.trim())
-    .filter(s => s)
+
+  const result: string[] = []
+  for (const line of value.split('\n')) {
+    const trimmed = line.trim()
+    if (trimmed) result.push(trimmed)
+  }
+  return result
 }

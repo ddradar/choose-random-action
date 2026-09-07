@@ -9,21 +9,22 @@ import { getMultilineInput } from './gh-command.ts'
  */
 export function getInputs(): Parameters<typeof chooseOne>[0] {
   const contents = getMultilineInput('contents', true)
-  const weights = getMultilineInput('weights').map(s => parseInt(s.trim(), 10))
+  const weightInputs = getMultilineInput('weights')
 
   if (contents.length === 0) throw new Error('contents is required.')
-  if (weights.length === 0)
+  if (weightInputs.length === 0)
     return contents.map(content => ({ content, weight: 1 }))
-
-  if (weights.some(n => isNaN(n) || n <= 0))
-    throw new Error('weights should be natural number.')
-  if (contents.length !== weights.length)
+  if (contents.length !== weightInputs.length)
     throw new RangeError(
-      `Parameters should be the same length. (contents: ${contents.length} weights: ${weights.length})`
+      `Parameters should be the same length. (contents: ${contents.length} weights: ${weightInputs.length})`
     )
 
-  return contents.map((content, i) => ({
-    content,
-    weight: weights[i]!,
-  }))
+  const result: ReturnType<typeof getInputs> = []
+  for (const rawWeight of weightInputs) {
+    const weight = parseInt(rawWeight, 10)
+    if (isNaN(weight) || weight <= 0)
+      throw new Error('weights should be natural number.')
+    result.push({ content: contents[result.length]!, weight })
+  }
+  return result
 }
