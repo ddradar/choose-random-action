@@ -296,6 +296,6 @@ jobs:
           fi
 
           git commit -m "build: deploy via ${{ github.sha }}"
-          gh repo sync --branch ${{ vars.RELEASE_BRANCH }} --force
+          git push "https://x-access-token:${GH_TOKEN}@github.com/${{ github.repository }}" HEAD:${{ vars.RELEASE_BRANCH }}
         env:
           GH_TOKEN: ${{ steps.generate-token.outputs.token }}
