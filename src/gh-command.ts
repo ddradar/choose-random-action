@@ -1,4 +1,4 @@
-import { appendFileSync, existsSync } from 'node:fs'
+import { appendFileSync } from 'node:fs'
 import { EOL } from 'node:os'
 
 /**
@@ -43,14 +43,8 @@ export function error(message: string): void {
  * @param value The value of the output variable.
  */
 export function setOutput(key: string, value: string): void {
-  const outputEnv = 'GITHUB_OUTPUT'
-  const filePath = process.env[outputEnv]
-  if (!filePath || !existsSync(filePath))
-    throw new Error(
-      `${outputEnv} environment variable is not set or file does not exist.`
-    )
-
-  appendFileSync(filePath, `${key}=${value}${EOL}`, { encoding: 'utf8' })
+  const filePath = process.env['GITHUB_OUTPUT']
+  appendFileSync(filePath!, `${key}=${value}${EOL}`, { encoding: 'utf8' })
 }
 
 /**
@@ -63,8 +57,11 @@ export function getMultilineInput(name: string, required = false): string[] {
   const value =
     process.env[`INPUT_${name.replace(/ /g, '_').toUpperCase()}`] ?? ''
   if (required && !value) throw new Error(`${name} is required.`)
-  return value
-    .split('\n')
-    .map(s => s.trim())
-    .filter(s => s)
+
+  const result: string[] = []
+  for (const line of value.split('\n')) {
+    const trimmed = line.trim()
+    if (trimmed) result.push(trimmed)
+  }
+  return result
 }

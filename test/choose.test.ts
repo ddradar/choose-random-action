@@ -5,7 +5,7 @@ await suite('src/choose.ts', async () => {
   let chooseOne: typeof import('../src/choose.ts').chooseOne
 
   before(async () => {
-    mock.module('../src/gh-command.ts', { namedExports: { debug: mock.fn() } })
+    mock.module('../src/gh-command.ts', { exports: { debug: mock.fn() } })
     chooseOne = (await import('../src/choose.ts')).chooseOne
   })
 
@@ -17,12 +17,12 @@ await suite('src/choose.ts', async () => {
     ]
 
     const validTestData: [number, string][] = [
-      [0.99, 'foo'],
-      [0.8, 'foo'],
-      [0.79, 'baz'],
-      [0.4, 'baz'],
-      [0.39, 'bar'],
-      [0, 'bar'],
+      [0, 'foo'],
+      [0.19, 'foo'],
+      [0.2, 'bar'],
+      [0.59, 'bar'],
+      [0.6, 'baz'],
+      [0.99, 'baz'],
     ]
     for (const [random, expected] of validTestData) {
       await test(`(choices, ${random}) returns ${expected}`, (t: TestContext) => {

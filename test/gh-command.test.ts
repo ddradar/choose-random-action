@@ -1,10 +1,8 @@
-// Note: This test file does not output anything to the console because it mocks `process.stdout.write`.
-// If you want to see the output, add `--test-reporter=spec --test-reporter-destination=stderr` to the test script in package.json.
-import { mkdtemp, readFile, writeFile } from 'node:fs/promises'
+import { mkdtemp, readFile, rm, writeFile } from 'node:fs/promises'
 import { EOL, tmpdir } from 'node:os'
 import { join } from 'node:path'
 import type { TestContext } from 'node:test'
-import { afterEach, beforeEach, mock, suite, test } from 'node:test'
+import { afterEach, beforeEach, mock, suite, test, after } from 'node:test'
 
 import {
   debug,
@@ -19,8 +17,11 @@ await suite('src/gh-command.ts', async () => {
   afterEach(() => (process.env = { ...originalEnv }))
 
   await suite('logging', async () => {
-    const stdoutMock = mock.method(process.stdout, 'write', () => true)
-    beforeEach(() => stdoutMock.mock.resetCalls())
+    let stdoutMock: ReturnType<typeof mock.method>
+    beforeEach(
+      () => (stdoutMock = mock.method(process.stdout, 'write', () => true))
+    )
+    afterEach(() => stdoutMock.mock.restore())
 
     await test('debug("message") writes "::debug::message" to stdout', (t: TestContext) => {
       // Arrange - Act
@@ -61,32 +62,32 @@ await suite('src/gh-command.ts', async () => {
 
   await suite('setOutput()', async () => {
     const tmpDir = await mkdtemp(join(tmpdir(), 'gh-command-test-'))
+    const filePath = join(tmpDir, 'output.txt')
+    after(async () => await rm(tmpDir, { recursive: true, force: true }))
 
     await test('throws if GITHUB_OUTPUT is not set', (t: TestContext) => {
       // Arrange
       delete process.env['GITHUB_OUTPUT']
 
       // Act - Assert
-      t.assert.throws(() => setOutput('key', 'value'), {
-        message:
-          'GITHUB_OUTPUT environment variable is not set or file does not exist.',
-      })
+      t.assert.throws(() => setOutput('key', 'value'))
     })
 
-    await test('throws if GITHUB_OUTPUT file does not exist', (t: TestContext) => {
+    await test('creates and appends when GITHUB_OUTPUT file does not exist', async (t: TestContext) => {
       // Arrange
-      process.env['GITHUB_OUTPUT'] = join(tmpDir, 'nonexistent.txt')
+      await rm(filePath, { force: true })
+      process.env['GITHUB_OUTPUT'] = filePath
 
-      // Act - Assert
-      t.assert.throws(() => setOutput('key', 'value'), {
-        message:
-          'GITHUB_OUTPUT environment variable is not set or file does not exist.',
-      })
+      // Act
+      setOutput('key', 'value')
+
+      // Assert
+      const content = await readFile(filePath, 'utf8')
+      t.assert.strictEqual(content, `key=value${EOL}`)
     })
 
     await test('appends "key=value[EOL]" to the file', async (t: TestContext) => {
       // Arrange
-      const filePath = join(tmpDir, 'output.txt')
       await writeFile(filePath, '')
       process.env['GITHUB_OUTPUT'] = filePath
 

@@ -18,19 +18,11 @@ await suite('src/main.ts', async () => {
   let run: typeof import('../src/main.ts').run
 
   before(async () => {
-    mock.module('../src/choose.ts', {
-      namedExports: { chooseOne: chooseOneMock },
-    })
+    mock.module('../src/choose.ts', { exports: { chooseOne: chooseOneMock } })
     mock.module('../src/gh-command.ts', {
-      namedExports: {
-        error: mock.fn(),
-        info: mock.fn(),
-        setOutput: setOutputMock,
-      },
+      exports: { error: mock.fn(), info: mock.fn(), setOutput: setOutputMock },
     })
-    mock.module('../src/input.ts', {
-      namedExports: { getInputs: getInputsMock },
-    })
+    mock.module('../src/input.ts', { exports: { getInputs: getInputsMock } })
 
     run = (await import('../src/main.ts')).run
   })
