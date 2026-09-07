@@ -64,9 +64,9 @@ detail
 
 - Title should include a clear summary of the changes.
 - Add related issue number to your description.(ex. ref #199)
-- If PR is in progress, add `[WIP]` prefix and send as Draft Pull Request. And remove `[WIP]` and Draft when we can review.
-  - Resolve conflict to `main` before you remove `[WIP]` prefix.
-  - To reserve the work, You may submit a Pull Request with `[WIP]` first. However, if there is no activity for a long time, it may be closed.
+- If PR is in progress, send as Draft Pull Request. Convert to Ready for Review when we can review.
+  - Resolve conflict to `main` before you mark as Ready for Review.
+  - To reserve the work, You may submit a Draft Pull Request first. However, if there is no activity for a long time, it may be closed.
 
 ## Thanks
 
