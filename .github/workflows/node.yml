@@ -277,11 +277,25 @@ jobs:
           name: dist
           path: dist
 
+      - name: Generate GitHub App Token
+        id: generate-token
+        uses: actions/create-github-app-token@v3.2.0
+        with:
+          client-id: ${{ vars.APP_CLIENT_ID }}
+          private-key: ${{ secrets.APP_PRIVATE_KEY }}
       - name: Commit and Push
-        continue-on-error: true
         run: |
           git config user.name ${{ vars.GH_ACTIONS_COMMIT_NAME }}
           git config user.email ${{ vars.GH_ACTIONS_COMMIT_EMAIL }}
           git add .
+
+          # Check if there are changes
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+            exit 0
+          fi
+
           git commit -m "build: deploy via ${{ github.sha }}"
-          git push
+          gh repo sync --branch ${{ vars.RELEASE_BRANCH }} --force
+        env:
+          GH_TOKEN: ${{ steps.generate-token.outputs.token }}
