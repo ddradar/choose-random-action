@@ -16,10 +16,10 @@
   "scripts": {
     "build": "node --experimental-strip-types build.mts",
     "fix": "run-p fix:*",
-    "fix:oxlint": "oxlint --type-aware --fix",
+    "fix:oxlint": "oxlint --fix",
     "fix:oxfmt": "oxfmt",
     "lint": "run-p lint:*",
-    "lint:oxlint": "oxlint --type-aware",
+    "lint:oxlint": "oxlint",
     "lint:oxfmt": "oxfmt --check",
     "prepare": "husky",
     "test": "node --test --experimental-strip-types --experimental-test-module-mocks"
@@ -40,7 +40,7 @@
   },
   "lint-staged": {
     "*.{js,mjs,ts,mts}": [
-      "oxlint --type-aware --fix",
+      "oxlint --fix",
       "oxfmt"
     ],
     "*.{json,md,yml}": "oxfmt"
