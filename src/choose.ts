@@ -16,14 +16,13 @@ export function chooseOne(choices: Choice[], random: number): string {
   debug(`Math.random(): ${random}`)
   if (isNaN(random) || random < 0 || 1 <= random)
     throw RangeError('random arg should be 0 <= random < 1.')
-  const sortedChoices = choices.sort((l, r) => r.weight - l.weight)
   const weightSum = choices.reduce((prev, c) => prev + c.weight, 0)
   // 1 <= selected <= weightSum
   const selected = Math.floor(random * weightSum) + 1
   debug(`Choice: ${selected}`)
 
   let current = 0
-  for (const choice of sortedChoices) {
+  for (const choice of choices) {
     current += choice.weight
     if (current >= selected) return choice.content
   }
