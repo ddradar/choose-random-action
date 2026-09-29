@@ -48,7 +48,7 @@
   "engines": {
     "node": ">=24"
   },
-  "packageManager": "npm@11.11.0",
+  "packageManager": "npm@12.1.0+sha512.17286eeb6a4dc7bd180acff9f9d1262504c556648ac2fa39080d2abc19060d1a686f8d8c27a1b6450dad77178a3389d89c8643aa4600c4482ab687a39fd406b5",
   "allowScripts": {
     "esbuild@0.28.2": true
   }
