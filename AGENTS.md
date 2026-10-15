@@ -69,10 +69,10 @@ build.mts        esbuild build script
 - All code must be ESM: use `import`/`export`; never use `require()`.
 - When importing local modules, always include the `.ts` extension:
   ```ts
-  // correct
-  import { foo } from './foo.ts'
   // incorrect
   import { foo } from './foo'
+  // correct
+  import { foo } from './foo.ts'
   ```
 - Prefer named exports over default exports.
 - Prefer `interface` over `type` for object shapes.
